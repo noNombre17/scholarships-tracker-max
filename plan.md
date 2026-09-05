@@ -8,7 +8,7 @@
 
 ## Core strategy
 
-1. **Walmart Live Better U (parent confirmed):** 100% tuition + books benefit for associates — HR-enrolled. Potentially the single biggest dollar value in this plan; have mom check her benefits portal immediately.
+1. ~~Walmart Live Better U~~ — confirmed NOT applicable; removed from plan.
 2. **The realistic money (Arkansas):** FAFSA + SAMS state awards (no essay) + **one UA application** (covers all UA freshman merit tiers up to $12k/yr). This is where the real tuition chunk comes from.
 3. **Monthly no-essay stack (10 min/month):** keep ~8 sweepstakes re-entered every month (Sallie, Niche, SoFi, Appily, ScholarshipOwl, Bold tiers, Scholly Easy Apply). Low odds each, but zero effort and they compound.
 4. **Big annual low-effort pots:** BigFuture (College Board), Niche $40k, Bold.org Be Bold $25k, US Bank, Scholarships360 $10k, Ascent $10k — each is a one-time 2–30 min entry.
@@ -74,9 +74,9 @@ Hispanic: HSF $500–$5k (Jan 2027) · LULAC LNSF $250–$2k (Max's LULAC VP rol
 
 ## Max's confirmed profile (what it changes)
 
-- ✅ **Parent at Walmart/Sam's Club** → **Live Better U: 100% tuition + books** (HR-enrolled, not an application). Biggest single benefit available — have mom check her benefits portal TODAY.
+- ❌ **Parent at Walmart/Sam's Club** → Live Better U does NOT apply in this situation; removed from plan.
 - ✅ **Single-mom household** → SPSF NWA eligible on paper, but ⚠️ income >$100k likely fails their "low-moderate income" test — confirm before the interview.
-- ✅ **Dad on active duty (deployed Germany)** → opens **military-child scholarships** (Fisher House $2k · AUSA $2k–$25k w/ dad's membership · Army Scholarship Foundation · ThanksUSA — Tier I). ⚠️ Arkansas Heroes (full tuition) requires a qualifying status (Medal of Honor / Purple Heart / disabled / DoD medical retiree) — likely N/A unless dad qualifies; confirm with dad.
+- ✅ **Dad: U.S. Army active duty (deployed Germany)** → opens **military-child scholarships** (Fisher House $2k · AUSA $2k–$25k w/ dad's membership · Army Scholarship Foundation · ThanksUSA — Tier I). ⚠️ Arkansas Heroes (full tuition) requires a qualifying status (Medal of Honor / Purple Heart / disabled / DoD medical retiree) — likely N/A unless dad qualifies; confirm with dad.
 - ✅ **U of A Fayetteville bound** → Tier E is the primary application path. Deadlines: admit **Nov 1**, scholarship **Nov 15** (priority).
 - ✅ **Mexican + South Korean heritage** → heritage scholarships (Tier H, research in progress).
 - ⚠️ **Income >$100k** → QuestBridge, Cooke, Horatio Alger, Advance Arkansas, Land of Opportunity likely disqualified; applying anyway per user — time-box essay work on these.

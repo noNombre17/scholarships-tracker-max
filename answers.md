@@ -19,7 +19,7 @@
 | Heritage | Mexican-American and Korean-American |
 | First-generation college student? | No |
 | Citizenship | US citizen |
-| Military family | Father on active duty (deployed in Germany); parents divorced |
+| Military family | Father: U.S. Army, active duty (deployed in Germany); parents divorced |
 | Languages | English; intermediate Spanish |
 | Certifications | Cybersecurity certification [CERT NAME]; First Aid |
 | Licenses | Licensed driver |

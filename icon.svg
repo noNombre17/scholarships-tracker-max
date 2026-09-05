@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- flat two-tone app icon: warm paper tile with a green graduation cap -->
+  <rect width="512" height="512" rx="100" fill="#f3edde"/>
+
+  <!-- mortarboard (diamond top) -->
+  <polygon points="256,150 380,206 256,262 132,206" fill="#2f6b46"/>
+
+  <!-- cap base / skull plate -->
+  <rect x="216" y="262" width="80" height="42" rx="10" fill="#2f6b46"/>
+
+  <!-- tassel cord -->
+  <path d="M380 206 q40 36 34 78" stroke="#2f6b46" stroke-width="9" fill="none" stroke-linecap="round"/>
+
+  <!-- tassel tuft -->
+  <circle cx="414" cy="294" r="13" fill="#2f6b46"/>
+  <circle cx="414" cy="294" r="5" fill="#f3edde"/>
+</svg>

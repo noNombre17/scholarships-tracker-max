@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Scholarship Tracker — phone mockup (Max)</title>
+<style>
+  /* ---------------------------------------------------------------
+     Design language: extends the existing warm "paper + serif +
+     green/rust/gold + grain" system into a phone-first form factor.
+     Same palette, same fonts, same status legend (⬜ 🔁 ⏳ ✅ ⚠️ ❌).
+     --------------------------------------------------------------- */
+  :root{
+    --paper:#f3edde;
+    --surface:#fbf7ec;
+    --surface-2:#efe7d3;
+    --ink:#23201a;
+    --ink-2:#6f6756;
+    --ink-3:#a49a85;
+    --line:#e2d8c2;
+    --line-strong:#c8bb9c;
+    --green:#2f6b46;
+    --green-soft:#e2ecdf;
+    --rust:#b1502f;
+    --rust-soft:#f5e3d8;
+    --gold:#b8862e;
+    --gold-soft:#f2e6ca;
+    --blue:#2f5b6e;
+    --blue-soft:#dde7ee;
+    --gray-soft:#e9e4d6;
+    --shadow:0 1px 2px rgba(40,32,16,.05),0 12px 32px -16px rgba(40,32,16,.28);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --sans:"Avenir Next",Avenir,"Segoe UI","Helvetica Neue",Helvetica,sans-serif;
+    --mono:"SF Mono","JetBrains Mono","Cascadia Code","Roboto Mono",Consolas,"Liberation Mono",monospace;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;height:100%}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 620px at 18% -12%,#faf4e5 0%,rgba(250,244,229,0) 62%),
+      radial-gradient(1000px 520px at 100% -6%,#efe6d0 0%,rgba(239,230,208,0) 58%),
+      var(--paper);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+    font-size:15px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:100%;
+  }
+  button{font-family:inherit;cursor:pointer;color:inherit}
+  a{color:inherit;text-decoration:none}
+
+  /* grain overlay (matches app) */
+  .grain{
+    position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:160px 160px;
+  }
+
+  /* ---------- desktop caption (hidden on phones) ---------- */
+  .caption{
+    position:relative;z-index:2;max-width:400px;padding:0 18px 18px;text-align:center;
+  }
+  .caption .kick{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+  .caption h1{font-family:var(--serif);font-size:24px;margin:4px 0 6px;line-height:1.1}
+  .caption p{font-size:13px;color:var(--ink-2);margin:0}
+  .caption .hint{display:inline-block;margin-top:8px;font-family:var(--mono);font-size:11px;color:var(--green);border:1px solid var(--line-strong);border-radius:999px;padding:5px 12px}
+
+  /* ---------- phone frame ---------- */
+  .stage{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center}
+  .phone{
+    width:min(400px,100vw);
+    height:min(844px,100dvh);
+    background:var(--surface);
+    border:1px solid var(--line-strong);
+    border-radius:0;
+    box-shadow:var(--shadow);
+    overflow:hidden;
+    display:flex;
+    flex-direction:column;
+    position:relative;
+  }
+  @media (min-width:480px){
+    .phone{border-radius:40px;border:8px solid #241f16}
+  }
+
+  /* status bar */
+  .statusbar{
+    flex:none;display:flex;align-items:center;justify-content:space-between;
+    padding:12px 22px 6px;font-family:var(--mono);font-size:12.5px;font-weight:700;color:var(--ink);
+  }
+  .statusbar .sb-icons{display:flex;align-items:center;gap:5px;font-size:11px;letter-spacing:.5px}
+  .statusbar .bat{width:22px;height:11px;border:1.5px solid var(--ink);border-radius:3px;position:relative}
+  .statusbar .bat::after{content:"";position:absolute;left:2px;top:2px;bottom:2px;width:14px;background:var(--ink);border-radius:1px}
+
+  /* app header */
+  .appbar{
+    flex:none;display:flex;align-items:center;gap:12px;padding:10px 18px 12px;
+  }
+  .brand-mini{flex:1;min-width:0}
+  .brand-mini .bk{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3)}
+  .brand-mini .bt{font-family:var(--serif);font-size:20px;line-height:1.1;font-weight:700}
+  .avatar{
+    flex:none;width:40px;height:40px;border-radius:50%;background:var(--ink);color:var(--paper);
+    display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:19px;font-weight:700;
+  }
+
+  /* scroll area */
+  .screen{
+    flex:1;overflow-y:auto;padding:0 16px 28px;display:none;
+    -webkit-overflow-scrolling:touch;
+  }
+  .screen.active{display:block;animation:screenin .28s ease both}
+  @keyframes screenin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+  /* shared type */
+  .eyebrow{font-family:var(--mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);margin:2px 0 8px}
+  h2.h{font-family:var(--serif);font-size:19px;margin:0;line-height:1.15}
+  .muted{color:var(--ink-2)}
+  .faint{color:var(--ink-3)}
+
+  /* hero */
+  .hero{
+    background:var(--ink);color:var(--paper);border-radius:20px;padding:20px 20px 18px;
+    position:relative;overflow:hidden;box-shadow:var(--shadow);margin-bottom:16px;
+  }
+  .hero::after{content:"";position:absolute;right:-40px;top:-40px;width:160px;height:160px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%,rgba(255,255,255,.16),rgba(255,255,255,0) 70%)}
+  .hero .h-kick{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#e9c884}
+  .hero .h-big{font-family:var(--serif);font-size:38px;line-height:1;margin:8px 0 4px;font-weight:700}
+  .hero .h-sub{font-size:13.5px;color:#d9d2c2;margin:0}
+  .hero .h-today{display:inline-block;margin-top:12px;font-family:var(--mono);font-size:11.5px;color:var(--paper);
+    border:1px solid rgba(244,240,232,.35);border-radius:999px;padding:5px 12px}
+
+  /* stat chips */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px}
+  .stat{
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 12px 11px;text-align:left;
+  }
+  .stat .n{font-family:var(--serif);font-size:26px;line-height:1;font-weight:700;color:var(--ink)}
+  .stat .l{font-size:11.5px;font-weight:600;color:var(--ink-2);margin-top:4px;line-height:1.2}
+  .stat.accent .n{color:var(--green)}
+
+  /* next-up cards */
+  .next-card{
+    width:100%;text-align:left;display:flex;gap:13px;align-items:stretch;
+    background:var(--surface);border:1px solid var(--line);border-radius:16px;
+    padding:14px 14px;margin-bottom:10px;box-shadow:var(--shadow);
+    transition:transform .13s ease,border-color .13s ease;
+  }
+  .next-card:active{transform:scale(.985)}
+  .next-card .pk{
+    flex:none;width:38px;height:38px;border-radius:11px;display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:13px;font-family:var(--mono);letter-spacing:.02em;
+  }
+  .next-card .pk.now{background:var(--rust);color:#f9f0ea}
+  .next-card .pk.soon{background:var(--gold);color:#fff}
+  .next-card .pk.later{background:var(--green);color:#eef5ec}
+  .next-card .nc-main{flex:1;min-width:0}
+  .next-card .nc-top{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+  .next-card .nc-name{font-weight:700;font-size:15.5px;line-height:1.25}
+  .next-card .nc-when{font-family:var(--mono);font-size:12px;font-weight:700;color:var(--rust);white-space:nowrap}
+  .next-card .nc-amt{font-family:var(--mono);font-size:13px;font-weight:700;color:var(--green);margin-top:1px}
+  .next-card .nc-why{font-size:12.5px;color:var(--ink-2);margin-top:3px;line-height:1.4}
+  .next-card .chev{margin-left:auto;align-self:center;color:var(--ink-3);font-size:20px;flex:none}
+
+  /* batch banner */
+  .banner{
+    display:flex;align-items:center;gap:13px;margin-top:4px;margin-bottom:6px;
+    background:var(--gold-soft);border:1px solid #d7b169;border-radius:16px;padding:14px;
+    transition:transform .13s ease;
+  }
+  .banner:active{transform:scale(.985)}
+  .banner .b-ring{flex:none;width:44px;height:44px}
+  .banner .b-main{flex:1;min-width:0}
+  .banner .b-t{font-weight:700;font-size:15px}
+  .banner .b-s{font-size:12.5px;color:#7a5a15}
+  .banner .chev{color:#a1791f;font-size:20px}
+
+  /* tier screen */
+  .legend{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 14px}
+  .legend .lg{
+    display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;color:var(--ink-2);
+    border:1px solid var(--line);border-radius:999px;padding:5px 9px;background:var(--surface);
+  }
+  .tierpills{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin-bottom:14px;-webkit-overflow-scrolling:touch}
+  .tierpills .pill{
+    flex:none;border:1px solid var(--line-strong);background:var(--surface);border-radius:999px;
+    padding:9px 14px;font-size:13px;font-weight:700;color:var(--ink-2);
+  }
+  .tierpills .pill.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+  .tierpills .pill .cnt{font-family:var(--mono);font-size:10.5px;opacity:.6;margin-left:4px}
+
+  .tier-block{margin-bottom:18px}
+  .tier-head{display:flex;align-items:center;gap:10px;margin-bottom:9px}
+  .tier-badge{flex:none;width:32px;height:32px;border-radius:9px;border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:16px;font-weight:700;background:var(--surface)}
+  .tier-title{font-family:var(--serif);font-size:15.5px;margin:0;line-height:1.15}
+  .tier-count{margin-left:auto;font-family:var(--mono);font-size:11px;color:var(--ink-3)}
+
+  /* tier row */
+  .row{
+    display:flex;gap:12px;align-items:center;padding:13px 14px;
+    background:var(--surface);border:1px solid var(--line);border-radius:14px;margin-bottom:8px;
+    min-height:64px;transition:border-color .14s ease;
+  }
+  .row-main{flex:1;min-width:0}
+  .row-name{font-weight:700;font-size:14.5px;line-height:1.28}
+  .row-meta{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin-top:4px;font-size:12px;color:var(--ink-2)}
+  .row-meta .amount{font-family:var(--mono);font-weight:700;color:var(--ink)}
+  .row-meta .dot{color:var(--line-strong)}
+  .row-meta .eff{font-family:var(--mono);color:var(--ink-3)}
+
+  /* status chips (tap to cycle) */
+  .chip{
+    flex:none;border:1px solid;border-radius:10px;padding:10px 12px;font-size:12.5px;font-weight:700;
+    display:inline-flex;align-items:center;gap:6px;white-space:nowrap;min-height:44px;
+    transition:transform .12s ease,box-shadow .12s ease;
+  }
+  .chip:active{transform:scale(.94)}
+  .chip .em{font-size:14px;line-height:1}
+  .st-todo{background:var(--surface);border-color:var(--line-strong);color:var(--ink)}
+  .st-re-enter{background:var(--blue-soft);border-color:#a9bfcc;color:#2f5b6e}
+  .st-submitted{background:var(--gold-soft);border-color:#d7b169;color:#7a5a15}
+  .st-awarded{background:var(--green-soft);border-color:#a9c7ab;color:#235c38}
+  .st-conditional{background:var(--rust-soft);border-color:#dba68e;color:#8e3d22}
+  .st-skipped{background:var(--gray-soft);border-color:var(--line-strong);color:var(--ink-3)}
+
+  .empty{padding:22px 14px;color:var(--ink-3);font-size:13px;border:1px dashed var(--line-strong);border-radius:14px;text-align:center}
+
+  /* batch screen */
+  .ring-wrap{display:flex;align-items:center;gap:18px;margin:6px 0 18px}
+  .ring{
+    flex:none;width:96px;height:96px;border-radius:50%;position:relative;
+    display:flex;align-items:center;justify-content:center;
+    background:conic-gradient(var(--green) 0deg, var(--surface-2) 0deg);
+  }
+  .ring::before{content:"";position:absolute;inset:11px;border-radius:50%;background:var(--surface)}
+  .ring .rv{position:relative;font-family:var(--serif);font-size:24px;font-weight:700;color:var(--ink)}
+  .ring .rl{position:absolute;top:68px;font-family:var(--mono);font-size:10px;color:var(--ink-3)}
+  .ring-side{flex:1;min-width:0}
+  .ring-side .r-t{font-family:var(--serif);font-size:18px;font-weight:700;line-height:1.1}
+  .ring-side .r-s{font-size:13px;color:var(--ink-2);margin-top:3px}
+
+  .batch-row{
+    display:flex;gap:13px;align-items:center;padding:13px 14px;
+    border:1px solid var(--line);border-radius:14px;background:var(--surface);margin-bottom:8px;
+    min-height:64px;transition:border-color .14s ease,background .14s ease;
+  }
+  .batch-row .cb{
+    flex:none;width:40px;height:40px;border-radius:12px;border:2px solid var(--line-strong);background:var(--surface);
+    display:flex;align-items:center;justify-content:center;color:transparent;font-size:18px;font-weight:700;
+    transition:background .13s ease,color .13s ease,border-color .13s ease;
+  }
+  .batch-row.done{background:var(--green-soft);border-color:#a9c7ab}
+  .batch-row.done .cb{background:var(--green);border-color:var(--green);color:#fff}
+  .batch-row .sm{flex:1;min-width:0}
+  .batch-row .sn{font-weight:700;font-size:14.5px}
+  .batch-row.done .sn{color:var(--ink-2);text-decoration:line-through}
+  .batch-row .ss{font-size:12px;color:var(--ink-2);font-family:var(--mono);margin-top:2px}
+  .batch-row .le{flex:none;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:right}
+
+  .done-banner{
+    display:none;align-items:center;gap:10px;margin:4px 0 14px;padding:15px 16px;
+    background:var(--green);color:#f7f4ea;border-radius:16px;font-weight:700;font-size:14.5px;
+    animation:pop .4s cubic-bezier(.2,.7,.3,1.2) both;
+  }
+  .done-banner.show{display:flex}
+  .done-banner .tick{flex:none;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center}
+  @keyframes pop{from{opacity:0;transform:scale(.92)}to{opacity:1;transform:none}}
+
+  .btn-big{
+    width:100%;display:flex;align-items:center;justify-content:center;gap:8px;
+    background:var(--green);border:1px solid var(--green);color:#f7f4ea;border-radius:14px;
+    padding:16px;font-size:15px;font-weight:700;min-height:56px;
+    transition:transform .12s ease,background .12s ease;
+  }
+  .btn-big:active{transform:scale(.985);background:#275c3b}
+
+  /* tab bar */
+  .tabbar{
+    flex:none;display:flex;border-top:1px solid var(--line);background:rgba(250,246,236,.96);
+    padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));
+  }
+  .tab{
+    flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;background:transparent;border:0;
+    padding:8px 4px;border-radius:12px;color:var(--ink-3);font-size:11px;font-weight:600;
+    transition:color .14s ease,background .14s ease;
+  }
+  .tab .ic{font-size:20px;line-height:1}
+  .tab.on{color:var(--ink);background:var(--surface-2)}
+  .tab.on .ic{color:var(--green)}
+</style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="stage">
+    <div class="caption">
+      <div class="kick">Scholarship Tracker · phone concept</div>
+      <h1>Max · Rogers, AR — one thumb, three screens</h1>
+      <p>Tap the tabs below the phone. On the Tiers screen, tap a status chip to flip it. On the Batch screen, tick the checklist.</p>
+      <span class="hint">tap around — everything is clickable</span>
+    </div>
+
+    <div class="phone">
+      <div class="statusbar">
+        <span>9:41</span>
+        <span class="sb-icons">&#9679;&#9679;&#9679;&#9679; 5G <span class="bat"></span></span>
+      </div>
+
+      <header class="appbar">
+        <div class="brand-mini">
+          <div class="bk">Scholarship Tracker</div>
+          <div class="bt">Yo, Max</div>
+        </div>
+        <div class="avatar">M</div>
+      </header>
+
+      <!-- ============ SCREEN 1 · NEXT UP ============ -->
+      <section class="screen active" id="s-home" aria-label="Next up">
+        <div class="hero">
+          <div class="h-kick">Your today</div>
+          <div class="h-big">$250k+</div>
+          <p class="h-sub">on the table across 57 scholarships · 9 tiers</p>
+          <span class="h-today">Fri, Sep 5, 2026</span>
+        </div>
+
+        <div class="stats">
+          <div class="stat accent"><div class="n">57</div><div class="l">scholarships tracked</div></div>
+          <div class="stat"><div class="n">8</div><div class="l">re-enter due Oct 1</div></div>
+          <div class="stat"><div class="n">4</div><div class="l">due in next 30 days</div></div>
+        </div>
+
+        <div class="eyebrow">Next up · ranked by money + deadline</div>
+        <div id="nextup"></div>
+
+        <div class="banner" data-goto="s-batch">
+          <svg class="b-ring" viewBox="0 0 44 44" aria-hidden="true">
+            <circle cx="22" cy="22" r="19" fill="none" stroke="#c89b45" stroke-width="3" opacity=".35"/>
+            <circle cx="22" cy="22" r="19" fill="none" stroke="#8a6a1f" stroke-width="3" stroke-linecap="round" stroke-dasharray="119" stroke-dashoffset="30" transform="rotate(-90 22 22)"/>
+            <text x="22" y="26" text-anchor="middle" font-family="var(--mono)" font-size="11" font-weight="700" fill="#7a5a15">0/8</text>
+          </svg>
+          <div class="b-main">
+            <div class="b-t">Monthly batch · ~10 min</div>
+            <div class="b-s">8 no-essay re-entries waiting for Oct 1</div>
+          </div>
+          <span class="chev">›</span>
+        </div>
+      </section>
+
+      <!-- ============ SCREEN 2 · TIERS ============ -->
+      <section class="screen" id="s-tiers" aria-label="Tiers">
+        <h2 class="h">Tiers A–I</h2>
+        <p class="muted" style="font-size:13px;margin:2px 0 12px">Tap a status chip to flip it — to-do → re-enter → submitted → awarded → conditional → skipped.</p>
+
+        <div class="legend" id="legend"></div>
+        <div class="tierpills" id="tierpills"></div>
+        <div id="tierlist"></div>
+      </section>
+
+      <!-- ============ SCREEN 3 · BATCH ============ -->
+      <section class="screen" id="s-batch" aria-label="Monthly batch">
+        <h2 class="h">Monthly batch</h2>
+        <p class="muted" style="font-size:13px;margin:2px 0 14px">1st of the month · 8 no-essay re-entries · ~10 min. Tick each as you go.</p>
+
+        <div class="done-banner" id="doneBanner"><span class="tick">✓</span> Batch cleared — see you Oct 1</div>
+
+        <div class="ring-wrap">
+          <div class="ring" id="ring"><span class="rv" id="ringVal">0/8</span><span class="rl">entered</span></div>
+          <div class="ring-side">
+            <div class="r-t">Sallie, Niche, SoFi, Appily…</div>
+            <div class="r-s">Low odds each, zero effort, and they compound every month.</div>
+          </div>
+        </div>
+
+        <div id="batchlist"></div>
+        <button class="btn-big" id="runBatch" style="margin-top:10px">Reset batch — stamp the month</button>
+      </section>
+
+      <!-- ============ TAB BAR ============ -->
+      <nav class="tabbar" aria-label="Screens">
+        <button class="tab on" data-goto="s-home"><span class="ic">▤</span>Next up</button>
+        <button class="tab" data-goto="s-tiers"><span class="ic">☰</span>Tiers</button>
+        <button class="tab" data-goto="s-batch"><span class="ic">✓</span>Batch</button>
+      </nav>
+    </div>
+  </div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------------- data (grounded in tracker.md / data.js) ---------------- */
+
+  var STATUS = {
+    todo:        { icon: "⬜", label: "To-do" },
+    "re-enter":  { icon: "🔁", label: "Re-enter" },
+    submitted:   { icon: "⏳", label: "Submitted" },
+    awarded:     { icon: "✅", label: "Awarded" },
+    conditional: { icon: "⚠️", label: "Conditional" },
+    skipped:     { icon: "❌", label: "Skipped" }
+  };
+  var STATUS_ORDER = ["todo","re-enter","submitted","awarded","conditional","skipped"];
+
+  var TIER_TITLES = {
+    A: "Monthly no-essay sweepstakes",
+    B: "Big annual no-essay / low-effort",
+    C: "Quick essays",
+    D: "Arkansas state — via SAMS",
+    E: "University of Arkansas",
+    F: "Local / NWA / Rogers",
+    G: "Big essay awards (eligibility-gated)",
+    H: "Heritage scholarships",
+    I: "Military-family scholarships"
+  };
+
+  var ROWS = [
+    {id:"A01", tier:"A", name:"Sallie $2,000 No Essay", amount:"$2,000", deadline:"Sep 30 · monthly", effort:"2-min form", status:"re-enter"},
+    {id:"A02", tier:"A", name:"Niche $2,000 No Essay", amount:"$2,000", deadline:"monthly", effort:"account, 1 entry", status:"submitted"},
+    {id:"A03", tier:"A", name:"SoFi $2,500 Giveaway", amount:"$2,500", deadline:"Sep 30", effort:"form · 18+", status:"re-enter"},
+    {id:"A04", tier:"A", name:"Appily Easy Money", amount:"$1,000", deadline:"monthly", effort:"account + profile", status:"re-enter"},
+    {id:"A05", tier:"A", name:"ScholarshipOwl $2,026", amount:"$2,026", deadline:"monthly", effort:"sign-in", status:"todo"},
+    {id:"A07", tier:"A", name:"Bold.org point tiers", amount:"$1k–$10k", deadline:"Sep 30", effort:"1 profile", status:"re-enter"},
+    {id:"A08", tier:"A", name:"Scholly Easy Apply", amount:"up to $13k", deadline:"Sep 30", effort:"1 form ~2 min", status:"re-enter"},
+    {id:"B03", tier:"B", name:"Bold.org Be Bold $25k", amount:"$25,000", deadline:"Sep 30", effort:"profile", status:"todo"},
+    {id:"B07", tier:"B", name:"Coca-Cola Scholars", amount:"$20,000", deadline:"Sep 30 · 5pm ET", effort:"phase 1 · no essay", status:"todo"},
+    {id:"B02", tier:"B", name:"Niche $40,000 No Essay", amount:"$40,000", deadline:"Oct 15", effort:"5 min", status:"todo"},
+    {id:"C03", tier:"C", name:"Raise.me micro-awards", amount:"hundreds →", deadline:"ongoing", effort:"portfolio", status:"awarded"},
+    {id:"C02", tier:"C", name:"10 Words or Less", amount:"$1,500", deadline:"Nov 15", effort:"≤10 words", status:"todo"},
+    {id:"D01", tier:"D", name:"Academic Challenge", amount:"$2,000 (yr 1)", deadline:"in SAMS", effort:"SAMS + FAFSA", status:"todo"},
+    {id:"E01", tier:"E", name:"UA freshman scholarship app", amount:"up to $12k/yr", deadline:"Nov 15 (priority)", effort:"short form + prompts", status:"todo"},
+    {id:"E03", tier:"E", name:"Honors College Fellowship", amount:"$80k / 4 yrs", deadline:"Nov 15", effort:"600-word essay", status:"conditional"},
+    {id:"F01", tier:"F", name:"NWACC Foundation", amount:"$350k+ pool", deadline:"rolling", effort:"one app", status:"todo"},
+    {id:"G05", tier:"G", name:"National Merit Scholarship", amount:"$2,500", deadline:"ACT Oct–Dec", effort:"test only", status:"skipped"},
+    {id:"H01", tier:"H", name:"HSF Scholar Program", amount:"$500–$5,000", deadline:"Jan–Feb 2027", effort:"app + essay", status:"todo"},
+    {id:"H07", tier:"H", name:"APIA Scholars", amount:"$2,500–$20,000", deadline:"Nov–Jan", effort:"essay 250–500", status:"todo"},
+    {id:"H08", tier:"H", name:"KASF (Korean-American)", amount:"$500–$5,000", deadline:"region app", effort:"essay + recs", status:"todo"},
+    {id:"I01", tier:"I", name:"Fisher House (Military Children)", amount:"$2,000", deadline:"Jan–Feb 2027", effort:"app + essay", status:"todo"},
+    {id:"I05", tier:"I", name:"Folds of Honor", amount:"$2,000–$5,000", deadline:"varies", effort:"—", status:"skipped"}
+  ];
+
+  var NEXT_UP = [
+    {key:"FAFSA", tone:"now", name:"File FAFSA 2026-27", when:"Do it today", amt:"Unlocks UA + state + HSF",
+     why:"Prerequisite for need-based aid, UA, state SAMS and HSF awards."},
+    {key:"COKE", tone:"soon", name:"Coca-Cola Scholars", when:"Sep 30 · 5pm ET · 25d", amt:"$20,000",
+     why:"Phase 1 needs no essays or recs — leadership + service fit."},
+    {key:"UA1", tone:"later", name:"UA admission application", when:"Nov 1 (priority) · 57d", amt:"Unlocks all merit tiers",
+     why:"Admission unlocks every UA freshman merit tier up to $12k/yr."},
+    {key:"UA2", tone:"later", name:"UA scholarship application", when:"Nov 15 (priority) · 71d", amt:"up to $12k/yr",
+     why:"One app covers Chancellor's, Silas Hunt, Honors Academy."}
+  ];
+
+  var BATCH = [
+    {id:"A01", name:"Sallie $2,000 No Essay", amount:"$2,000", note:"2 min"},
+    {id:"A02", name:"Niche $2,000 No Essay", amount:"$2,000", note:"1 entry"},
+    {id:"A03", name:"SoFi $2,500 Giveaway", amount:"$2,500", note:"18+ only"},
+    {id:"A04", name:"Appily Easy Money", amount:"$1,000", note:"account"},
+    {id:"A05", name:"ScholarshipOwl $2,026", amount:"$2,026", note:"sign-in"},
+    {id:"A06", name:"ScholarshipOwl $50k", amount:"$1k ×4/mo", note:"sign-up"},
+    {id:"A07", name:"Bold.org point tiers", amount:"$1k–$10k", note:"1 profile"},
+    {id:"A08", name:"Scholly Easy Apply", amount:"$13k bundle", note:"1 form"}
+  ];
+
+  var doneSet = {};
+
+  /* ---------------- helpers ---------------- */
+  function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+
+  /* ---------------- home ---------------- */
+  function renderNextUp(){
+    var html = "";
+    NEXT_UP.forEach(function(p){
+      html += '<button class="next-card" data-nudge="'+esc(p.name)+'">'
+        + '<div class="pk '+p.tone+'">'+esc(p.key)+'</div>'
+        + '<div class="nc-main">'
+        +   '<div class="nc-top"><span class="nc-name">'+esc(p.name)+'</span><span class="nc-when">'+esc(p.when)+'</span></div>'
+        +   '<div class="nc-amt">'+esc(p.amt)+'</div>'
+        +   '<div class="nc-why">'+esc(p.why)+'</div>'
+        + '</div>'
+        + '<span class="chev">›</span>'
+        + '</button>';
+    });
+    document.getElementById("nextup").innerHTML = html;
+  }
+
+  /* ---------------- legend ---------------- */
+  function renderLegend(){
+    var html = "";
+    STATUS_ORDER.forEach(function(st){
+      html += '<span class="lg">'+STATUS[st].icon+' '+STATUS[st].label+'</span>';
+    });
+    document.getElementById("legend").innerHTML = html;
+  }
+
+  /* ---------------- tiers ---------------- */
+  var tierFilter = "all";
+  function tierCounts(){
+    var c = {all: ROWS.length};
+    ROWS.forEach(function(r){ c[r.tier] = (c[r.tier]||0)+1; });
+    return c;
+  }
+  function renderTierPills(){
+    var counts = tierCounts();
+    var tiers = "ABCDEFGHI".split("");
+    var html = '<button class="pill'+(tierFilter==="all"?" on":"")+'" data-tier="all">All<span class="cnt">'+counts.all+'</span></button>';
+    tiers.forEach(function(t){
+      var n = counts[t]||0;
+      html += '<button class="pill'+(tierFilter===t?" on":"")+'" data-tier="'+t+'">'+t+'<span class="cnt">'+n+'</span></button>';
+    });
+    document.getElementById("tierpills").innerHTML = html;
+  }
+  function renderTierList(){
+    var rows = ROWS.filter(function(r){ return tierFilter==="all" || r.tier===tierFilter; });
+    var html = "";
+    if(!rows.length){
+      html = '<div class="empty">No scholarships in this tier (mockup subset — see the full tracker).</div>';
+    }
+    var byTier = {};
+    rows.forEach(function(r){ (byTier[r.tier]=byTier[r.tier]||[]).push(r); });
+    Object.keys(byTier).sort().forEach(function(t){
+      var list = byTier[t];
+      html += '<section class="tier-block">'
+        + '<div class="tier-head"><div class="tier-badge">'+t+'</div>'
+        + '<h3 class="tier-title">Tier '+t+' — '+esc(TIER_TITLES[t]||"")+'</h3>'
+        + '<span class="tier-count">'+list.length+'</span></div>';
+      list.forEach(function(r){
+        var st = r.status;
+        html += '<div class="row">'
+          + '<div class="row-main">'
+          +   '<div class="row-name">'+esc(r.name)+'</div>'
+          +   '<div class="row-meta"><span class="amount">'+esc(r.amount)+'</span>'
+          +   '<span class="dot">·</span><span>'+esc(r.deadline)+'</span>'
+          +   '<span class="dot">·</span><span class="eff">'+esc(r.effort)+'</span></div>'
+          + '</div>'
+          + '<button class="chip st-'+esc(st)+'" data-flip="'+esc(r.id)+'" title="Tap to flip status">'
+          + '<span class="em">'+STATUS[st].icon+'</span>'+STATUS[st].label+'</button>'
+          + '</div>';
+      });
+      html += '</section>';
+    });
+    document.getElementById("tierlist").innerHTML = html;
+  }
+
+  /* ---------------- batch ---------------- */
+  function renderBatch(){
+    var done = Object.keys(doneSet).length;
+    var html = "";
+    BATCH.forEach(function(b){
+      var on = !!doneSet[b.id];
+      html += '<div class="batch-row'+(on?" done":"")+'" data-check="'+esc(b.id)+'">'
+        + '<button class="cb" data-check="'+esc(b.id)+'">✓</button>'
+        + '<div class="sm"><div class="sn">'+esc(b.name)+'</div>'
+        + '<div class="ss">'+esc(b.amount)+' · '+esc(b.note)+'</div></div>'
+        + '<span class="le">↗</span>'
+        + '</div>';
+    });
+    document.getElementById("batchlist").innerHTML = html;
+    updateBatchUI(done);
+  }
+  function updateBatchUI(done){
+    var total = BATCH.length;
+    var pct = total ? Math.round(done/total*100) : 0;
+    var ring = document.getElementById("ring");
+    ring.style.background = "conic-gradient(var(--green) "+pct+"%, var(--surface-2) "+pct+"%)";
+    document.getElementById("ringVal").textContent = done + "/" + total;
+    var banner = document.getElementById("doneBanner");
+    banner.classList.toggle("show", done === total);
+  }
+
+  /* ---------------- tab switching ---------------- */
+  function show(id){
+    document.querySelectorAll(".screen").forEach(function(s){ s.classList.toggle("active", s.id===id); });
+    document.querySelectorAll(".tab").forEach(function(t){ t.classList.toggle("on", t.dataset.goto===id); });
+  }
+
+  /* ---------------- events ---------------- */
+  document.addEventListener("click", function(e){
+    var flip = e.target.closest("[data-flip]");
+    if(flip){
+      var id = flip.dataset.flip;
+      var r = ROWS.find(function(x){ return x.id===id; });
+      if(r){
+        var i = STATUS_ORDER.indexOf(r.status);
+        r.status = STATUS_ORDER[(i+1)%STATUS_ORDER.length];
+        renderTierList();
+        nudge(STATUS[r.status].icon+" "+r.name+" → "+STATUS[r.status].label);
+      }
+      return;
+    }
+    var check = e.target.closest("[data-check]");
+    if(check){
+      var cid = check.dataset.check;
+      if(doneSet[cid]) delete doneSet[cid]; else doneSet[cid]=true;
+      renderBatch();
+      return;
+    }
+    var pill = e.target.closest("[data-tier]");
+    if(pill){
+      tierFilter = pill.dataset.tier;
+      renderTierPills();
+      renderTierList();
+      return;
+    }
+    var tab = e.target.closest("[data-goto]");
+    if(tab){ show(tab.dataset.goto); return; }
+    var card = e.target.closest("[data-nudge]");
+    if(card){ nudge("Demo — final app would open this application"); return; }
+    if(e.target.closest("#runBatch")){
+      doneSet = {};
+      renderBatch();
+      nudge("Batch reset — 8 re-entries stamped for this month");
+    }
+  });
+
+  /* ---------------- toast ---------------- */
+  var toastEl;
+  function nudge(msg){
+    if(!toastEl){
+      toastEl = document.createElement("div");
+      toastEl.style.cssText = "position:fixed;left:50%;bottom:94px;transform:translateX(-50%) translateY(10px);background:var(--ink);color:var(--paper);border-radius:11px;padding:11px 16px;font-size:13px;font-weight:600;z-index:60;opacity:0;pointer-events:none;transition:opacity .22s ease,transform .22s ease;box-shadow:var(--shadow);max-width:320px;text-align:center;";
+      document.body.appendChild(toastEl);
+    }
+    toastEl.textContent = msg;
+    toastEl.style.opacity = "1";
+    toastEl.style.transform = "translateX(-50%) translateY(0)";
+    clearTimeout(nudge._t);
+    nudge._t = setTimeout(function(){ toastEl.style.opacity="0"; toastEl.style.transform="translateX(-50%) translateY(10px)"; }, 1800);
+  }
+
+  /* ---------------- init ---------------- */
+  renderNextUp();
+  renderLegend();
+  renderTierPills();
+  renderTierList();
+  renderBatch();
+})();
+</script>
+</body>
+</html>

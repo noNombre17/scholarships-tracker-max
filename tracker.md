@@ -1,7 +1,7 @@
 # Scholarship Application Tracker — Max (Rogers, AR)
 
 **Updated:** Aug 31, 2026 · Source research: nationwide no-essay + Arkansas/NWA-specific (verified this week).
-**Max's profile:** Senior (class of 2027) → **U of A Fayetteville** · Mexican + South Korean heritage · ACT 21 (retaking; UA superscores) · GPA 3.85 · Single-mom household (parents divorced) · **Dad on active duty (deployed Germany)** · Parent at Walmart/Sam's Club · **US citizen** · **Not first-gen** · Intended major: CS / engineering + business · Income > $100k · **FAFSA not filed yet**
+**Max's profile:** Senior (class of 2027) → **U of A Fayetteville** · Mexican + South Korean heritage · ACT 21 (retaking; UA superscores) · GPA 3.85 · Single-mom household (parents divorced) · **U.S. Army active duty (deployed Germany)** · Parent at Walmart/Sam's Club · **US citizen** · **Not first-gen** · Intended major: CS / engineering + business · Income > $100k · **FAFSA not filed yet**
 **Legend:** ⬜ to-do · 🔁 re-enter monthly · ⏳ submitted/pending · ✅ awarded/done · ⚠️ conditional · ❌ skipped
 
 ---
@@ -72,7 +72,7 @@
 | SPSF NWA (single parents) | $1,250–$2,500/term | Fall Jun 15 · Spr Oct 15 · Sum Mar 15 | app + interview | ⬜ | ⚠️ single-parent household ✅ but income >$100k likely fails "low-moderate income" — confirm before interview | spsfnwa.org/scholarships/ |
 | Rogers Rotary Club | varies | ask club | call/email | ⬜ | not published online — contact directly | rogersrotary.org |
 | Rogers ISD / counselors | district list | ask | ask counselors | ⬜ | district doesn't publish a list | via school |
-| **Walmart "Live Better U"** | **100% tuition + books** (bachelor's; expanded to skilled trades 2025) | HR-enrolled — mom checks benefits portal | N/A | ⬜ | ✅ **parent at Walmart/Sam's Club confirmed — potentially covers ALL UA tuition.** Have mom verify current caps via benefits | walmart.com/careers/ |
+| **Walmart "Live Better U"** | **100% tuition + books** (bachelor's; expanded to skilled trades 2025) | HR-enrolled — mom checks benefits portal | N/A | ❌ | ✅ **parent at Walmart/Sam's Club confirmed — potentially covers ALL UA tuition.** Have mom verify current caps via benefits — does not apply | walmart.com/careers/ |
 
 ## G. Big essay awards (eligibility-gated)
 
@@ -97,6 +97,9 @@
 | UA Multicultural Center (inquiry) | discretionary? — ask | no deadline | email/call (15 min) | ⬜ | No scholarship currently listed — email uamc@uark.edu + scholars@uark.edu to ask about Latino-specific funds | multicultural.uark.edu |
 | **APIA Scholars** (Asian & Pacific Islander American Scholarship Fund) | $2,500–$20,000 (one-time to multi-year) | next cycle ~**Nov 2026 – Jan 2027** (2026-27 ran Nov 15–Jan 15; confirm) | application + 250–500-word essay | ⬜ | US citizen/PR (or COFA nationals); enrolling US college fall 2027; **no income cap**; first-gen NOT required; heritage: verify on scholarships page (FAQ says all ethnicities welcome) | apiascholars.org/scholarships/ |
 | **KASF** (Korean-American Scholarship Foundation) | $500–$5,000 | region-specific — apply to AR's region (confirm) | essay + recs + financial need | ⬜ | **Korean heritage** (any citizenship incl. Korean nationals); **GPA 3.0+**; full-time enrollment; KASF-KIA bonus: 3.5 GPA + STEM/business major, possibly larger award + video testimonial | kasf.org/scholarships/ · kasf.org/apply/ |
+| HHF Youth Awards (Hispanic Heritage Foundation) | up to $4,000 | Nov 1, 2026 | online app + essays | ⬜ | Hispanic/Latino HS senior; GPA 3.0+; Engineering & Technology category fits CS; no income cap, no first-gen req; strong fit for LULAC VP + service — verify category list | hispanicheritage.org |
+| ScholarSHPE (SHPE) | $1,000–$10,000 | opens ~Feb 2027 | app + essays/recs | ⬜ | join SHPE now; STEM major; GPA 2.5+; some sponsor awards need US citizenship | shpe.org |
+| GMiS Scholars (Great Minds in STEM) | $500–$5,000 | opens ~Mar 2027 | 750–850 word essay + 2 recs | ⬜ | STEM; GPA 3.0+; leadership/service emphasized; open to all STEM not just Hispanic | greatmindsinstem.org |
 
 **Checked & ruled out (as of Aug 31, 2026):** Golden Door Scholars (NC/SC/GA residence + income cap) · MALDEF (no undergraduate program — resource guide only) · TheDream.US (undocumented/DACA-only; N/A if citizen) · UA Land of Opportunity (Pell-preferred; unlikely >$100k income).
 
@@ -111,6 +114,10 @@
 | **Army Scholarship Foundation** | varies (needs confirmation) | spring (confirm) | application | ⬜ | Sons/daughters of US Army soldiers (incl. active duty); site unreachable at research time — verify | armyscholarshipfoundation.org |
 | **ThanksUSA** | varies (needs confirmation) | ~Jan–Feb 2027 (confirm) | application | ⬜ | Spouses + children of active-duty troops; referenced by AUSA; site fetch failed — verify | thanksusa.org/scholarships/ |
 | Folds of Honor / Heroes' Legacy | $2,000–$5,000 | varies | — | ❌ | Only children of **fallen or disabled** service members — N/A unless dad has a disability rating | foldsofhonor.org |
+| Operation Homefront — Military Child of the Year (Army) | $10,000 | nomination closes Dec 1, 2026 | nomination + recs | ⬜ | ages 13–18; legal dependent of active-duty (DEERS); Army category; not need-based — verify birthday | operationhomefront.org |
+| VFW Voice of Democracy | $35,000 national / $1,000+ state | Oct 31, 2026 | 3–5 min audio essay | ⬜ | open to all HS grades 9–12; US citizen/PR; not military-exclusive | vfw.org |
+| MOAA Education Assistance Program | interest-free loans + grants | ~Nov 1–Mar 1 | one app + essays | ⬜ | child of officer OR active/retired enlisted; GPA 3.0+; if dad is an OFFICER needs paid MOAA membership — confirm dad's rank | moaa.org |
+| AER — MG James Ursano Scholarship | varies (need-based) | opens Jan 1, closes Apr 1 | app + FAFSA | ⬜ | child of active-duty Army, under 24; need-based via FAFSA — low yield at >$100k income | armyemergencyrelief.org |
 
 **Arkansas Heroes (Tier D):** requires specific qualifying categories — confirm dad's status before counting on it.
 

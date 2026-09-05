@@ -1,0 +1,19 @@
+{
+  "name": "Scholarship Tracker · Max",
+  "short_name": "ScholarTracker",
+  "description": "Offline-first tracker for Max's scholarship applications.",
+  "lang": "en",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f3edde",
+  "theme_color": "#2f6b46",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
