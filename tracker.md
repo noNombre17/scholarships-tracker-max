@@ -19,6 +19,11 @@
 | Bold.org point tiers | $1k–$10k | Sep 30, 2026 | 1 profile, minutes | ⬜ 🔁 | ~90 no-essay awards on one profile | bold.org/scholarships/by-type/no-essay-scholarships/ |
 | Scholly Easy Apply (Sallie) | up to $13k (18 awards) | Sep 30, 2026 | 1 form ~2 min | ⬜ 🔁 | bundles 18 scholarships | sallie.com/scholarships/scholly/easy-apply |
 | Lenny.ai sweepstakes | $1,001 / $2,999 | Sep 28–29, 2026 | quick form | ⬜ | newer sponsor — verify amounts/rules | lenny.ai/lenny-scholarship |
+| Citizens / College Raptor Sweepstakes | $2,500 | quarterly | web form | ⬜ 🔁 | HS senior, AR eligible; re-enter quarterly | citizensbank.com/student-loans/scholarship.aspx |
+| Abe's "Plain, Honest" Scholarship | $1,500 | monthly | trivial form | ⬜ 🔁 | undergrad; no purchase/loan needed | abestudentloans.com |
+| College Ave $1,000 Monthly Sweepstakes | $1,000 | monthly | form | ⬜ 🔁 | students & parents; one entry/mo | collegeave.com/promotions/ |
+| Edvisors Monthly Scholarship | $1,000 | monthly | form | ⬜ 🔁 | HS senior 16+; privacy flag — bonus entries share emails | edvisors.com/rules-1k-scholarship/ |
+| Discover No-Essay Sweepstakes | $5,000 | monthly | form | ⬜ 🔁 | 18+ only | discover.com |
 
 ## B. Big annual no-essay / low-effort (one-time)
 
@@ -72,6 +77,9 @@
 | SPSF NWA (single parents) | $1,250–$2,500/term | Fall Jun 15 · Spr Oct 15 · Sum Mar 15 | app + interview | ⬜ | ⚠️ single-parent household ✅ but income >$100k likely fails "low-moderate income" — confirm before interview | spsfnwa.org/scholarships/ |
 | Rogers Rotary Club | varies | ask club | call/email | ⬜ | not published online — contact directly | rogersrotary.org |
 | Rogers ISD / counselors | district list | ask | ask counselors | ⬜ | district doesn't publish a list | via school |
+| Rogers Public Schools Community-Based Scholarship | $100–$40,000 (many donors) | Jan 1–31, 2027 | SmarterSelect app | ⬜ | Rogers senior; notify HS Scholarship Coordinator | rogersscholarships.com |
+| Arkansas Federal Credit Union Scholarship | $5,000 | ~Jan–Mar 2027 | essay + 2 recs | ⬜ | AFCU member or child of member | afcu.org |
+| NWA Young Professionals Scholarship | $500–$2,000 | spring 2027 | app | ⬜ | Benton/Washington Co senior → Arkansas college | nwayp.org |
 | **Walmart "Live Better U"** | **100% tuition + books** (bachelor's; expanded to skilled trades 2025) | HR-enrolled — mom checks benefits portal | N/A | ❌ | ✅ **parent at Walmart/Sam's Club confirmed — potentially covers ALL UA tuition.** Have mom verify current caps via benefits — does not apply | walmart.com/careers/ |
 
 ## G. Big essay awards (eligibility-gated)
@@ -84,6 +92,17 @@
 | Horatio Alger | $25,000 | Jan–Feb 2027 | essays + need + recs | ⬜ | ⚠️ income >$100k likely disqualified; apply only if user insists | alger.org |
 | National Merit Scholarship | $2,500 + corporate; → UA Chancellor's Merit $12k/yr | ACT Oct–Dec 2026 (senior route) | test only | ❌ | ⚠️ needs ~top 1% index (≈ACT 33+) — ACT 21 not competitive; skip | nationalmerit.org |
 | Arkansas Alumni Association (UA-bound) | unknown | unknown | — | ⬜ | behind login wall — verify with UA | arkansasalumni.org |
+| National Cyber Scholarship Foundation | $2,500–$3,500 + free SANS training | CyberStart opens ~Fall 2026; apps ~Jan 2027 | CTF-style competition | ⬜ | pure merit, no income cap; cybersecurity cert helps | nationalcyberscholarship.org |
+| NFIB Young Entrepreneur Award | $1,000–$15,000 | opens ~Oct 1, 2026; ~Dec 18, 2026 | essay + phone interview | ⬜ | HS senior who owns a business (Max Mows fits); no income cap | nfib.com |
+| Amazon Future Engineer Scholarship | $40,000 ($10k/yr ×4) + internship | ~Jan 15, 2027 | app | ⚠️ | CS major; need-gated — long shot at >$100k | amazonfutureengineer.com/scholarships |
+| Generation Google (North America) | $10,000 | ~Aug (annual) | app | ⚠️ | CS; need + DEI selection; Hispanic heritage helps | edu.google.com |
+| Lockheed Martin STEM Scholarship | ~$10,000/yr | ~Mar–Apr | app | ⚠️ | eng/CS; need + underrepresented gate; verify 2027 cycle (possible pause) | lockheedmartin.com |
+| (ISC)² Undergraduate Cybersecurity Scholarship | $1,000–$5,000 | ~Mar 15 | essays + 1 rec | ⚠️ | cybersecurity degree; need-weighted selection | iamcybersafe.org/s/academic-scholarships |
+| CyberPatriot (AFA) National Youth Cyber Defense | sponsor scholarships (varies) | Oct 2026 – Mar 2027 | team competition | ⚠️ | competition-based; many prizes tied to partner schools | uscyberpatriot.org |
+| DECA Inc. scholarships | $1,000–$2,500 | ~Jan 11, 2027 | transcript + 3 recs | ⚠️ | requires DECA membership | deca.org/scholarships |
+| FBLA scholarships | $500–$2,000 | ~Apr 15 | app | ⚠️ | requires FBLA membership | fbla.org |
+| Ramsey Education Scholarship | $1,000 ×5 | ~May 31, 2027 | essay or video | ⚠️ | requires Ramsey Foundations course (~$30) | ramseysolutions.com |
+| NFTE World Series of Innovation | $1,500 / $600 / $300 | Dec 12, 2026 | free competition | ⚠️ | grades 9–12; on-ramp to NFTE funds | nfte.com |
 
 ## H. Heritage scholarships — Hispanic/Latino (research complete Aug 31, 2026)
 
@@ -100,6 +119,7 @@
 | HHF Youth Awards (Hispanic Heritage Foundation) | up to $4,000 | Nov 1, 2026 | online app + essays | ⬜ | Hispanic/Latino HS senior; GPA 3.0+; Engineering & Technology category fits CS; no income cap, no first-gen req; strong fit for LULAC VP + service — verify category list | hispanicheritage.org |
 | ScholarSHPE (SHPE) | $1,000–$10,000 | opens ~Feb 2027 | app + essays/recs | ⬜ | join SHPE now; STEM major; GPA 2.5+; some sponsor awards need US citizenship | shpe.org |
 | GMiS Scholars (Great Minds in STEM) | $500–$5,000 | opens ~Mar 2027 | 750–850 word essay + 2 recs | ⬜ | STEM; GPA 3.0+; leadership/service emphasized; open to all STEM not just Hispanic | greatmindsinstem.org |
+| One Korean Foundation / AR Korean Chamber | ~$1,000 | Dec (annual) | essay | ⬜ | Korean-American Arkansas students; confirm 2027 via AR Korean Chamber | (verify) |
 
 **Checked & ruled out (as of Aug 31, 2026):** Golden Door Scholars (NC/SC/GA residence + income cap) · MALDEF (no undergraduate program — resource guide only) · TheDream.US (undocumented/DACA-only; N/A if citizen) · UA Land of Opportunity (Pell-preferred; unlikely >$100k income).
 
@@ -109,7 +129,7 @@
 
 | Scholarship | Amount | Deadline | Effort | Status | Notes | URL |
 |---|---|---|---|---|---|---|
-| **Fisher House — Scholarships for Military Children** | $2,000 (min 1 per commissary) | ~Jan–Feb 2027 (window opens early Jan; confirm) | application + essay + transcript | ⬜ | Children of **active, reserve, or retired** military — **Max qualifies via dad**; $35M+ awarded, 14,000+ recipients | militaryscholar.org |
+| **Fisher House — Scholarships for Military Children** | $2,000 (min 1 per commissary) | Dec 10, 2026 – Feb 11, 2027 | application + essay + transcript | ⬜ | Children of **active, reserve, or retired** military — **Max qualifies via dad**; $35M+ awarded, 14,000+ recipients | militaryscholar.org |
 | **AUSA scholarships** | $2,000–$25,000 (Vuono $10k · Cribbins STEM $10k · Chabraja STEM $5k · MilDef $5k · Van Autreve $2k–$25k) | **Feb 20 – May 7** (2026 cycle; 2027 likely similar) | 1-page autobiography + career letter + 2 recs (+ transcript for STEM) | ⬜ | **AUSA Premium membership required** (dad can join; covers his children); single application covers all awards | ausa.org/scholarships · scholarship.ausa.org |
 | **Army Scholarship Foundation** | varies (needs confirmation) | spring (confirm) | application | ⬜ | Sons/daughters of US Army soldiers (incl. active duty); site unreachable at research time — verify | armyscholarshipfoundation.org |
 | **ThanksUSA** | varies (needs confirmation) | ~Jan–Feb 2027 (confirm) | application | ⬜ | Spouses + children of active-duty troops; referenced by AUSA; site fetch failed — verify | thanksusa.org/scholarships/ |

@@ -77,11 +77,11 @@ def reparse_markdown(path=TRACKER):
 def run_checks(rows):
     problems = []
 
-    # 1) Row count ~64
+    # 1) Row count ~84
     count = len(rows)
     print("Row count: %d" % count)
-    if not (50 <= count <= 70):
-        problems.append("row count %d outside expected ~64 range" % count)
+    if not (70 <= count <= 90):
+        problems.append("row count %d outside expected ~84 range" % count)
 
     # 2) All tiers A-I present
     present = {r["tier"] for r in rows}
@@ -109,13 +109,15 @@ def run_checks(rows):
         else:
             empty_url_rows.append(r["id"])
 
-    # Only the known no-public-url entry (Rogers ISD) may have an empty url.
+    # Only the known no-public-url entries (Rogers ISD + One Korean, pending URL)
+    # may have an empty url.
     if empty_url_rows:
-        allowed = {"F05"}
+        allowed = {"F05", "H12"}
         unexpected = [i for i in empty_url_rows if i not in allowed]
         if unexpected:
             problems.append(
-                "rows with empty url (expected only Rogers ISD F05): %s"
+                "rows with empty url (expected only Rogers ISD F05 and "
+                "One Korean H12): %s"
                 % unexpected
             )
 

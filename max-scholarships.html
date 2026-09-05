@@ -1,0 +1,1786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="manifest" href="manifest.json">
+<title>Scholarship Tracker · Max</title>
+<style>
+  :root{
+    --paper:#f3edde;
+    --surface:#fbf7ec;
+    --surface-2:#efe7d3;
+    --ink:#23201a;
+    --ink-2:#6f6756;
+    --ink-3:#a49a85;
+    --line:#e2d8c2;
+    --line-strong:#c8bb9c;
+    --green:#2f6b46;
+    --green-soft:#e2ecdf;
+    --rust:#b1502f;
+    --rust-soft:#f5e3d8;
+    --gold:#b8862e;
+    --gold-soft:#f2e6ca;
+    --gray-soft:#e9e4d6;
+    --shadow:0 1px 2px rgba(40,32,16,.05),0 10px 30px -14px rgba(40,32,16,.22);
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+    --sans:"Avenir Next",Avenir,"Segoe UI","Helvetica Neue",Helvetica,sans-serif;
+    --mono:"SF Mono","JetBrains Mono","Cascadia Code","Roboto Mono",Consolas,"Liberation Mono",monospace;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:var(--sans);
+    color:var(--ink);
+    background:
+      radial-gradient(1200px 620px at 18% -12%,#faf4e5 0%,rgba(250,244,229,0) 62%),
+      radial-gradient(1000px 520px at 100% -6%,#efe6d0 0%,rgba(239,230,208,0) 58%),
+      var(--paper);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+    font-size:15px;
+  }
+  a{color:inherit}
+  button{font-family:inherit;cursor:pointer}
+
+  /* grain overlay */
+  .grain{
+    position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.05;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:160px 160px;
+  }
+
+  /* ---------- sidebar ---------- */
+  .sidebar{
+    position:fixed;left:0;top:0;bottom:0;width:266px;z-index:2;
+    padding:30px 20px 22px;
+    border-right:1px solid var(--line);
+    background:rgba(250,246,236,.9);
+    backdrop-filter:blur(9px);
+    display:flex;flex-direction:column;gap:20px;
+    overflow-y:auto;
+  }
+  .brand-kicker{
+    font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);
+  }
+  .brand-title{
+    font-family:var(--serif);font-size:27px;line-height:1.1;margin:6px 0 2px;letter-spacing:.01em;
+  }
+  .brand-sub{color:var(--ink-2);font-size:13px;margin:0}
+  .brand-rule{height:1px;background:var(--line-strong);margin:14px 0 2px;position:relative}
+  .brand-rule::after{content:"";position:absolute;left:0;top:-2px;width:38px;height:4px;background:var(--green)}
+
+  .nav{display:flex;flex-direction:column;gap:4px}
+  .nav-item{
+    display:flex;align-items:center;gap:12px;text-align:left;width:100%;
+    padding:11px 12px;border:1px solid transparent;border-radius:11px;
+    background:transparent;color:var(--ink-2);font-size:14.5px;font-weight:600;
+    transition:background .16s ease,color .16s ease,transform .16s ease;
+  }
+  .nav-item:hover{background:var(--surface-2);color:var(--ink)}
+  .nav-item.active{background:var(--ink);color:var(--paper)}
+  .nav-item.active .nav-num{color:var(--gold)}
+  .nav-num{font-family:var(--mono);font-size:11px;letter-spacing:.06em;color:var(--ink-3);width:22px;flex:none}
+  .nav-item.active .nav-num{color:#e9c884}
+  .nav-item .nav-hint{font-family:var(--mono);font-size:10.5px;color:var(--ink-3);margin-left:auto;opacity:.7}
+
+  .sidebar-foot{border-top:1px solid var(--line);padding-top:16px;display:flex;flex-direction:column;gap:10px;margin-top:auto}
+  .io-row{display:flex;gap:8px}
+  .legend{font-size:11.5px;color:var(--ink-2)}
+  .legend .lg{display:flex;align-items:center;gap:7px;padding:3px 0}
+  .legend .lg em{font-style:normal;font-family:var(--mono);font-size:12px}
+
+  /* ---------- main ---------- */
+  main{margin-left:266px;padding:34px 44px 96px;position:relative;z-index:1;max-width:1180px}
+  .view-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:22px;flex-wrap:wrap}
+  .view-title{font-family:var(--serif);font-size:31px;line-height:1.05;margin:0;letter-spacing:.005em}
+  .view-sub{color:var(--ink-2);font-size:13.5px;margin:7px 0 0;max-width:60ch}
+  .today-chip{font-family:var(--mono);font-size:12px;color:var(--ink-2);border:1px solid var(--line);border-radius:999px;padding:7px 13px;background:var(--surface)}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow)}
+  .card-pad{padding:20px 22px}
+  .card-title{font-family:var(--serif);font-size:17px;margin:0 0 4px}
+  .card-title-sm{font-family:var(--serif);font-size:15px;margin:0 0 2px}
+  .muted{color:var(--ink-2)}
+  .faint{color:var(--ink-3)}
+
+  /* reveal */
+  @keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+  .reveal{animation:rise .5s cubic-bezier(.2,.7,.3,1) both}
+
+  /* buttons */
+  .btn{
+    display:inline-flex;align-items:center;gap:7px;border:1px solid var(--line-strong);
+    background:var(--surface);color:var(--ink);border-radius:10px;padding:9px 14px;
+    font-size:13.5px;font-weight:600;transition:transform .12s ease,box-shadow .12s ease,background .12s ease;
+  }
+  .btn:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+  .btn.primary{background:var(--green);border-color:var(--green);color:#f7f4ea}
+  .btn.primary:hover{background:#275c3b}
+  .btn.ghost{background:transparent}
+  .btn.danger{background:var(--rust);border-color:var(--rust);color:#f9f0ea}
+  .btn.small{padding:6px 11px;font-size:12.5px}
+
+  /* status chips + legend colors */
+  .st-todo{background:var(--surface);border-color:var(--line-strong);color:var(--ink)}
+  .st-submitted{background:var(--gold-soft);border-color:#d7b169;color:#7a5a15}
+  .st-awarded{background:var(--green-soft);border-color:#a9c7ab;color:#235c38}
+  .st-conditional{background:var(--rust-soft);border-color:#dba68e;color:#8e3d22}
+  .st-skipped{background:var(--gray-soft);border-color:var(--line-strong);color:var(--ink-3);text-decoration:line-through}
+
+  .status-chip{
+    border:1px solid;border-radius:9px;padding:7px 10px;font-size:13px;font-weight:700;
+    display:inline-flex;align-items:center;gap:7px;white-space:nowrap;
+    transition:transform .12s ease,box-shadow .12s ease;
+  }
+  .status-chip:hover{transform:translateY(-1px);box-shadow:var(--shadow)}
+  .status-chip .em{font-size:15px;line-height:1}
+
+  /* dashboard */
+  .stat-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .stat-card{padding:16px 18px;cursor:pointer;transition:transform .14s ease,border-color .14s ease;position:relative;overflow:hidden;text-align:left;font-family:var(--sans)}
+  .stat-card:hover{transform:translateY(-2px);border-color:var(--line-strong)}
+  .stat-card .n{display:block;font-family:var(--serif);font-size:34px;line-height:1;margin:2px 0 4px;color:inherit}
+  .stat-card .l{display:block;font-size:12.5px;font-weight:600;color:var(--ink-2)}
+  .stat-card .em{position:absolute;right:14px;top:14px;font-size:20px;opacity:.85}
+
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .dl-list{list-style:none;margin:0;padding:0}
+  .dl-list li{display:flex;align-items:center;gap:11px;padding:10px 2px;border-bottom:1px solid var(--line)}
+  .dl-list li:last-child{border-bottom:0}
+  .dl-date{font-family:var(--mono);font-size:12.5px;color:var(--rust);min-width:118px;font-weight:700}
+  .dl-name{flex:1;font-weight:600;font-size:14px}
+  .dl-sub{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+
+  .priority{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+  .priority:last-child{border-bottom:0}
+  .priority .pk{flex:none;width:34px;height:34px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px}
+  .priority .pk.now{background:var(--rust);color:#f9f0ea}
+  .priority .pk.soon{background:var(--gold);color:#fff}
+  .priority .pk.later{background:var(--green);color:#eef5ec}
+  .priority .pk.batch{background:var(--ink);color:var(--paper)}
+  .priority .pt{font-weight:700;font-size:14.5px}
+  .priority .pw{font-family:var(--mono);font-size:12px;color:var(--rust);margin:1px 0 3px}
+  .priority .py{font-size:13px;color:var(--ink-2)}
+  .priority .act{margin-top:7px}
+
+  /* tiers */
+  .filterbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:18px}
+  .pills{display:flex;gap:6px;flex-wrap:wrap}
+  .pill{border:1px solid var(--line-strong);background:var(--surface);border-radius:999px;padding:6px 13px;font-size:13px;font-weight:600;color:var(--ink-2)}
+  .pill.on{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+  .pill .cnt{font-family:var(--mono);font-size:11px;opacity:.65;margin-left:5px}
+  .search-input{border:1px solid var(--line-strong);background:var(--surface);border-radius:10px;padding:8px 12px;font-size:13.5px;color:var(--ink);min-width:190px;font-family:var(--sans)}
+  .search-input:focus{outline:none;border-color:var(--green)}
+  .sort-select{border:1px solid var(--line-strong);background:var(--surface);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--ink);font-family:var(--sans)}
+
+  .tier-block{margin-bottom:26px}
+  .tier-head{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .tier-badge{flex:none;width:38px;height:38px;border-radius:10px;border:1.5px solid var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--serif);font-size:19px;font-weight:700;background:var(--surface)}
+  .tier-title{font-family:var(--serif);font-size:18px;margin:0}
+  .tier-sub{font-size:12.5px;color:var(--ink-2);margin:0}
+  .tier-count{font-family:var(--mono);font-size:11.5px;color:var(--ink-3);margin-left:auto}
+
+  .row{
+    display:flex;gap:13px;align-items:flex-start;padding:13px 15px;
+    background:var(--surface);border:1px solid var(--line);border-radius:12px;margin-bottom:8px;
+    transition:border-color .14s ease,box-shadow .14s ease;
+  }
+  .row:hover{border-color:var(--line-strong);box-shadow:var(--shadow)}
+  .row.flash{animation:flash 1.4s ease}
+  @keyframes flash{0%,60%{box-shadow:0 0 0 2px var(--gold);border-color:var(--gold)}100%{box-shadow:var(--shadow)}}
+  .row .left{flex:none;display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+  .row-main{flex:1;min-width:0}
+  .row-name{font-weight:700;font-size:14.5px;line-height:1.3}
+  .row-name .kind{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--green);border:1px solid #a9c7ab;border-radius:6px;padding:1px 6px;margin-left:7px;vertical-align:2px}
+  .row-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:4px;font-size:12.5px;color:var(--ink-2)}
+  .row-meta .amount{font-family:var(--mono);font-weight:700;color:var(--ink)}
+  .row-meta .dot{color:var(--line-strong)}
+  .row-meta .dl{font-family:var(--mono)}
+  .row-meta .rec{font-family:var(--mono);font-size:10.5px;color:var(--gold);border:1px solid #d7b169;border-radius:6px;padding:0 6px}
+  .row-notes{font-size:12.5px;color:var(--ink-2);margin-top:5px;line-height:1.45}
+  .row-actions{flex:none;display:flex;gap:6px;align-items:center}
+  .icon-btn{width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);font-size:14px;display:flex;align-items:center;justify-content:center;text-decoration:none}
+  .icon-btn:hover{border-color:var(--line-strong);color:var(--ink)}
+
+  /* calendar */
+  .cal-nav{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+  .cal-nav .mn{font-family:var(--serif);font-size:22px;margin:0;min-width:210px;text-align:center}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:7px}
+  .cal-dow{text-align:center;font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding:4px 0}
+  .cal-cell{min-height:86px;border:1px solid var(--line);border-radius:10px;background:var(--surface);padding:7px;display:flex;flex-direction:column;gap:4px}
+  .cal-cell.dim{background:transparent;border-color:transparent}
+  .cal-cell .dnum{font-family:var(--mono);font-size:12px;color:var(--ink-3)}
+  .cal-cell.today{outline:2px solid var(--green);outline-offset:-2px}
+  .cal-cell.today .dnum{color:var(--green);font-weight:800}
+  .cal-chip{font-size:11px;font-weight:600;line-height:1.25;border:1px solid var(--line-strong);border-radius:7px;padding:3px 6px;background:var(--surface-2);color:var(--ink)}
+  .cal-chip.batch{border-color:var(--ink);background:var(--ink);color:var(--paper);cursor:pointer}
+  .cal-chip.batch:hover{background:var(--green);border-color:var(--green)}
+  .cal-chip a{text-decoration:none}
+  .cal-note{font-size:12.5px;color:var(--ink-2);margin-top:12px}
+
+  /* batch */
+  .sweep-row{display:flex;gap:13px;align-items:center;padding:12px 15px;border:1px solid var(--line);border-radius:11px;background:var(--surface);margin-bottom:8px}
+  .sweep-row .cb{flex:none;width:22px;height:22px;border-radius:6px;border:1.5px solid var(--line-strong);background:var(--surface);display:flex;align-items:center;justify-content:center;color:transparent;font-size:13px;transition:background .12s ease,color .12s ease,border-color .12s ease}
+  .sweep-row.done .cb{background:var(--green);border-color:var(--green);color:#fff}
+  .sweep-row .sm{flex:1;min-width:0}
+  .sweep-row .sn{font-weight:700;font-size:14px}
+  .sweep-row.done .sn{color:var(--ink-2);text-decoration:line-through}
+  .sweep-row .ss{font-size:12px;color:var(--ink-2);font-family:var(--mono);margin-top:1px}
+  .sweep-row .le{flex:none;font-family:var(--mono);font-size:11px;color:var(--ink-3);text-align:right;line-height:1.2}
+
+  /* profile */
+  .fact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  .fact{padding:12px 16px;border-bottom:1px solid var(--line)}
+  .fact:nth-child(odd){border-right:1px solid var(--line)}
+  .fact:nth-last-child(-n+2){border-bottom:0}
+  .fact .fk{font-family:var(--mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3)}
+  .fact .fv{font-size:14px;font-weight:600;margin-top:2px}
+  .flag-row{display:flex;gap:13px;align-items:flex-start;padding:12px 15px;border:1px solid var(--line);border-radius:11px;background:var(--surface);margin-bottom:8px}
+  .flag-row .fl-em{font-size:18px;flex:none;line-height:1.2}
+  .flag-row .fl-note{font-size:12.5px;color:var(--ink-2);margin-top:3px}
+
+  /* modal + toast */
+  .modal-backdrop{position:fixed;inset:0;background:rgba(35,32,26,.4);z-index:50;display:flex;align-items:center;justify-content:center;padding:22px}
+  .modal-card{background:var(--surface);border:1px solid var(--line-strong);border-radius:16px;box-shadow:var(--shadow);width:min(520px,100%);padding:22px}
+  .modal-title{font-family:var(--serif);font-size:18px}
+  .modal-name{font-size:13px;color:var(--ink-2);margin:2px 0 12px}
+  .modal-area{width:100%;min-height:150px;border:1px solid var(--line-strong);border-radius:10px;background:#fffdf6;padding:12px;font-family:var(--sans);font-size:13.5px;color:var(--ink);resize:vertical;line-height:1.5}
+  .modal-area:focus{outline:none;border-color:var(--green)}
+  .modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+
+  .toast{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);background:var(--ink);color:var(--paper);border-radius:11px;padding:11px 18px;font-size:13.5px;font-weight:600;z-index:60;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;box-shadow:var(--shadow)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+  .empty{color:var(--ink-3);font-size:13px;font-style:italic}
+
+  /* ---------- fill kit ---------- */
+  .fk-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:start}
+  .fk-item{display:flex;align-items:center;gap:10px;padding:9px 2px;border-bottom:1px solid var(--line)}
+  .fk-item:last-child{border-bottom:0}
+  .fk-label{flex:none;font-family:var(--mono);font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);width:118px}
+  .fk-value{flex:1;min-width:0;font-weight:600;font-size:13.5px;line-height:1.4}
+  .copy-btn{flex:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink-2);border-radius:8px;padding:5px 11px;font-size:12px;font-weight:700;transition:border-color .12s ease,color .12s ease,background .12s ease,transform .12s ease}
+  .copy-btn:hover{border-color:var(--green);color:var(--green);transform:translateY(-1px)}
+  .copy-btn.strong{background:var(--ink);border-color:var(--ink);color:var(--paper);width:100%;justify-content:center;padding:8px 11px}
+  .copy-btn.strong:hover{background:var(--green);border-color:var(--green);color:#fff}
+  .oneliner-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px}
+  .oneliner{display:flex;flex-direction:column;gap:6px;padding:13px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+  .oneliner .ol-label{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
+  .oneliner .ol-text{font-size:13.5px;font-weight:600;line-height:1.4}
+  .essay-card{display:flex;flex-direction:column;gap:9px;padding:14px 16px;border:1px solid var(--line);border-radius:12px;background:var(--surface);margin-bottom:10px}
+  .essay-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .essay-title{font-weight:700;font-size:14.5px;line-height:1.3}
+  .essay-meta{font-family:var(--mono);font-size:11px;color:var(--ink-3);white-space:nowrap}
+  .essay-text{font-size:13px;color:var(--ink-2);line-height:1.55;white-space:pre-wrap;background:var(--paper);border:1px solid var(--line);border-radius:9px;padding:10px 12px;max-height:150px;overflow:auto}
+  .mil-note{margin-top:7px;font-size:12px;line-height:1.45;color:var(--ink-2);background:var(--gold-soft);border:1px solid #d7b169;border-radius:8px;padding:6px 9px}
+
+  @media (max-width:920px){
+    .sidebar{position:static;width:100%;border-right:0;border-bottom:1px solid var(--line);flex-direction:row;align-items:center;flex-wrap:wrap;gap:12px;padding:16px}
+    .brand{flex:1;min-width:200px}
+    .nav{flex-direction:row;flex-wrap:wrap;gap:6px}
+    .nav-item{padding:8px 11px;font-size:13px}
+    .nav-item .nav-hint{display:none}
+    .sidebar-foot{flex-direction:row;align-items:center;flex-wrap:wrap;margin-top:0;border-top:0;padding-top:0}
+    main{margin-left:0;padding:22px 18px 80px}
+    .stat-row{grid-template-columns:repeat(3,1fr)}
+    .two-col{grid-template-columns:1fr}
+    .fact-grid{grid-template-columns:1fr}
+    .fact:nth-child(odd){border-right:0}
+    .fk-grid{grid-template-columns:1fr}
+    .cal-cell{min-height:62px}
+  }
+</style>
+</head>
+<body>
+  <div class="grain" aria-hidden="true"></div>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-kicker">Scholarship Tracker</div>
+      <h1 class="brand-title">Max · Rogers, AR</h1>
+      <p class="brand-sub">Class of 2027 · U of A Fayetteville</p>
+      <div class="brand-rule"></div>
+    </div>
+
+    <nav class="nav" aria-label="Views">
+      <button class="nav-item" data-act="nav" data-view="dashboard"><span class="nav-num">01</span> Dashboard</button>
+      <button class="nav-item" data-act="nav" data-view="tiers"><span class="nav-num">02</span> Tiers A–I</button>
+      <button class="nav-item" data-act="nav" data-view="calendar"><span class="nav-num">03</span> Calendar</button>
+      <button class="nav-item" data-act="nav" data-view="batch"><span class="nav-num">04</span> Monthly batch<span class="nav-hint">🔁 8</span></button>
+      <button class="nav-item" data-act="nav" data-view="profile"><span class="nav-num">05</span> Profile</button>
+      <button class="nav-item" data-act="nav" data-view="fillkit"><span class="nav-num">06</span> Fill Kit</button>
+    </nav>
+
+    <div class="sidebar-foot">
+      <div class="io-row">
+        <button class="btn small" data-act="export">Export JSON</button>
+        <button class="btn small" data-act="import">Import JSON</button>
+        <input type="file" id="import-file" accept="application/json,.json" hidden>
+      </div>
+      <div class="legend">
+        <div class="lg"><em>⬜</em> To-do</div>
+        <div class="lg"><em>🔁</em> Re-enter monthly</div>
+        <div class="lg"><em>⏳</em> Submitted</div>
+        <div class="lg"><em>✅</em> Awarded</div>
+        <div class="lg"><em>⚠️</em> Conditional</div>
+        <div class="lg"><em>❌</em> Skipped</div>
+      </div>
+    </div>
+  </aside>
+
+  <main id="app" aria-live="polite"></main>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script>
+// Auto-generated by convert.py — do not edit by hand.
+// Sources: tracker.md (Tiers A-I) and answers.md (FILLKIT).
+const SCHOLARSHIPS = [
+  {"id": "A01", "name": "Sallie $2,000 No Essay", "tier": "A", "amount": "$2,000", "deadline": {"raw": "Sep 30, 2026 (monthly)", "recurring": true, "fuzzy": false}, "effort": "2-min form", "status": "todo", "recurring": true, "url": "https://sallie.com/scholarships/no-essay", "notes": "16+, HS jr/sr planning college; funds paid to school", "kind": ""},
+  {"id": "A02", "name": "Niche $2,000 No Essay", "tier": "A", "amount": "$2,000", "deadline": {"raw": "monthly", "recurring": true, "fuzzy": true}, "effort": "account, 1 entry", "status": "todo", "recurring": true, "url": "https://niche.com/colleges/scholarships/no-essay-scholarship/", "notes": "US citizen or visa", "kind": ""},
+  {"id": "A03", "name": "SoFi $2,500 Giveaway", "tier": "A", "amount": "$2,500", "deadline": {"raw": "Sep 30, 2026", "recurring": false, "fuzzy": false}, "effort": "form", "status": "todo", "recurring": true, "url": "https://refer.sofi.com/c/2077228/3283756/11190", "notes": "18+ only", "kind": ""},
+  {"id": "A04", "name": "Appily Easy Money", "tier": "A", "amount": "$1,000", "deadline": {"raw": "monthly", "recurring": true, "fuzzy": true}, "effort": "account + profile", "status": "todo", "recurring": true, "url": "https://appily.com/scholarships/easy-money-scholarship", "notes": "13+; data-broker privacy flag", "kind": ""},
+  {"id": "A05", "name": "ScholarshipOwl $2,026", "tier": "A", "amount": "$2,026", "deadline": {"raw": "monthly", "recurring": true, "fuzzy": true}, "effort": "sign-in", "status": "todo", "recurring": true, "url": "https://scholarshipowl.com", "notes": "freemium, data-heavy", "kind": ""},
+  {"id": "A06", "name": "ScholarshipOwl $50k program", "tier": "A", "amount": "$1,000 ×4/mo", "deadline": {"raw": "monthly", "recurring": true, "fuzzy": true}, "effort": "sign-up", "status": "todo", "recurring": true, "url": "https://scholarshipowl.com", "notes": "realistic win = $1k", "kind": ""},
+  {"id": "A07", "name": "Bold.org point tiers", "tier": "A", "amount": "$1k–$10k", "deadline": {"raw": "Sep 30, 2026", "recurring": false, "fuzzy": false}, "effort": "1 profile, minutes", "status": "todo", "recurring": true, "url": "https://bold.org/scholarships/by-type/no-essay-scholarships/", "notes": "~90 no-essay awards on one profile", "kind": ""},
+  {"id": "A08", "name": "Scholly Easy Apply (Sallie)", "tier": "A", "amount": "up to $13k (18 awards)", "deadline": {"raw": "Sep 30, 2026", "recurring": false, "fuzzy": false}, "effort": "1 form ~2 min", "status": "todo", "recurring": true, "url": "https://sallie.com/scholarships/scholly/easy-apply", "notes": "bundles 18 scholarships", "kind": ""},
+  {"id": "A09", "name": "Lenny.ai sweepstakes", "tier": "A", "amount": "$1,001 / $2,999", "deadline": {"raw": "Sep 28–29, 2026", "recurring": false, "fuzzy": true}, "effort": "quick form", "status": "todo", "recurring": false, "url": "https://lenny.ai/lenny-scholarship", "notes": "newer sponsor — verify amounts/rules", "kind": ""},
+  {"id": "A10", "name": "Citizens / College Raptor Sweepstakes", "tier": "A", "amount": "$2,500", "deadline": {"raw": "quarterly", "recurring": false, "fuzzy": true}, "effort": "web form", "status": "todo", "recurring": true, "url": "https://citizensbank.com/student-loans/scholarship.aspx", "notes": "HS senior, AR eligible; re-enter quarterly", "kind": ""},
+  {"id": "A11", "name": "Abe's \"Plain, Honest\" Scholarship", "tier": "A", "amount": "$1,500", "deadline": {"raw": "monthly", "recurring": true, "fuzzy": true}, "effort": "trivial form", "status": "todo", "recurring": true, "url": "https://abestudentloans.com", "notes": "undergrad; no purchase/loan needed", "kind": ""},
+  {"id": "A12", "name": "College Ave $1,000 Monthly Sweepstakes", "tier": "A", "amount": "$1,000", "deadline": {"raw": "monthly", "recurring": true, "fuzzy": true}, "effort": "form", "status": "todo", "recurring": true, "url": "https://collegeave.com/promotions/", "notes": "students & parents; one entry/mo", "kind": ""},
+  {"id": "A13", "name": "Edvisors Monthly Scholarship", "tier": "A", "amount": "$1,000", "deadline": {"raw": "monthly", "recurring": true, "fuzzy": true}, "effort": "form", "status": "todo", "recurring": true, "url": "https://edvisors.com/rules-1k-scholarship/", "notes": "HS senior 16+; privacy flag — bonus entries share emails", "kind": ""},
+  {"id": "A14", "name": "Discover No-Essay Sweepstakes", "tier": "A", "amount": "$5,000", "deadline": {"raw": "monthly", "recurring": true, "fuzzy": true}, "effort": "form", "status": "todo", "recurring": true, "url": "https://discover.com", "notes": "18+ only", "kind": ""},
+  {"id": "B01", "name": "BigFuture (College Board)", "tier": "B", "amount": "$40k + $500 monthly", "deadline": {"raw": "monthly drawings", "recurring": true, "fuzzy": true}, "effort": "free planning steps", "status": "todo", "recurring": false, "url": "https://bigfuture.collegeboard.org/pay-for-college/bigfuture-scholarships/scholarship-details", "notes": "do all 6 steps; more = more entries; higher chance if low-income", "kind": ""},
+  {"id": "B02", "name": "Niche $40,000 No Essay", "tier": "B", "amount": "$40,000", "deadline": {"raw": "Oct 15, 2026", "recurring": false, "fuzzy": false}, "effort": "5 min", "status": "todo", "recurring": false, "url": "https://niche.com/colleges/scholarships/40k-no-essay-scholarship-2026/", "notes": "winner by Nov 15, 2026", "kind": ""},
+  {"id": "B03", "name": "Bold.org Be Bold $25k", "tier": "B", "amount": "$25,000", "deadline": {"raw": "Sep 30, 2026", "recurring": false, "fuzzy": false}, "effort": "profile, no essay", "status": "todo", "recurring": false, "url": "https://bold.org/scholarships/the-be-bold-no-essay-scholarship/", "notes": "6-yr track record, $160k paid", "kind": ""},
+  {"id": "B04", "name": "US Bank Student Scholarship", "tier": "B", "amount": "$2.5k–$20k tiered", "deadline": {"raw": "Oct 30, 2026", "recurring": false, "fuzzy": false}, "effort": "financial-ed lessons", "status": "todo", "recurring": false, "url": "https://scholarships360.org/scholarships/search/us-bank-student-scholarship/", "notes": "17+; more modules = higher tier", "kind": ""},
+  {"id": "B05", "name": "Scholarships360 $10k", "tier": "B", "amount": "$10,000", "deadline": {"raw": "monthly; final Jun 30, 2027", "recurring": true, "fuzzy": false}, "effort": "account", "status": "todo", "recurring": false, "url": "https://scholarships360.org/scholarships/search/10000-no-essay-scholarship/", "notes": "site is scholarships360.org", "kind": ""},
+  {"id": "B06", "name": "Ascent $10k Summer Giveaway", "tier": "B", "amount": "$10,000", "deadline": {"raw": "Sep 30, 2026", "recurring": false, "fuzzy": false}, "effort": "quick form", "status": "todo", "recurring": false, "url": "https://ascentfunding.com/scholarships/summer-scholarship-giveaway-10k", "notes": "lender-sponsored — read official rules", "kind": ""},
+  {"id": "B07", "name": "Coca-Cola Scholars", "tier": "B", "amount": "$20,000 (150 awards)", "deadline": {"raw": "Sep 30, 2026, 5pm ET — phase 1 OPEN now", "recurring": false, "fuzzy": false}, "effort": "phase 1: no essays/transcripts/recs", "status": "todo", "recurring": false, "url": "https://coca-colascholarsfoundation.org/apply/", "notes": "leadership + service focus — Max's profile fits; later phases add essays", "kind": ""},
+  {"id": "B08", "name": "Doodle for Google", "tier": "B", "amount": "up to $55k", "deadline": {"raw": "annual (~Oct) — verify cycle", "recurring": false, "fuzzy": true}, "effort": "draw + form", "status": "todo", "recurring": false, "url": "https://doodles.google.com/d4g/", "notes": "official page unreachable at research time", "kind": ""},
+  {"id": "B09", "name": "Christian Connector / Catholic / Protestant", "tier": "B", "amount": "$5k / $2k / $2k", "deadline": {"raw": "May 31, 2027", "recurring": false, "fuzzy": false}, "effort": "simple form", "status": "todo", "recurring": false, "url": "https://christianconnector.com", "notes": "only if attending a faith-based college", "kind": ""},
+  {"id": "C01", "name": "Unigo $10k", "tier": "C", "amount": "$10,000", "deadline": {"raw": "Dec 31, 2026", "recurring": false, "fuzzy": false}, "effort": "250 words", "status": "todo", "recurring": false, "url": "https://unigo.com/scholarships/our-scholarships/unigo-10k-scholarship", "notes": "\"smart, funny or rich?\"; privacy flag (sells info)", "kind": ""},
+  {"id": "C02", "name": "10 Words or Less", "tier": "C", "amount": "$1,500", "deadline": {"raw": "Nov 15, 2026", "recurring": false, "fuzzy": false}, "effort": "≤10 words", "status": "todo", "recurring": false, "url": "https://studentscholarships.org/scholarship/10258/10-words-or-less-scholarship", "notes": "ages 17–25, US/Canada college Fall 2027", "kind": ""},
+  {"id": "C03", "name": "Raise.me micro-scholarships", "tier": "C", "amount": "hundreds→tens of thousands", "deadline": {"raw": "ongoing", "recurring": true, "fuzzy": true}, "effort": "portfolio of achievements", "status": "todo", "recurring": false, "url": "https://raise.me", "notes": "no essays; partner colleges", "kind": ""},
+  {"id": "D01", "name": "Academic Challenge", "tier": "D", "amount": "$2,000 (yr 1)", "deadline": {"raw": "in SAMS", "recurring": false, "fuzzy": true}, "effort": "SAMS + FAFSA", "status": "todo", "recurring": false, "url": "https://sams.adhe.edu", "notes": "lottery-funded; Diploma of Merit or GPA basis", "kind": ""},
+  {"id": "D02", "name": "Governor's Scholars (renamed from GDS)", "tier": "D", "amount": "up to $5,000/yr", "deadline": {"raw": "in SAMS", "recurring": false, "fuzzy": true}, "effort": "SAMS + FAFSA", "status": "todo", "recurring": false, "url": "https://sams.adhe.edu", "notes": "associate-degree or Diploma of Distinction paths", "kind": ""},
+  {"id": "D03", "name": "ACCESS to Acceleration", "tier": "D", "amount": "$65/hr, max $2,000/yr", "deadline": {"raw": "in SAMS", "recurring": false, "fuzzy": true}, "effort": "SAMS", "status": "todo", "recurring": false, "url": "https://sams.adhe.edu", "notes": "replaces Concurrent Challenge (repealed); dual-enrollment", "kind": ""},
+  {"id": "D04", "name": "Arkansas Future Grant", "tier": "D", "amount": "2-yr tuition or $3,800 (4-yr)", "deadline": {"raw": "in SAMS", "recurring": false, "fuzzy": true}, "effort": "SAMS + FAFSA", "status": "todo", "recurring": false, "url": "https://sams.adhe.edu", "notes": "workforce/certificate/AA", "kind": ""},
+  {"id": "D05", "name": "Workforce Challenge", "tier": "D", "amount": "$3,000/yr", "deadline": {"raw": "in SAMS", "recurring": false, "fuzzy": true}, "effort": "app", "status": "todo", "recurring": false, "url": "https://sams.adhe.edu", "notes": "5 fields: mfg, health, IT, construction, logistics", "kind": ""},
+  {"id": "D06", "name": "Teacher Academy", "tier": "D", "amount": "up to $12,000/yr", "deadline": {"raw": "Fall 2026 window", "recurring": false, "fuzzy": true}, "effort": "app", "status": "todo", "recurring": false, "url": "https://sams.adhe.edu", "notes": "only if planning to teach", "kind": ""},
+  {"id": "D07", "name": "Heroes Scholarship", "tier": "D", "amount": "tuition + housing + fees", "deadline": {"raw": "2026 cycle", "recurring": false, "fuzzy": true}, "effort": "app", "status": "todo", "recurring": false, "url": "https://sams.adhe.edu", "notes": "⚠️ dad is active-duty (deployed Germany) — Heroes likely N/A unless he has a qualifying status (Medal of Honor / Purple Heart / disabled vet / DoD medical retiree); confirm with dad", "kind": ""},
+  {"id": "E01", "name": "UA freshman scholarship app (ONE app → all awards)", "tier": "E", "amount": "Chancellor's up to $10k/yr · Silas Hunt $5–8k/yr · Advance AR $4k/yr · Honors Academy $4k/yr · Razorback Bridge $3.5k/yr · one-time $1k–$5k", "deadline": {"raw": "Admit: Nov 1, 2026 (pri) / Jan 15, 2027 · Scholarship: Nov 15, 2026 (pri) / Feb 1, 2027", "recurring": false, "fuzzy": false}, "effort": "short form + 3 works + prompts", "status": "todo", "recurring": false, "url": "https://scholarships.uark.edu/guide-to-academic-freshman-scholarships/", "notes": "Max's #1 priority app. UA recalcs GPA (weighted) + superscores ACT — retake to unlock higher tiers", "kind": ""},
+  {"id": "E02", "name": "Chancellor's Merit", "tier": "E", "amount": "$12,000/yr", "deadline": {"raw": "via National Merit", "recurring": false, "fuzzy": true}, "effort": "none beyond NM", "status": "todo", "recurring": false, "url": "https://scholarships.uark.edu", "notes": "needs National Merit + UA #1", "kind": ""},
+  {"id": "E03", "name": "Honors College Fellowship", "tier": "E", "amount": "up to $80k over 4 yrs", "deadline": {"raw": "Nov 15, 2026 / Feb 1, 2027", "recurring": false, "fuzzy": false}, "effort": "600-word essay + recs", "status": "todo", "recurring": false, "url": "https://honors.uark.edu/find-funding/index.php", "notes": "⚠️ needs ACT 32 + 3.90 weighted — Max at 21/3.85; revisit only if ACT improves", "kind": ""},
+  {"id": "E04", "name": "Fostering Success", "tier": "E", "amount": "up to $9,000/yr ×4", "deadline": {"raw": "Jan 15 / Feb 1, 2027", "recurring": false, "fuzzy": false}, "effort": "UA app + FAFSA", "status": "todo", "recurring": false, "url": "https://scholarships.uark.edu", "notes": "only if AR foster care ≥1 yr", "kind": ""},
+  {"id": "F01", "name": "NWACC Foundation", "tier": "F", "amount": "$350k+ pool, 350+ students", "deadline": {"raw": "rolling / per fund", "recurring": true, "fuzzy": true}, "effort": "one app", "status": "todo", "recurring": false, "url": "https://nwaccfoundation.org/how-to-apply", "notes": "community college route; transfer path to UA", "kind": ""},
+  {"id": "F02", "name": "Arkansas Community Foundation", "tier": "F", "amount": "dozens of endowments (varies)", "deadline": {"raw": "portal opens Feb 1, 2027", "recurring": false, "fuzzy": false}, "effort": "eligibility quiz + app", "status": "todo", "recurring": false, "url": "https://arcf.org/apply/scholarships/", "notes": "some funds are county/HS/college-specific (Benton Co. exists)", "kind": ""},
+  {"id": "F03", "name": "SPSF NWA (single parents)", "tier": "F", "amount": "$1,250–$2,500/term", "deadline": {"raw": "Fall Jun 15 · Spr Oct 15 · Sum Mar 15", "recurring": false, "fuzzy": true}, "effort": "app + interview", "status": "todo", "recurring": false, "url": "https://spsfnwa.org/scholarships/", "notes": "⚠️ single-parent household ✅ but income >$100k likely fails \"low-moderate income\" — confirm before interview", "kind": ""},
+  {"id": "F04", "name": "Rogers Rotary Club", "tier": "F", "amount": "varies", "deadline": {"raw": "ask club", "recurring": false, "fuzzy": true}, "effort": "call/email", "status": "todo", "recurring": false, "url": "https://rogersrotary.org", "notes": "not published online — contact directly", "kind": ""},
+  {"id": "F05", "name": "Rogers ISD / counselors", "tier": "F", "amount": "district list", "deadline": {"raw": "ask", "recurring": false, "fuzzy": true}, "effort": "ask counselors", "status": "todo", "recurring": false, "url": "", "notes": "district doesn't publish a list", "kind": ""},
+  {"id": "F06", "name": "Rogers Public Schools Community-Based Scholarship", "tier": "F", "amount": "$100–$40,000 (many donors)", "deadline": {"raw": "Jan 1–31, 2027", "recurring": false, "fuzzy": true}, "effort": "SmarterSelect app", "status": "todo", "recurring": false, "url": "https://rogersscholarships.com", "notes": "Rogers senior; notify HS Scholarship Coordinator", "kind": ""},
+  {"id": "F07", "name": "Arkansas Federal Credit Union Scholarship", "tier": "F", "amount": "$5,000", "deadline": {"raw": "~Jan–Mar 2027", "recurring": false, "fuzzy": true}, "effort": "essay + 2 recs", "status": "todo", "recurring": false, "url": "https://afcu.org", "notes": "AFCU member or child of member", "kind": ""},
+  {"id": "F08", "name": "NWA Young Professionals Scholarship", "tier": "F", "amount": "$500–$2,000", "deadline": {"raw": "spring 2027", "recurring": false, "fuzzy": true}, "effort": "app", "status": "todo", "recurring": false, "url": "https://nwayp.org", "notes": "Benton/Washington Co senior → Arkansas college", "kind": ""},
+  {"id": "F09", "name": "Walmart \"Live Better U\"", "tier": "F", "amount": "100% tuition + books (bachelor's; expanded to skilled trades 2025)", "deadline": {"raw": "HR-enrolled — mom checks benefits portal", "recurring": false, "fuzzy": true}, "effort": "N/A", "status": "skipped", "recurring": false, "url": "https://walmart.com/careers/", "notes": "✅ parent at Walmart/Sam's Club confirmed — potentially covers ALL UA tuition. Have mom verify current caps via benefits — does not apply", "kind": "benefit"},
+  {"id": "G01", "name": "QuestBridge National College Match", "tier": "G", "amount": "~$200k (full ride)", "deadline": {"raw": "Aug–Oct 2026", "recurring": false, "fuzzy": true}, "effort": "essays + recs + transcript", "status": "todo", "recurring": false, "url": "https://questbridge.org", "notes": "⚠️ income >$100k likely disqualified — verify 2026 income guidelines before investing essay time", "kind": ""},
+  {"id": "G02", "name": "Jack Kent Cooke", "tier": "G", "amount": "$40k+/yr × up to 4", "deadline": {"raw": "opens Nov 2026", "recurring": false, "fuzzy": true}, "effort": "short form + FAFSA need", "status": "todo", "recurring": false, "url": "https://jackkentcooke.org", "notes": "⚠️ income >$100k likely disqualified; apply only if user insists", "kind": ""},
+  {"id": "G03", "name": "Elks Most Valuable Student", "tier": "G", "amount": "$30k top + lodge/district", "deadline": {"raw": "lodge early 2027; natl Mar–Apr 2027", "recurring": false, "fuzzy": true}, "effort": "2 essays + recs + leadership", "status": "todo", "recurring": false, "url": "https://elks.org", "notes": "check local lodge in Rogers/Bentonville", "kind": ""},
+  {"id": "G04", "name": "Horatio Alger", "tier": "G", "amount": "$25,000", "deadline": {"raw": "Jan–Feb 2027", "recurring": false, "fuzzy": true}, "effort": "essays + need + recs", "status": "todo", "recurring": false, "url": "https://alger.org", "notes": "⚠️ income >$100k likely disqualified; apply only if user insists", "kind": ""},
+  {"id": "G05", "name": "National Merit Scholarship", "tier": "G", "amount": "$2,500 + corporate; → UA Chancellor's Merit $12k/yr", "deadline": {"raw": "ACT Oct–Dec 2026 (senior route)", "recurring": false, "fuzzy": true}, "effort": "test only", "status": "skipped", "recurring": false, "url": "https://nationalmerit.org", "notes": "⚠️ needs ~top 1% index (≈ACT 33+) — ACT 21 not competitive; skip", "kind": ""},
+  {"id": "G06", "name": "Arkansas Alumni Association (UA-bound)", "tier": "G", "amount": "unknown", "deadline": {"raw": "unknown", "recurring": false, "fuzzy": true}, "effort": "—", "status": "todo", "recurring": false, "url": "https://arkansasalumni.org", "notes": "behind login wall — verify with UA", "kind": ""},
+  {"id": "G07", "name": "National Cyber Scholarship Foundation", "tier": "G", "amount": "$2,500–$3,500 + free SANS training", "deadline": {"raw": "CyberStart opens ~Fall 2026; apps ~Jan 2027", "recurring": false, "fuzzy": true}, "effort": "CTF-style competition", "status": "todo", "recurring": false, "url": "https://nationalcyberscholarship.org", "notes": "pure merit, no income cap; cybersecurity cert helps", "kind": ""},
+  {"id": "G08", "name": "NFIB Young Entrepreneur Award", "tier": "G", "amount": "$1,000–$15,000", "deadline": {"raw": "opens ~Oct 1, 2026; ~Dec 18, 2026", "recurring": false, "fuzzy": true}, "effort": "essay + phone interview", "status": "todo", "recurring": false, "url": "https://nfib.com", "notes": "HS senior who owns a business (Max Mows fits); no income cap", "kind": ""},
+  {"id": "G09", "name": "Amazon Future Engineer Scholarship", "tier": "G", "amount": "$40,000 ($10k/yr ×4) + internship", "deadline": {"raw": "~Jan 15, 2027", "recurring": false, "fuzzy": true}, "effort": "app", "status": "conditional", "recurring": false, "url": "https://amazonfutureengineer.com/scholarships", "notes": "CS major; need-gated — long shot at >$100k", "kind": ""},
+  {"id": "G10", "name": "Generation Google (North America)", "tier": "G", "amount": "$10,000", "deadline": {"raw": "~Aug (annual)", "recurring": false, "fuzzy": true}, "effort": "app", "status": "conditional", "recurring": false, "url": "https://edu.google.com", "notes": "CS; need + DEI selection; Hispanic heritage helps", "kind": ""},
+  {"id": "G11", "name": "Lockheed Martin STEM Scholarship", "tier": "G", "amount": "~$10,000/yr", "deadline": {"raw": "~Mar–Apr", "recurring": false, "fuzzy": true}, "effort": "app", "status": "conditional", "recurring": false, "url": "https://lockheedmartin.com", "notes": "eng/CS; need + underrepresented gate; verify 2027 cycle (possible pause)", "kind": ""},
+  {"id": "G12", "name": "(ISC)² Undergraduate Cybersecurity Scholarship", "tier": "G", "amount": "$1,000–$5,000", "deadline": {"raw": "~Mar 15", "recurring": false, "fuzzy": true}, "effort": "essays + 1 rec", "status": "conditional", "recurring": false, "url": "https://iamcybersafe.org/s/academic-scholarships", "notes": "cybersecurity degree; need-weighted selection", "kind": ""},
+  {"id": "G13", "name": "CyberPatriot (AFA) National Youth Cyber Defense", "tier": "G", "amount": "sponsor scholarships (varies)", "deadline": {"raw": "Oct 2026 – Mar 2027", "recurring": false, "fuzzy": true}, "effort": "team competition", "status": "conditional", "recurring": false, "url": "https://uscyberpatriot.org", "notes": "competition-based; many prizes tied to partner schools", "kind": ""},
+  {"id": "G14", "name": "DECA Inc. scholarships", "tier": "G", "amount": "$1,000–$2,500", "deadline": {"raw": "~Jan 11, 2027", "recurring": false, "fuzzy": true}, "effort": "transcript + 3 recs", "status": "conditional", "recurring": false, "url": "https://deca.org/scholarships", "notes": "requires DECA membership", "kind": ""},
+  {"id": "G15", "name": "FBLA scholarships", "tier": "G", "amount": "$500–$2,000", "deadline": {"raw": "~Apr 15", "recurring": false, "fuzzy": true}, "effort": "app", "status": "conditional", "recurring": false, "url": "https://fbla.org", "notes": "requires FBLA membership", "kind": ""},
+  {"id": "G16", "name": "Ramsey Education Scholarship", "tier": "G", "amount": "$1,000 ×5", "deadline": {"raw": "~May 31, 2027", "recurring": false, "fuzzy": true}, "effort": "essay or video", "status": "conditional", "recurring": false, "url": "https://ramseysolutions.com", "notes": "requires Ramsey Foundations course (~$30)", "kind": ""},
+  {"id": "G17", "name": "NFTE World Series of Innovation", "tier": "G", "amount": "$1,500 / $600 / $300", "deadline": {"raw": "Dec 12, 2026", "recurring": false, "fuzzy": false}, "effort": "free competition", "status": "conditional", "recurring": false, "url": "https://nfte.com", "notes": "grades 9–12; on-ramp to NFTE funds", "kind": ""},
+  {"id": "H01", "name": "HSF Scholar Program (Hispanic Scholarship Fund)", "tier": "H", "amount": "$500–$5,000", "deadline": {"raw": "~Jan–Feb 2027 (2027 cycle; confirm on site)", "recurring": false, "fuzzy": true}, "effort": "short app + essay + FAFSA", "status": "todo", "recurring": false, "url": "https://hsf.net/scholarship", "notes": "Best-fit heritage pick. No income cap; US citizen/PR/DACA; GPA 3.0+; identify as Hispanic heritage; awards >$30M/yr", "kind": ""},
+  {"id": "H02", "name": "LULAC National Scholarship Fund (LNSF)", "tier": "H", "amount": "$250–$2,000", "deadline": {"raw": "~early 2027, closes ~May 2027 (confirm)", "recurring": false, "fuzzy": true}, "effort": "short app + essay", "status": "todo", "recurring": false, "url": "https://lnesc.org/scholarships/lulac/", "notes": "No income cap; DACA/PR/citizen; ✅ Max is VP of a LULAC Youth Council — local council participation likely satisfied; confirm council is LNSF-participating", "kind": ""},
+  {"id": "H03", "name": "Prospanica", "tier": "H", "amount": "up to $5,000", "deadline": {"raw": "~Feb–May 2027 (confirm)", "recurring": false, "fuzzy": true}, "effort": "membership + app + essay", "status": "todo", "recurring": false, "url": "https://prospanica.org/scholarships/", "notes": "Membership fee (hardship waiver avail); ⚠️ may require already-enrolled college freshman at app time — email scholarships@prospanica.org", "kind": ""},
+  {"id": "H04", "name": "USHLI Dr. Juan Andrade Jr. Scholarship", "tier": "H", "amount": "$1,000", "deadline": {"raw": "reopens ~Fall 2026 (Dec)", "recurring": false, "fuzzy": true}, "effort": "2 essays + 2 recs + résumé + transcript", "status": "todo", "recurring": false, "url": "https://ushli.org/dr-juan-andrade-jr-scholarship-for-young-hispanic-leaders/", "notes": "Non-citizens eligible; age ≤25; ⚠️ need-based — $100k+ income may not \"demonstrate need\"", "kind": ""},
+  {"id": "H05", "name": "HACU partner scholarships", "tier": "H", "amount": "$1,500–$10,000", "deadline": {"raw": "opens ~Feb 2027", "recurring": false, "fuzzy": true}, "effort": "per award", "status": "todo", "recurring": false, "url": "https://hacu.net/programs/hacu-scholarship-program/", "notes": "⚠️ most require enrollment at a HACU-member institution — UA almost certainly NOT one; verify before applying", "kind": ""},
+  {"id": "H06", "name": "UA Multicultural Center (inquiry)", "tier": "H", "amount": "discretionary? — ask", "deadline": {"raw": "no deadline", "recurring": false, "fuzzy": true}, "effort": "email/call (15 min)", "status": "todo", "recurring": false, "url": "https://multicultural.uark.edu", "notes": "No scholarship currently listed — email uamc@uark.edu + scholars@uark.edu to ask about Latino-specific funds", "kind": ""},
+  {"id": "H07", "name": "APIA Scholars (Asian & Pacific Islander American Scholarship Fund)", "tier": "H", "amount": "$2,500–$20,000 (one-time to multi-year)", "deadline": {"raw": "next cycle ~Nov 2026 – Jan 2027 (2026-27 ran Nov 15–Jan 15; confirm)", "recurring": false, "fuzzy": true}, "effort": "application + 250–500-word essay", "status": "todo", "recurring": false, "url": "https://apiascholars.org/scholarships/", "notes": "US citizen/PR (or COFA nationals); enrolling US college fall 2027; no income cap; first-gen NOT required; heritage: verify on scholarships page (FAQ says all ethnicities welcome)", "kind": ""},
+  {"id": "H08", "name": "KASF (Korean-American Scholarship Foundation)", "tier": "H", "amount": "$500–$5,000", "deadline": {"raw": "region-specific — apply to AR's region (confirm)", "recurring": false, "fuzzy": true}, "effort": "essay + recs + financial need", "status": "todo", "recurring": false, "url": "https://kasf.org/scholarships/", "notes": "Korean heritage (any citizenship incl. Korean nationals); GPA 3.0+; full-time enrollment; KASF-KIA bonus: 3.5 GPA + STEM/business major, possibly larger award + video testimonial", "kind": ""},
+  {"id": "H09", "name": "HHF Youth Awards (Hispanic Heritage Foundation)", "tier": "H", "amount": "up to $4,000", "deadline": {"raw": "Nov 1, 2026", "recurring": false, "fuzzy": false}, "effort": "online app + essays", "status": "todo", "recurring": false, "url": "https://hispanicheritage.org", "notes": "Hispanic/Latino HS senior; GPA 3.0+; Engineering & Technology category fits CS; no income cap, no first-gen req; strong fit for LULAC VP + service — verify category list", "kind": ""},
+  {"id": "H10", "name": "ScholarSHPE (SHPE)", "tier": "H", "amount": "$1,000–$10,000", "deadline": {"raw": "opens ~Feb 2027", "recurring": false, "fuzzy": true}, "effort": "app + essays/recs", "status": "todo", "recurring": false, "url": "https://shpe.org", "notes": "join SHPE now; STEM major; GPA 2.5+; some sponsor awards need US citizenship", "kind": ""},
+  {"id": "H11", "name": "GMiS Scholars (Great Minds in STEM)", "tier": "H", "amount": "$500–$5,000", "deadline": {"raw": "opens ~Mar 2027", "recurring": false, "fuzzy": true}, "effort": "750–850 word essay + 2 recs", "status": "todo", "recurring": false, "url": "https://greatmindsinstem.org", "notes": "STEM; GPA 3.0+; leadership/service emphasized; open to all STEM not just Hispanic", "kind": ""},
+  {"id": "H12", "name": "One Korean Foundation / AR Korean Chamber", "tier": "H", "amount": "~$1,000", "deadline": {"raw": "Dec (annual)", "recurring": false, "fuzzy": true}, "effort": "essay", "status": "todo", "recurring": false, "url": "", "notes": "Korean-American Arkansas students; confirm 2027 via AR Korean Chamber", "kind": ""},
+  {"id": "I01", "name": "Fisher House — Scholarships for Military Children", "tier": "I", "amount": "$2,000 (min 1 per commissary)", "deadline": {"raw": "Dec 10, 2026 – Feb 11, 2027", "recurring": false, "fuzzy": false}, "effort": "application + essay + transcript", "status": "todo", "recurring": false, "url": "https://militaryscholar.org", "notes": "Children of active, reserve, or retired military — Max qualifies via dad; $35M+ awarded, 14,000+ recipients", "kind": ""},
+  {"id": "I02", "name": "AUSA scholarships", "tier": "I", "amount": "$2,000–$25,000 (Vuono $10k · Cribbins STEM $10k · Chabraja STEM $5k · MilDef $5k · Van Autreve $2k–$25k)", "deadline": {"raw": "Feb 20 – May 7 (2026 cycle; 2027 likely similar)", "recurring": false, "fuzzy": true}, "effort": "1-page autobiography + career letter + 2 recs (+ transcript for STEM)", "status": "todo", "recurring": false, "url": "https://ausa.org/scholarships", "notes": "AUSA Premium membership required (dad can join; covers his children); single application covers all awards", "kind": ""},
+  {"id": "I03", "name": "Army Scholarship Foundation", "tier": "I", "amount": "varies (needs confirmation)", "deadline": {"raw": "spring (confirm)", "recurring": false, "fuzzy": true}, "effort": "application", "status": "todo", "recurring": false, "url": "https://armyscholarshipfoundation.org", "notes": "Sons/daughters of US Army soldiers (incl. active duty); site unreachable at research time — verify", "kind": ""},
+  {"id": "I04", "name": "ThanksUSA", "tier": "I", "amount": "varies (needs confirmation)", "deadline": {"raw": "~Jan–Feb 2027 (confirm)", "recurring": false, "fuzzy": true}, "effort": "application", "status": "todo", "recurring": false, "url": "https://thanksusa.org/scholarships/", "notes": "Spouses + children of active-duty troops; referenced by AUSA; site fetch failed — verify", "kind": ""},
+  {"id": "I05", "name": "Folds of Honor / Heroes' Legacy", "tier": "I", "amount": "$2,000–$5,000", "deadline": {"raw": "varies", "recurring": false, "fuzzy": true}, "effort": "—", "status": "skipped", "recurring": false, "url": "https://foldsofhonor.org", "notes": "Only children of fallen or disabled service members — N/A unless dad has a disability rating", "kind": ""},
+  {"id": "I06", "name": "Operation Homefront — Military Child of the Year (Army)", "tier": "I", "amount": "$10,000", "deadline": {"raw": "nomination closes Dec 1, 2026", "recurring": false, "fuzzy": false}, "effort": "nomination + recs", "status": "todo", "recurring": false, "url": "https://operationhomefront.org", "notes": "ages 13–18; legal dependent of active-duty (DEERS); Army category; not need-based — verify birthday", "kind": ""},
+  {"id": "I07", "name": "VFW Voice of Democracy", "tier": "I", "amount": "$35,000 national / $1,000+ state", "deadline": {"raw": "Oct 31, 2026", "recurring": false, "fuzzy": false}, "effort": "3–5 min audio essay", "status": "todo", "recurring": false, "url": "https://vfw.org", "notes": "open to all HS grades 9–12; US citizen/PR; not military-exclusive", "kind": ""},
+  {"id": "I08", "name": "MOAA Education Assistance Program", "tier": "I", "amount": "interest-free loans + grants", "deadline": {"raw": "~Nov 1–Mar 1", "recurring": false, "fuzzy": true}, "effort": "one app + essays", "status": "todo", "recurring": false, "url": "https://moaa.org", "notes": "child of officer OR active/retired enlisted; GPA 3.0+; if dad is an OFFICER needs paid MOAA membership — confirm dad's rank", "kind": ""},
+  {"id": "I09", "name": "AER — MG James Ursano Scholarship", "tier": "I", "amount": "varies (need-based)", "deadline": {"raw": "opens Jan 1, closes Apr 1", "recurring": false, "fuzzy": true}, "effort": "app + FAFSA", "status": "todo", "recurring": false, "url": "https://armyemergencyrelief.org", "notes": "child of active-duty Army, under 24; need-based via FAFSA — low yield at >$100k income", "kind": ""}
+];
+
+const FILLKIT = {
+  "profile": [
+    [
+      "Full name",
+      "Max B. Hill De Santiago"
+    ],
+    [
+      "Email",
+      "Max.Hill037@gmail.com"
+    ],
+    [
+      "Phone",
+      "479-507-5373"
+    ],
+    [
+      "City / State",
+      "Rogers, AR"
+    ],
+    [
+      "High school",
+      "Rogers High School, Class of 2027"
+    ],
+    [
+      "GPA",
+      "3.85 / 4.0"
+    ],
+    [
+      "Intended college",
+      "University of Arkansas, Fayetteville (Fall 2027)"
+    ],
+    [
+      "Intended major",
+      "Computer Science / Cybersecurity / Engineering + Business (confirm exact combination)"
+    ],
+    [
+      "Heritage",
+      "Mexican-American and Korean-American"
+    ],
+    [
+      "First-generation college student?",
+      "No"
+    ],
+    [
+      "Citizenship",
+      "US citizen"
+    ],
+    [
+      "Military family",
+      "Father: U.S. Army, active duty (deployed in Germany); parents divorced"
+    ],
+    [
+      "Languages",
+      "English; intermediate Spanish"
+    ],
+    [
+      "Certifications",
+      "Cybersecurity certification [CERT NAME]; First Aid"
+    ],
+    [
+      "Licenses",
+      "Licensed driver"
+    ]
+  ],
+  "contact": [
+    [
+      "full name",
+      "Max B. Hill De Santiago"
+    ],
+    [
+      "email",
+      "Max.Hill037@gmail.com"
+    ],
+    [
+      "phone",
+      "479-507-5373"
+    ],
+    [
+      "high school",
+      "Rogers High School, Class of 2027"
+    ],
+    [
+      "city / state",
+      "Rogers, AR"
+    ]
+  ],
+  "bios": [
+    {
+      "label": "~30 words",
+      "text": "Senior at Rogers High School (GPA 3.85) with a technical focus in robotics and cybersecurity. Founded a 25-client lawn-care business, and leads youth civic programs serving 150+ students across Northwest Arkansas."
+    },
+    {
+      "label": "~60 words",
+      "text": "Rogers High School senior (GPA 3.85) with a technical focus in robotics and cybersecurity. Founded Max Mows at 15 and scaled it to 25 residential clients. As a youth council president and LULAC officer, he has led 150+ students through civic projects — including 30+ beds built for families in need and 100+ hours of tornado-relief service. Also a varsity tennis and track athlete whose portrait photograph was exhibited at Crystal Bridges Museum."
+    },
+    {
+      "label": "~120 words",
+      "text": "Max B. Hill De Santiago is a Rogers High School senior (Class of 2027, GPA 3.85) planning to study computer science and business at the University of Arkansas. He brings a builder's mindset: in TSA Robotics he engineered and programmed a robot from scratch, and a cybersecurity certification taught him how systems are attacked and defended. He founded Max Mows at 15, growing a lawn-care business to 25 clients. As Vice President of the LULAC Youth Council, he forged a partnership with Sleep in Heavenly Peace that delivered 30+ beds to low-income families, mobilized a 15-student team for tornado relief, and ran a community food-security drive. He is also President of the Youth Area Council, a varsity tennis and track athlete, and a photographer whose work was exhibited at Crystal Bridges Museum of American Art."
+    }
+  ],
+  "awards": [
+    "Straight A Honor Roll Award, Rogers Chamber of Commerce (May 2026)",
+    "Volunteer of the Year, Rogers Chamber of Commerce (May 2025)",
+    "BYU Tennis Championship — Division Winner (July 2025)",
+    "Whitey Smith Relay Carnival — 2nd Place, 4x200 Relay (April 2026)",
+    "Crystal Bridges Museum of American Art — portrait photograph selected for exhibition (elite intensive program)"
+  ],
+  "activities": [
+    {
+      "role": "President",
+      "org": "Youth Area Council",
+      "detail": "Preside over monthly strategic planning; lead workshops for 150+ youth on teamwork and mentorship"
+    },
+    {
+      "role": "Vice President",
+      "org": "LULAC Youth Council",
+      "detail": "Led Sleep in Heavenly Peace bed build (30+ beds); tornado relief 100+ hrs, 20 properties; food-security drive"
+    },
+    {
+      "role": "Member",
+      "org": "TSA Robotics",
+      "detail": "Built and programmed competition robot from scratch; debugged hardware and software to improve performance"
+    },
+    {
+      "role": "Founder",
+      "org": "Max Mows (lawn care)",
+      "detail": "Founded and scaled business to 25 residential clients; handled marketing, scheduling, and quality control"
+    },
+    {
+      "role": "Varsity",
+      "org": "Rogers High School Tennis",
+      "detail": "Varsity player; BYU division winner; balanced tournament calendar with academics and internship"
+    },
+    {
+      "role": "Varsity",
+      "org": "Rogers High School Track & Field",
+      "detail": "100m and 200m sprinter; 2nd place 4x200 at Whitey Smith Relay Carnival"
+    },
+    {
+      "role": "Intern",
+      "org": "Ozark Trade & Holdings",
+      "detail": "Supply-chain logistics and asset deployment; managed financial accounts/billing in Excel; supported office systems"
+    }
+  ],
+  "essays": [
+    {
+      "id": "about",
+      "title": "Tell us about yourself",
+      "words": 250,
+      "text": "My senior year looks different than I planned. In May I started a logistics internship, in August I took over a youth council presidency, and in between I kept practice, robotics, and my lawn-care company running. I like it that way.\n\nI've always been the kind of student who builds things. In TSA Robotics I engineered a robot from scratch and spent hours troubleshooting a misreading sensor or a stalled servo. That patience carried into code — Python, Java, and a cybersecurity certification that taught me how attackers think and how to defend against them. I want to build a career protecting the systems people rely on.\n\nBut technology isn't the whole story. In 2024 I founded Max Mows and grew it to 25 clients, learning scheduling, marketing, and how to keep a promise. As Vice President of the LULAC Youth Council, I helped organize a bed build that delivered 30+ beds to families across Northwest Arkansas, mobilized 15 students for tornado relief that cleared 20 properties, and led a food drive for local food banks. As President of the Youth Area Council, I run workshops for 150+ students on teamwork and mentorship.\n\nI also play varsity tennis and run the 100m and 200m, where I learned that improvement comes from showing up consistently. When I'm not in motion, I take portraits — one was exhibited at Crystal Bridges.\n\nI'm ready to bring the same energy to college."
+    },
+    {
+      "id": "leadership",
+      "title": "Leadership",
+      "words": 250,
+      "text": "Two titles on my résumé taught me what leadership actually is. As President of the Youth Area Council and Vice President of the LULAC Youth Council, I learned that leading means organizing people around a result — not just holding the title.\n\nAs Youth Area Council President, I run monthly strategic planning and lead workshops for 150+ youth participants on teamwork and professional mentorship. The work taught me to build an agenda, delegate, and keep a roomful of teenagers engaged, which is its own skill.\n\nThe LULAC Youth Council is where I learned to turn plans into impact. I forged a partnership with Sleep in Heavenly Peace, coordinating volunteers to manufacture and distribute 30+ beds for low-income households across Northwest Arkansas. When tornadoes hit our region, I mobilized a 15-student rapid response team that contributed 100+ hours clearing debris from 20 residential properties. Later, I ran a community food-security drive, using peer outreach to bring in substantial donations for local food banks.\n\nWhat I'm most proud of isn't the numbers. Every project started with someone who had a need and a small team that wanted to help. My job was to make the path clear — who brings the wood, who drives the truck, who calls the family. Leadership, I've learned, is mostly logistics with a sense of purpose."
+    },
+    {
+      "id": "community",
+      "title": "Community impact",
+      "words": 250,
+      "text": "In April of my junior year, tornadoes tore through our region. Within days, I had mobilized 15 students from the LULAC Youth Council into a rapid response team. Over the following weeks we contributed 100+ hours clearing debris from 20 residential properties — hauling branches, sorting salvage, and showing up at houses where people simply needed another set of hands.\n\nThat experience shaped how I think about service. Help is most useful when it's organized, so I started looking for ways to make our council's impact systematic. I forged a partnership with Sleep in Heavenly Peace, and together we manufactured and distributed 30+ beds to low-income households across Northwest Arkansas. A bed might not sound like much, but for a kid who has been sleeping on a floor, it's a home.\n\nI've also run a community food-security drive, using peer outreach to rally donations for local food banks, and as Youth Area Council President I lead workshops where 150+ students learn teamwork and mentorship skills — so the next generation of volunteers is better prepared than I was.\n\nWhat drives me is simple: I've seen what a small, organized team can do for a neighborhood, and I want to keep building those teams. College is the next step in learning how to organize at a bigger scale — and in the meantime, I'll keep showing up with the trailer and the chainsaw."
+    },
+    {
+      "id": "challenge",
+      "title": "A challenge I overcame",
+      "words": 250,
+      "text": "In my first year of TSA Robotics, I decided to build the robot from scratch. I had no kit, no mentor with the answers — just a chassis, some motors, and a determination to make it work.\n\nEverything that could go wrong did. The motors wouldn't spin consistently, the code compiled but the robot ignored it, and the chassis fell apart at our first practice match. It would have been easier to use a prebuilt kit, but I had committed to the harder path, so I learned to debug systematically: isolate one variable, test it, write down what happened, move to the next. I read the datasheets. I rewrote the code. I replaced the wiring. And eventually — after more late nights than I care to count — the robot did what I told it to.\n\nWhat I kept from that project wasn't the robot. It was the method: break the problem down, test one thing at a time, and don't quit because it's hard. That method carried into my cybersecurity coursework, where I learned to trace how an attack happens step by step, and into my lawn-care business, where a broken mower or a no-show client is just another problem to isolate and solve.\n\nI still get excited about hard problems. I just know better now: hard is where the good stuff is, and patience usually beats brilliance."
+    },
+    {
+      "id": "career",
+      "title": "Career goals",
+      "words": 250,
+      "text": "I want to build a career in cybersecurity — specifically, protecting the systems that small businesses and communities depend on.\n\nThe interest started with curiosity and turned into training. In TSA Robotics I learned to build and break systems from the hardware up, and my cybersecurity certification taught me how networks are attacked and defended. I learned Python and Java, and a logistics internship showed me how real organizations depend on data they can't afford to lose. Every week I saw how much of our region's commerce runs through spreadsheets, payment systems, and client records — and how fragile that trust is.\n\nMy community service points the same direction. In the LULAC Youth Council I organized teams to build beds, clear storm debris, and feed neighbors, and I learned that the most vulnerable people are the ones least equipped to protect themselves. That's true of technology too: small businesses and families can't afford enterprise security teams, so they're the ones most likely to get hurt.\n\nAt the University of Arkansas I plan to combine computer science and engineering with business — building secure systems and learning to run them. After college, I want to come back to Northwest Arkansas and work where I grew up — helping the businesses and organizations here stay safe as they grow.\n\nThe technical skills matter. But the reason I want them is to be useful to people, the same reason I loaded a chainsaw into the truck after the tornadoes."
+    },
+    {
+      "id": "why-ua",
+      "title": "Why the University of Arkansas?",
+      "words": 200,
+      "text": "The University of Arkansas is where I want to earn my degree, and not just because it's forty minutes from home.\n\nAcademically, it's the right fit. I want to study computer science and engineering with a business focus — the College of Engineering and Walton College are exactly the combination I need [CONFIRM/ADD specific program or professor]. My GPA, robotics background, and cybersecurity certification put me in a position to make the most of it — and to keep raising the bar, because the Honors College is a goal I'm working toward.\n\nBut the strongest reason is the community. I've spent high school leading youth councils, organizing tornado relief, and building beds for families in Northwest Arkansas. Staying in-state means I can keep serving that community while I learn — interning, mentoring younger students, and giving back to the place that raised me.\n\nIt also makes financial sense for our family. Between in-state tuition, the merit scholarships UA offers through its single freshman application, and the state scholarships I'll apply for through SAMS, an Arkansas education is one we can afford without taking on crushing debt.\n\nI want to be a Razorback — to earn my degree at home, serve at home, and build my career at home."
+    },
+    {
+      "id": "heritage",
+      "title": "Heritage & identity",
+      "words": 250,
+      "text": "I carry two cultures: my Mexican heritage from my mother's side and my Korean heritage from my father's. My dad is a soldier currently serving overseas in Germany, and my mom raised me as a single parent — she worked to give me a future her own family couldn't have imagined. Both sides taught me that community is everything.\n\nMy Mexican-American identity is part of why I serve. When I joined the LULAC Youth Council, I didn't just join a club — I found a tradition of civic organizing that goes back generations, and I worked to earn my place in it. As Vice President, I helped lead a bed build for families in need, mobilized students after the tornadoes, and organized a food drive. I've seen what our community can do when it works together, and I want to be part of that story.\n\nMy Korean heritage taught me the same lesson from a different angle: respect for elders, the value of hard work, and the importance of showing up for family — blood or chosen. [ADD any personal detail, e.g., food, language, relatives.]\n\nGrowing up in a single-parent household, I learned early that nobody was coming to do the work for us. I started a lawn-care business at 15. I took on leadership roles. I kept my grades up.\n\nThis scholarship matters to me because it would let me focus on engineering and service instead of tuition — and because I believe in paying forward what my community gave me. My mom worked so I could have choices. I want to use them well."
+    },
+    {
+      "id": "entrepreneurship",
+      "title": "Entrepreneurship — Max Mows",
+      "words": 150,
+      "text": "In the summer before my freshman year, I wanted money and I wanted to learn how money worked. So I started mowing lawns.\n\nMax Mows grew from a single mower into a real business with 25 residential clients. I learned to market — flyers first, then word of mouth and referrals — and to schedule like a professional, because in lawn care, reliability is the product. When a mower broke, I fixed it or worked around it. When a client wasn't happy, I fixed that too.\n\nThe business taught me things no classroom could: pricing, cash flow, client communication, and the discipline of showing up in the summer heat. I kept it running through August 2026, even while I added an internship, robotics, and varsity athletics to my schedule.\n\nI'm proud of Max Mows because it was mine — founded, run, and grown by me. It proved I can build something from nothing and manage it well. College is the next business, and I'm ready to put the same work in."
+    }
+  ],
+  "oneliners": [
+    {
+      "label": "Career goal",
+      "text": "To build a career in cybersecurity, protecting the systems that small businesses and communities depend on."
+    },
+    {
+      "label": "Leadership, one sentence",
+      "text": "I lead by organizing people around a clear result — 150 students in a workshop, or 15 volunteers clearing storm debris."
+    },
+    {
+      "label": "Biggest achievement",
+      "text": "Building a competition robot from scratch, then debugging it until it worked."
+    },
+    {
+      "label": "Community service, one sentence",
+      "text": "I serve because I've seen what a small, organized team can do for a neighborhood."
+    },
+    {
+      "label": "Why do you deserve this scholarship?",
+      "text": "I've earned my place through work — a business I built, a community I've served, and grades I've maintained — and this scholarship would let me focus on engineering instead of tuition."
+    },
+    {
+      "label": "What makes you unique?",
+      "text": "I'm a robotics builder and a portrait photographer, a track sprinter and a youth council president — and I bring the same stubborn patience to everything."
+    },
+    {
+      "label": "Describe a time you showed leadership",
+      "text": "When tornadoes hit our region, I mobilized 15 students and cleared 20 properties in over 100 hours of service."
+    },
+    {
+      "label": "Hobbies/interests",
+      "text": "Photography (my portrait was exhibited at Crystal Bridges), sprinting, robotics, and building things."
+    }
+  ]
+};
+
+</script>
+  <script>
+/* Scholarship Tracker — vanilla JS, zero dependencies.
+   Loads after data.js (global `SCHOLARSHIPS`). All runtime state lives in
+   localStorage; nothing leaves the browser. */
+(function () {
+  "use strict";
+
+  /* ------------------------------------------------------------------ *
+   * Constants
+   * ------------------------------------------------------------------ */
+
+  var MONTHS = ["January","February","March","April","May","June","July",
+                "August","September","October","November","December"];
+  var MONTH_SHORT = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep",
+                     "Oct","Nov","Dec"];
+
+  var STATUS = {
+    todo:        { emoji: "⬜", label: "To-do" },
+    submitted:   { emoji: "⏳", label: "Submitted" },
+    awarded:     { emoji: "✅", label: "Awarded" },
+    conditional: { emoji: "⚠️", label: "Conditional" },
+    skipped:     { emoji: "❌", label: "Skipped" }
+  };
+  var STATUS_ORDER = ["todo","submitted","awarded","conditional","skipped"];
+
+  // Grounded in tracker.md section headers.
+  var TIER_TITLES = {
+    A: "Monthly no-essay sweepstakes",
+    B: "Big annual no-essay / low-effort",
+    C: "Quick essays",
+    D: "Arkansas state — via SAMS",
+    E: "University of Arkansas",
+    F: "Local / NWA / Rogers",
+    G: "Big essay awards (eligibility-gated)",
+    H: "Heritage scholarships",
+    I: "Military-family scholarships"
+  };
+
+  // Dashboard priorities — grounded in plan.md ("THIS WEEK" + priorities).
+  var PRIORITIES = [
+    { key: "FAFSA", tone: "now", title: "File FAFSA 2026-27",
+      when: "Open now — do this today", url: "https://studentaid.gov",
+      why: "Prerequisite for need-based aid, UA, state SAMS and HSF awards." },
+    { key: "Coke", tone: "soon", title: "Coca-Cola Scholars · $20,000",
+      when: "Sep 30, 2026 · 5pm ET", find: "Coca-Cola Scholars",
+      why: "Phase 1 needs no essays, transcripts or recs — leadership + service fit." },
+    { key: "UA1", tone: "later", title: "UA admission application",
+      when: "Nov 1, 2026 (priority)", find: "UA freshman scholarship app",
+      why: "Admission unlocks every UA freshman merit tier up to $12k/yr." },
+    { key: "UA2", tone: "later", title: "UA scholarship application",
+      when: "Nov 15, 2026 (priority)", find: "UA freshman scholarship app",
+      why: "One app covers Chancellor's, Silas Hunt, Honors Academy, Razorback Bridge." },
+    { key: "MIL", tone: "later", title: "Military-child lane — Fisher House + AUSA",
+      when: "Fisher House ~Jan–Feb 2027 · AUSA Feb–May 2027", find: "Fisher House",
+      why: "Dad's active duty (deployed Germany) opens Tier I: Fisher House $2,000 (essay + transcript) and AUSA $2k–$25k via one app + dad's premium membership." },
+    { key: "BATCH", tone: "batch", title: "Monthly sweepstakes batch",
+      when: "1st of each month · ~10 min", action: "batch",
+      why: "Re-enter the 8 no-essay sweepstakes and stamp the month." }
+  ];
+
+  var PROFILE = [
+    ["Class", "2027 (senior)"],
+    ["College", "University of Arkansas, Fayetteville"],
+    ["Major", "Computer Science / Cybersecurity / Engineering + Business"],
+    ["GPA", "3.85 / 4.0"],
+    ["ACT", "21 — retaking (UA superscores)"],
+    ["Heritage", "Mexican-American + Korean-American"],
+    ["Household", "Single-mom (parents divorced)"],
+    ["First-generation", "No"],
+    ["Parent employer", "Walmart / Sam's Club"],
+    ["Military family", "Dad on active duty (deployed Germany)"],
+    ["Citizenship", "US citizen"],
+    ["Income", "> $100k"],
+    ["Leadership", "LULAC Youth Council VP · Youth Area Council President"]
+  ];
+  var CONTACT = [
+    ["Full name", "Max B. Hill De Santiago"],
+    ["Email", "Max.Hill037@gmail.com"],
+    ["Phone", "479-507-5373"],
+    ["High school", "Rogers High School · Rogers, AR"],
+    ["Languages", "English · intermediate Spanish"],
+    ["Certifications", "Cybersecurity certification · First Aid"]
+  ];
+
+  var STORE_KEY = "scholarships.tracker.v1";
+
+  /* ------------------------------------------------------------------ *
+   * State (localStorage)
+   * ------------------------------------------------------------------ */
+
+  var state = loadState();
+
+  function capLog(log) {
+    if (!Array.isArray(log)) return [];
+    return log.length > 500 ? log.slice(log.length - 500) : log;
+  }
+
+  function loadState() {
+    try {
+      var raw = localStorage.getItem(STORE_KEY);
+      if (raw) {
+        var parsed = JSON.parse(raw);
+        if (parsed && typeof parsed === "object" && parsed.overrides) {
+          parsed.log = capLog(parsed.log || []);
+          return parsed;
+        }
+      }
+    } catch (e) { /* ignore */ }
+    return { version: 1, overrides: {}, log: [] };
+  }
+  function saveState() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(state)); }
+    catch (e) { /* storage may be unavailable */ }
+  }
+  function baseById(id) {
+    for (var i = 0; i < SCHOLARSHIPS.length; i++) if (SCHOLARSHIPS[i].id === id) return SCHOLARSHIPS[i];
+    return null;
+  }
+  function override(id) { return (state.overrides && state.overrides[id]) || {}; }
+  function effStatus(s) { var o = override(s.id); return o.status || s.status; }
+  function effNotes(s)   { var o = override(s.id); return (o.notes === undefined) ? s.notes : o.notes; }
+  function effEntered(s) { var o = override(s.id); return o.lastEntered || null; }
+
+  function setStatus(id, status) {
+    var s = baseById(id); if (!s) return;
+    var o = shallow(override(id));
+    if (status === s.status) delete o.status; else o.status = status;
+    putOverride(id, o);
+  }
+  function setNotes(id, notes) {
+    var s = baseById(id); if (!s) return;
+    var o = shallow(override(id));
+    if (notes === s.notes) delete o.notes; else o.notes = notes;
+    putOverride(id, o);
+  }
+  function stampEntered(id, iso) {
+    var o = shallow(override(id));
+    o.lastEntered = iso;
+    putOverride(id, o);
+  }
+  var LOG_FIELDS = ["status", "notes", "lastEntered"];
+  function logField(id, o, field, base) {
+    if (field === "status") return o.status !== undefined ? o.status : base.status;
+    if (field === "notes") return o.notes !== undefined ? o.notes : base.notes;
+    if (field === "lastEntered") return o.lastEntered || null;
+    return null;
+  }
+  function logChange(id, field, from, to) {
+    state.log.push({ ts: new Date().toISOString(), id: id, field: field, from: from, to: to });
+    state.log = capLog(state.log);
+  }
+  function putOverride(id, o) {
+    var prev = override(id);   // capture prior override BEFORE mutating
+    var base = baseById(id);
+    if (Object.keys(o).length) state.overrides[id] = o; else delete state.overrides[id];
+    if (base) {
+      for (var i = 0; i < LOG_FIELDS.length; i++) {
+        var f = LOG_FIELDS[i];
+        var from = logField(id, prev, f, base);
+        var to = logField(id, o, f, base);
+        if (from !== to) logChange(id, f, from, to);
+      }
+    }
+    saveState();
+  }
+  function shallow(o) { var c = {}; for (var k in o) c[k] = o[k]; return c; }
+
+  /* ------------------------------------------------------------------ *
+   * Derived collections
+   * ------------------------------------------------------------------ */
+
+  var recurringList = SCHOLARSHIPS.filter(function (s) { return s.recurring; });
+
+  // Exact one-time deadlines: single concrete date, not a recurring sweepstakes.
+  var exactDated = SCHOLARSHIPS.filter(function (s) {
+    return !s.recurring && parseExactDate(s.deadline.raw) !== null;
+  });
+
+  function countByStatus() {
+    var c = { todo: 0, submitted: 0, awarded: 0, conditional: 0, skipped: 0 };
+    SCHOLARSHIPS.forEach(function (s) { c[effStatus(s)]++; });
+    return c;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Date helpers
+   * ------------------------------------------------------------------ */
+
+  function todayAtMidnight() {
+    var d = new Date(); d.setHours(0,0,0,0); return d;
+  }
+  function toISO(d) {
+    var m = d.getMonth() + 1, day = d.getDate();
+    return d.getFullYear() + "-" + (m < 10 ? "0" + m : m) + "-" + (day < 10 ? "0" + day : day);
+  }
+  function daysUntil(d) { return Math.round((d - todayAtMidnight()) / 86400000); }
+  function fmtShort(d) { return MONTH_SHORT[d.getMonth()] + " " + d.getDate(); }
+  function fmtFull(d) { return MONTH_SHORT[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(); }
+
+  function parseExactDate(raw) {
+    if (!raw) return null;
+    // Reject multi-date ranges, "opens"/"monthly"/"final" phrasings.
+    if (/[\/·–]|monthly|opens|final|drawings|ongoing|rolling|~|cycle|window|\bvia\b/i.test(raw)) return null;
+    var m = raw.match(/\b(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?\s+(\d{1,2}),?\s+(\d{4})\b/i);
+    if (!m) return null;
+    var mi = -1;
+    for (var i = 0; i < MONTH_SHORT.length; i++) {
+      if (MONTH_SHORT[i].toLowerCase() === m[1].slice(0, 3).toLowerCase()) { mi = i; break; }
+    }
+    if (mi < 0) return null;
+    return new Date(parseInt(m[3], 10), mi, parseInt(m[2], 10));
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Small utilities
+   * ------------------------------------------------------------------ */
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+    });
+  }
+  function findByName(sub) {
+    for (var i = 0; i < SCHOLARSHIPS.length; i++) {
+      if (SCHOLARSHIPS[i].name.indexOf(sub) !== -1) return SCHOLARSHIPS[i];
+    }
+    return null;
+  }
+  function toast(msg) {
+    var el = document.getElementById("toast");
+    el.textContent = msg;
+    el.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { el.classList.remove("show"); }, 2400);
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Router / rendering
+   * ------------------------------------------------------------------ */
+
+  var app = document.getElementById("app");
+  var currentView = "dashboard";
+  var animateReveal = true;
+  var focusId = null;
+
+  // tiers view filters (kept across re-renders)
+  var tierFilter = { status: "all", sort: "status", q: "" };
+  // calendar cursor (first-of-month)
+  var calCursor = (function () { var d = todayAtMidnight(); return new Date(d.getFullYear(), d.getMonth(), 1); })();
+
+  function showView(v) {
+    currentView = v;
+    animateReveal = true;
+    setActiveNav();
+    render();
+    window.scrollTo(0, 0);
+  }
+  function rerender() {
+    var y = window.scrollY;
+    animateReveal = false;
+    render();
+    window.scrollTo(0, y);
+  }
+  function setActiveNav() {
+    document.querySelectorAll(".nav-item").forEach(function (b) {
+      b.classList.toggle("active", b.dataset.view === currentView);
+    });
+  }
+
+  function render() {
+    var html = "";
+    if (currentView === "dashboard") html = renderDashboard();
+    else if (currentView === "tiers") html = renderTiers();
+    else if (currentView === "calendar") html = renderCalendar();
+    else if (currentView === "batch") html = renderBatch();
+    else if (currentView === "profile") html = renderProfile();
+    else if (currentView === "fillkit") html = renderFillKit();
+    app.innerHTML = html;
+
+    if (animateReveal) {
+      var els = app.querySelectorAll(".stagger");
+      for (var i = 0; i < els.length; i++) {
+        els[i].classList.add("reveal");
+        els[i].style.animationDelay = (Math.min(i, 18) * 38) + "ms";
+      }
+    }
+    if (focusId) {
+      var el = app.querySelector('[data-rowid="' + focusId + '"]');
+      if (el) {
+        el.scrollIntoView({ block: "center", behavior: "smooth" });
+        el.classList.add("flash");
+      }
+      focusId = null;
+    }
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Dashboard
+   * ------------------------------------------------------------------ */
+
+  function renderDashboard() {
+    var counts = countByStatus();
+    var t = todayAtMidnight();
+    var upcoming = exactDated.map(function (s) {
+      return { s: s, d: parseExactDate(s.deadline.raw) };
+    }).filter(function (x) { return x.d >= t; })
+      .sort(function (a, b) { return a.d - b.d; });
+
+    var next7 = upcoming.filter(function (x) { return daysUntil(x.d) <= 7; });
+    var next30 = upcoming.filter(function (x) { return daysUntil(x.d) <= 30; });
+
+    var html = "";
+    html += head("Dashboard", "One look at what's due, what's flagged, and what to file next.", t);
+
+    html += '<div class="stat-row stagger">';
+    STATUS_ORDER.forEach(function (st) {
+      var meta = STATUS[st];
+      html +=
+        '<button class="card stat-card ' + chipClass(st) + '" data-act="nav" data-view="tiers" data-status="' + st + '">' +
+        '<span class="em">' + meta.emoji + '</span>' +
+        '<span class="n">' + (counts[st] || 0) + '</span>' +
+        '<span class="l">' + meta.label + '</span>' +
+        '</button>';
+    });
+    html += '</div>';
+
+    html += '<div style="height:18px"></div>';
+    html += '<div class="two-col">';
+
+    // Priorities
+    html += '<section class="card card-pad stagger"><h2 class="card-title">Priorities right now</h2>';
+    html += '<p class="muted" style="font-size:12.5px;margin:0 0 6px">';
+    html += 'FAFSA first, then the Sep 30 deadline cluster, then the UA apps.</p>';
+    PRIORITIES.forEach(function (p) {
+      var findS = p.find ? findByName(p.find) : null;
+      html += '<div class="priority">';
+      html += '<div class="pk ' + p.tone + '">' + p.key + '</div>';
+      html += '<div style="flex:1;min-width:0">';
+      html += '<div class="pt">' + esc(p.title) + '</div>';
+      html += '<div class="pw">' + esc(p.when) + '</div>';
+      html += '<div class="py">' + esc(p.why) + '</div>';
+      html += '<div class="act">';
+      if (p.url) {
+        html += '<a class="btn small" href="' + esc(p.url) + '" target="_blank" rel="noopener">Open studentaid.gov ↗</a>';
+      } else if (p.action === "batch") {
+        html += '<button class="btn small" data-act="nav" data-view="batch">Run the batch →</button>';
+      } else if (findS) {
+        html += '<button class="btn small" data-act="focus" data-id="' + findS.id + '">View in Tiers →</button>';
+      }
+      html += '</div></div></div>';
+    });
+    html += '</section>';
+
+    // Deadlines
+    html += '<div>';
+    html += '<section class="card card-pad stagger"><h2 class="card-title">Next 7 days</h2>';
+    html += deadlineList(next7, t);
+    html += '</section>';
+    html += '<div style="height:16px"></div>';
+    html += '<section class="card card-pad stagger"><h2 class="card-title">Next 30 days</h2>';
+    html += deadlineList(next30, t);
+    html += '</section>';
+    html += '</div>';
+
+    html += '</div>';
+    return html;
+  }
+
+  function deadlineList(list, t) {
+    if (!list.length) return '<p class="empty">Nothing due in this window.</p>';
+    var html = '<ul class="dl-list">';
+    list.forEach(function (x) {
+      var n = daysUntil(x.d);
+      html += '<li>';
+      html += '<span class="dl-date">' + fmtShort(x.d) + '</span>';
+      html += '<span class="dl-name">' + esc(x.s.name) + '</span>';
+      html += '<span class="dl-sub">' + esc(x.s.amount) + '</span>';
+      html += '<span class="dl-sub" title="Tier">' + x.s.tier + '</span>';
+      html += '<span class="dl-sub" style="color:' + (n <= 7 ? 'var(--rust)' : 'var(--ink-3)') + '">in ' + n + 'd</span>';
+      html += '</li>';
+    });
+    html += '</ul>';
+    return html;
+  }
+
+  function head(title, sub, today) {
+    var chip = today ? '<div class="today-chip">' + fmtFull(today) + '</div>' : "";
+    return '<div class="view-head">' +
+      '<div><h1 class="view-title">' + esc(title) + '</h1>' +
+      '<p class="view-sub">' + esc(sub) + '</p></div>' +
+      chip + '</div>';
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Tiers
+   * ------------------------------------------------------------------ */
+
+  function renderTiers() {
+    var html = "";
+    html += head("Tiers A–I", "All 57 programs, grouped by priority. Click a status chip to flip it; the pencil edits notes.");
+
+    // filter bar
+    html += '<div class="filterbar stagger">';
+    html += '<div class="pills">';
+    var pillDefs = [{ v: "all", l: "All" }].concat(STATUS_ORDER.map(function (st) {
+      return { v: st, l: STATUS[st].emoji + " " + STATUS[st].label };
+    }));
+    var counts = countByStatus();
+    pillDefs.forEach(function (p) {
+      var on = tierFilter.status === p.v;
+      var n = p.v === "all" ? SCHOLARSHIPS.length : counts[p.v];
+      html += '<button class="pill' + (on ? " on" : "") + '" data-act="filter-status" data-status="' + p.v + '">' +
+        esc(p.l) + '<span class="cnt">' + n + '</span></button>';
+    });
+    html += '</div>';
+    html += '<input class="search-input" type="search" placeholder="Search name or notes…" value="' + esc(tierFilter.q) + '" data-act="search-input">';
+    html += '<select class="sort-select" data-act="sort-select">';
+    html += '<option value="status"' + (tierFilter.sort === "status" ? " selected" : "") + '>Sort: Status + deadline</option>';
+    html += '<option value="deadline"' + (tierFilter.sort === "deadline" ? " selected" : "") + '>Sort: Deadline (soonest)</option>';
+    html += '<option value="tier"' + (tierFilter.sort === "tier" ? " selected" : "") + '>Sort: Tier A–I</option>';
+    html += '</select>';
+    html += '</div>';
+
+    // gather + filter
+    var q = tierFilter.q.trim().toLowerCase();
+    var rows = SCHOLARSHIPS.filter(function (s) {
+      if (tierFilter.status !== "all" && effStatus(s) !== tierFilter.status) return false;
+      if (q) {
+        var hay = (s.name + " " + s.notes + " " + s.amount).toLowerCase();
+        if (hay.indexOf(q) === -1) return false;
+      }
+      return true;
+    });
+
+    if (tierFilter.sort === "deadline") {
+      rows.sort(function (a, b) {
+        var da = parseExactDate(a.deadline.raw), db = parseExactDate(b.deadline.raw);
+        if (da && db) return da - db;
+        if (da) return -1; if (db) return 1;
+        return a.name.localeCompare(b.name);
+      });
+    } else if (tierFilter.sort === "tier") {
+      rows.sort(function (a, b) { return a.tier < b.tier ? -1 : a.tier > b.tier ? 1 : a.id.localeCompare(b.id); });
+    } else {
+      rows.sort(function (a, b) {
+        var sa = STATUS_ORDER.indexOf(effStatus(a)), sb = STATUS_ORDER.indexOf(effStatus(b));
+        if (sa !== sb) return sa - sb;
+        var da = parseExactDate(a.deadline.raw), db = parseExactDate(b.deadline.raw);
+        if (da && db) return da - db;
+        if (da) return -1; if (db) return 1;
+        return a.id.localeCompare(b.id);
+      });
+    }
+
+    if (!rows.length) {
+      html += '<p class="empty stagger">No scholarships match this filter.</p>';
+      return html;
+    }
+
+    // group by tier
+    var byTier = {};
+    rows.forEach(function (s) { (byTier[s.tier] = byTier[s.tier] || []).push(s); });
+    var tierOrder = Object.keys(byTier).sort();
+
+    tierOrder.forEach(function (t) {
+      var list = byTier[t];
+      html += '<section class="tier-block stagger">';
+      html += '<div class="tier-head">';
+      html += '<div class="tier-badge">' + t + '</div>';
+      html += '<div><h3 class="tier-title">Tier ' + t + ' — ' + esc(TIER_TITLES[t] || "") + '</h3>';
+      html += '</div><div class="tier-count">' + list.length + ' item' + (list.length === 1 ? "" : "s") + '</div></div>';
+      list.forEach(function (s) { html += tierRow(s); });
+      html += '</section>';
+    });
+
+    return html;
+  }
+
+  function tierRow(s) {
+    var st = effStatus(s);
+    var meta = STATUS[st];
+    var next = STATUS_ORDER[(STATUS_ORDER.indexOf(st) + 1) % STATUS_ORDER.length];
+    var d = s.deadline.raw;
+    var hasUrl = !!s.url;
+    var rec = s.recurring;
+
+    var html = '<div class="row" data-rowid="' + esc(s.id) + '">';
+    html += '<div class="left">';
+    html += '<button class="status-chip ' + chipClass(st) + '" data-act="cycle-status" data-id="' + esc(s.id) + '" title="Click to flip: ' + esc(meta.label) + ' → ' + esc(STATUS[next].label) + '">' +
+      '<span class="em">' + meta.emoji + '</span>' + esc(meta.label) + '</button>';
+    html += '</div>';
+    html += '<div class="row-main">';
+    html += '<div class="row-name">' + esc(s.name) +
+      (s.kind === "benefit" ? '<span class="kind">benefit</span>' : "") + '</div>';
+    html += '<div class="row-meta">';
+    html += '<span class="amount">' + esc(s.amount) + '</span>';
+    html += '<span class="dot">·</span><span class="dl">' + esc(d) + '</span>';
+    if (rec) html += '<span class="rec">🔁 monthly</span>';
+    html += '</div>';
+    if (s.notes) html += '<div class="row-notes">' + esc(s.notes) + '</div>';
+    html += '</div>';
+    html += '<div class="row-actions">';
+    if (hasUrl) html += '<a class="icon-btn" href="' + esc(s.url) + '" target="_blank" rel="noopener" title="Open application">↗</a>';
+    html += '<button class="icon-btn" data-act="edit-notes" data-id="' + esc(s.id) + '" title="Edit notes">✎</button>';
+    html += '</div></div>';
+    return html;
+  }
+
+  function chipClass(st) {
+    return "st-" + st;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Calendar
+   * ------------------------------------------------------------------ */
+
+  function renderCalendar() {
+    var first = new Date(calCursor.getFullYear(), calCursor.getMonth(), 1);
+    var year = first.getFullYear(), month = first.getMonth();
+    var startDow = first.getDay();
+    var daysInMonth = new Date(year, month + 1, 0).getDate();
+    var t = todayAtMidnight();
+    var todayKey = t.getFullYear() + "-" + t.getMonth() + "-" + t.getDate();
+
+    var html = "";
+    html += head("Calendar", "Exact one-time deadlines only. The monthly sweepstakes batch is pinned on the 1st.");
+
+    html += '<div class="card card-pad stagger">';
+    html += '<div class="cal-nav">';
+    html += '<button class="btn" data-act="cal-prev">← Prev</button>';
+    html += '<h2 class="mn">' + MONTHS[month] + " " + year + '</h2>';
+    html += '<button class="btn" data-act="cal-next">Next →</button>';
+    html += '<button class="btn ghost small" data-act="cal-today">Today</button>';
+    html += '</div>';
+
+    html += '<div class="cal-grid">';
+    var dows = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    dows.forEach(function (w) { html += '<div class="cal-dow">' + w + '</div>'; });
+
+    var cells = [];
+    for (var i = 0; i < startDow; i++) cells.push({ empty: true });
+    for (var d = 1; d <= daysInMonth; d++) {
+      var date = new Date(year, month, d);
+      var items = exactDated.filter(function (s) { return sameDay(parseExactDate(s.deadline.raw), date); });
+      cells.push({ date: date, items: items, batch: d === 1 });
+    }
+    while (cells.length % 7 !== 0) cells.push({ empty: true });
+
+    cells.forEach(function (c) {
+      if (c.empty) { html += '<div class="cal-cell dim"></div>'; return; }
+      var key = c.date.getFullYear() + "-" + c.date.getMonth() + "-" + c.date.getDate();
+      var cls = "cal-cell" + (key === todayKey ? " today" : "");
+      html += '<div class="' + cls + '">';
+      html += '<div class="dnum">' + c.date.getDate() + '</div>';
+      if (c.batch) {
+        html += '<div class="cal-chip batch" data-act="nav" data-view="batch" title="Monthly sweepstakes batch">📌 Monthly batch · ' + recurringList.length + '</div>';
+      }
+      c.items.forEach(function (s) {
+        var st = effStatus(s);
+        html += '<a class="cal-chip" href="' + (s.url ? esc(s.url) : "#") + '" target="_blank" rel="noopener" title="' + esc(s.name) + ' · ' + esc(s.amount) + '">' +
+          (st === "todo" ? "" : STATUS[st].emoji + " ") + esc(s.name) + '</a>';
+      });
+      html += '</div>';
+    });
+    html += '</div>';
+
+    var fuzzyCount = SCHOLARSHIPS.length - exactDated.length - recurringList.length;
+    html += '<p class="cal-note">' + fuzzyCount + ' items have rolling, monthly, multi-part or fuzzy dates — see <button class="btn small" data-act="nav" data-view="tiers" style="margin-left:4px">Tiers A–I</button> for full deadlines.</p>';
+    html += '</div>';
+    return html;
+  }
+
+  function sameDay(a, b) {
+    return a && b && a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Monthly batch
+   * ------------------------------------------------------------------ */
+
+  function renderBatch() {
+    var html = "";
+    html += head("Monthly batch", "The 8 no-essay sweepstakes to re-enter every month. Tick each as you finish, then run the batch to reset and stamp the date.");
+
+    var last = lastBatchDate();
+    html += '<section class="card card-pad stagger" style="margin-bottom:16px">';
+    html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">';
+    html += '<div><h2 class="card-title">Run the batch</h2>';
+    html += '<p class="muted" style="font-size:13px;margin:0">Last batch ran: <strong>' + (last ? fmtFull(parseISO(last)) : "never") + '</strong></p></div>';
+    html += '<button class="btn primary" data-act="run-batch">Reset 🔁 + stamp date</button>';
+    html += '</div></section>';
+
+    html += '<section class="card card-pad stagger">';
+    html += '<h2 class="card-title">Sweepstakes checklist</h2>';
+    html += '<p class="muted" style="font-size:12.5px;margin:0 0 8px">';
+    html += 'Checked = entered this month. Running the batch clears them for next month.</p>';
+
+    var done = recurringList.filter(function (s) { return effStatus(s) !== "todo"; }).length;
+    html += '<div style="margin-bottom:10px">';
+    html += '<div style="height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden">';
+    html += '<div style="height:100%;width:' + Math.round(done / recurringList.length * 100) + '%;background:var(--green);transition:width .3s ease"></div>';
+    html += '</div>';
+    html += '<div class="faint" style="font-size:11.5px;margin-top:5px">' + done + ' of ' + recurringList.length + ' entered this month</div></div>';
+
+    recurringList.forEach(function (s) {
+      var entered = effStatus(s) !== "todo";
+      var le = effEntered(s);
+      html += '<div class="sweep-row' + (entered ? " done" : "") + '" data-act="check-sweep" data-id="' + esc(s.id) + '">';
+      html += '<span class="cb">✓</span>';
+      html += '<div class="sm">';
+      html += '<div class="sn">' + esc(s.name) + '</div>';
+      html += '<div class="ss">' + esc(s.amount) + ' · ' + esc(s.effort) + ' · ' + esc(s.deadline.raw) + '</div>';
+      html += '</div>';
+      html += '<div class="le">' + (le ? "last " + fmtShort(parseISO(le)) : "—") + '</div>';
+      html += '<a class="icon-btn" href="' + (s.url ? esc(s.url) : "#") + '" target="_blank" rel="noopener" title="Open" data-act="nop">↗</a>';
+      html += '</div>';
+    });
+    html += '</section>';
+    return html;
+  }
+
+  function parseISO(iso) {
+    var p = iso.split("-");
+    return new Date(parseInt(p[0], 10), parseInt(p[1], 10) - 1, parseInt(p[2], 10));
+  }
+  function lastBatchDate() {
+    var latest = null;
+    recurringList.forEach(function (s) {
+      var le = effEntered(s);
+      if (le && (!latest || le > latest)) latest = le;
+    });
+    return latest;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Profile / eligibility
+   * ------------------------------------------------------------------ */
+
+  function renderProfile() {
+    var html = "";
+    html += head("Profile & eligibility", "Read-only snapshot from Max's fast facts, plus the ⚠️ / ❌ eligibility flags already in the tracker.");
+
+    html += '<section class="card card-pad stagger" style="margin-bottom:16px">';
+    html += '<h2 class="card-title">Profile</h2>';
+    html += '<div class="fact-grid">';
+    PROFILE.forEach(function (f) {
+      html += '<div class="fact"><div class="fk">' + esc(f[0]) + '</div><div class="fv">' + esc(f[1]) + '</div>';
+      if (f[0] === "Military family") {
+        html += '<div class="mil-note">🪖 Elevated lane — Dad\'s active duty (deployed Germany) unlocks <strong>Tier I</strong>: Fisher House $2,000 · AUSA $2k–$25k. See Dashboard priorities.</div>';
+      }
+      html += '</div>';
+    });
+    html += '</div>';
+    html += '<p class="faint" style="font-size:12px;margin:12px 0 0">';
+    html += esc(CONTACT.map(function (c) { return c[0] + ": " + c[1]; }).join(" · "));
+    html += '</p></section>';
+
+    // Eligibility flags — reuse ⚠️ / ❌ statuses (no rules engine).
+    var flags = SCHOLARSHIPS.filter(function (s) {
+      var st = effStatus(s);
+      return st === "conditional" || st === "skipped";
+    });
+    var hideSkipped = tierFilter.hideSkipped; // persisted toggle
+    if (hideSkipped) flags = flags.filter(function (s) { return effStatus(s) !== "skipped"; });
+
+    html += '<section class="card card-pad stagger" style="margin-bottom:16px">';
+    html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">';
+    html += '<h2 class="card-title" style="margin:0">Eligibility flags</h2>';
+    html += '<label style="font-size:13px;color:var(--ink-2);display:flex;align-items:center;gap:7px;cursor:pointer">' +
+      '<input type="checkbox" data-act="toggle-hide-skipped" ' + (hideSkipped ? "checked" : "") + '> Hide skipped (❌)</label>';
+    html += '</div>';
+    if (!flags.length) {
+      html += '<p class="empty" style="margin-top:10px">No ⚠️ or ❌ flags right now.</p>';
+    } else {
+      flags.forEach(function (s) {
+        var st = effStatus(s);
+        html += '<div class="flag-row">';
+        html += '<div class="fl-em">' + STATUS[st].emoji + '</div>';
+        html += '<div style="flex:1;min-width:0">';
+        html += '<div class="row-name" style="font-size:14px">' + esc(s.name) + ' <span class="faint" style="font-weight:400">· Tier ' + s.tier + '</span></div>';
+        if (s.notes) html += '<div class="fl-note">' + esc(s.notes) + '</div>';
+        html += '</div>';
+        html += '<a class="icon-btn" href="' + (s.url ? esc(s.url) : "#") + '" target="_blank" rel="noopener" title="Open">↗</a>';
+        html += '</div>';
+      });
+    }
+    html += '</section>';
+
+    // Watchlist — notes already carrying a ⚠️ concern, regardless of status.
+    var watch = SCHOLARSHIPS.filter(function (s) {
+      return s.notes && s.notes.indexOf("⚠") !== -1 && effStatus(s) === "todo";
+    });
+    html += '<section class="card card-pad stagger">';
+    html += '<h2 class="card-title">Watchlist — ⚠️ in notes</h2>';
+    html += '<p class="muted" style="font-size:12.5px;margin:0 0 8px">';
+    html += 'Still “to-do” but flagged in the research as a possible eligibility miss. Review before investing time.</p>';
+    watch.forEach(function (s) {
+      html += '<div class="flag-row">';
+      html += '<div class="fl-em">⚠️</div>';
+      html += '<div style="flex:1;min-width:0">';
+      html += '<div class="row-name" style="font-size:14px">' + esc(s.name) + ' <span class="faint" style="font-weight:400">· Tier ' + s.tier + '</span></div>';
+      html += '<div class="fl-note">' + esc(s.notes) + '</div>';
+      html += '</div>';
+      html += '</div>';
+    });
+    if (!watch.length) html += '<p class="empty" style="margin-top:8px">No ⚠️ notes pending.</p>';
+    html += '</section>';
+
+    return html;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Fill Kit
+   * ------------------------------------------------------------------ */
+
+  function fillkitReady() {
+    return typeof FILLKIT !== "undefined" && FILLKIT && typeof FILLKIT === "object";
+  }
+  function fkList(key) {
+    return (fillkitReady() && Array.isArray(FILLKIT[key])) ? FILLKIT[key] : [];
+  }
+  function wordCount(text) {
+    var m = String(text == null ? "" : text).trim().match(/\S+/g);
+    return m ? m.length : 0;
+  }
+
+  function copyText(text, label) {
+    var s = String(text == null ? "" : text);
+    function done() { toast(label); }
+    function legacy() {
+      var ta = document.createElement("textarea");
+      ta.value = s;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.left = "-9999px";
+      ta.style.top = "0";
+      document.body.appendChild(ta);
+      ta.focus();
+      ta.select();
+      ta.setSelectionRange(0, s.length);
+      var ok = false;
+      try { ok = document.execCommand("copy"); } catch (e) { ok = false; }
+      document.body.removeChild(ta);
+      if (ok) done(); else toast("Copy blocked — select the text manually");
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(s).then(done, legacy);
+    } else {
+      legacy();
+    }
+  }
+
+  function copyFill(key) {
+    if (!key) return;
+    var parts = key.split(".");
+    var section = parts[0];
+    var idx = parts[1];
+
+    if (idx === "all") {
+      var list = fkList(section);
+      if (!list.length) return;
+      var all = "";
+      var label = "Copied";
+      if (section === "profile" || section === "contact") {
+        all = list.map(function (r) { return r[0] + ": " + r[1]; }).join("\n");
+        label = section === "profile" ? "Copied full profile" : "Copied full contact info";
+      } else if (section === "awards") {
+        all = list.join("\n");
+        label = "Copied all awards";
+      } else if (section === "oneliners") {
+        all = list.map(function (o) { return o.label + ": " + o.text; }).join("\n");
+        label = "Copied all one-liners";
+      } else if (section === "essays") {
+        all = list.map(function (e) { return e.title + "\n" + e.text; }).join("\n\n");
+        label = "Copied all essays";
+      }
+      copyText(all, label);
+      return;
+    }
+
+    var i = parseInt(idx, 10);
+    if (section === "profile" || section === "contact") {
+      var row = fkList(section)[i];
+      if (!row) return;
+      copyText(row[1], "Copied — " + row[0]);
+    } else if (section === "bio") {
+      var b = fkList("bios")[i];
+      if (!b) return;
+      copyText(b.text, "Copied bio — " + b.label);
+    } else if (section === "essay") {
+      var e = fkList("essays")[i];
+      if (!e) return;
+      copyText(e.text, "Copied essay — " + e.title);
+    } else if (section === "award") {
+      var a = fkList("awards")[i];
+      if (!a) return;
+      copyText(a, "Copied award");
+    } else if (section === "oneliner") {
+      var o = fkList("oneliners")[i];
+      if (!o) return;
+      copyText(o.text, "Copied — " + o.label);
+    }
+  }
+
+  function fkPairBlock(title, key, list) {
+    if (!list.length) return "";
+    var html = '<div><div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:4px">';
+    html += '<h3 class="card-title-sm" style="margin:0">' + esc(title) + '</h3>';
+    html += '<button class="copy-btn" data-act="copy" data-copy="' + key + '.all">Copy all</button>';
+    html += '</div>';
+    list.forEach(function (row, i) {
+      html += '<div class="fk-item">';
+      html += '<span class="fk-label">' + esc(row[0]) + '</span>';
+      html += '<span class="fk-value">' + esc(row[1]) + '</span>';
+      html += '<button class="copy-btn" data-act="copy" data-copy="' + key + '.' + i + '">Copy</button>';
+      html += '</div>';
+    });
+    html += '</div>';
+    return html;
+  }
+
+  function renderFillKit() {
+    var html = "";
+    html += head("Fill Kit", "One-click copy for the fields Max fills over and over. Paste straight into applications.");
+
+    if (!fillkitReady()) {
+      html += '<section class="card card-pad stagger"><p class="empty" style="margin:0">No fill data available yet. The Fill Kit is generated in a separate step — check back once data.js includes it.</p></section>';
+      return html;
+    }
+
+    var oneliners = fkList("oneliners");
+    var profile = fkList("profile");
+    var contact = fkList("contact");
+    var bios = fkList("bios");
+    var essays = fkList("essays");
+    var awards = fkList("awards");
+    var activities = fkList("activities");
+
+    var hasAny = oneliners.length || profile.length || contact.length || bios.length || essays.length || awards.length || activities.length;
+    if (!hasAny) {
+      html += '<section class="card card-pad stagger"><p class="empty" style="margin:0">Fill data is present but empty. Nothing to copy yet.</p></section>';
+      return html;
+    }
+
+    // One-liners — the highest-value quick answers, kept front and center.
+    if (oneliners.length) {
+      html += '<section class="card card-pad stagger" style="margin-bottom:16px;border-color:var(--gold)">';
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:12px">';
+      html += '<div><h2 class="card-title">One-liners</h2>';
+      html += '<p class="muted" style="font-size:12.5px;margin:0">The quick answers Max uses most — copy straight into short-answer fields.</p></div>';
+      html += '<button class="btn primary" data-act="copy" data-copy="oneliners.all">Copy all one-liners</button>';
+      html += '</div>';
+      html += '<div class="oneliner-grid">';
+      oneliners.forEach(function (o, i) {
+        html += '<div class="oneliner">';
+        html += '<div class="ol-label">' + esc(o.label) + '</div>';
+        html += '<div class="ol-text">' + esc(o.text) + '</div>';
+        html += '<button class="copy-btn strong" data-act="copy" data-copy="oneliner.' + i + '">Copy</button>';
+        html += '</div>';
+      });
+      html += '</div></section>';
+    }
+
+    // Profile + contact.
+    if (profile.length || contact.length) {
+      html += '<section class="card card-pad stagger" style="margin-bottom:16px">';
+      html += '<h2 class="card-title">Copy profile</h2>';
+      html += '<p class="muted" style="font-size:12.5px;margin:0 0 10px">Every field Max re-types in applications.</p>';
+      html += '<div class="fk-grid">';
+      html += fkPairBlock("Profile", "profile", profile);
+      html += fkPairBlock("Contact", "contact", contact);
+      html += '</div>';
+      html += '</section>';
+    }
+
+    // Bios.
+    if (bios.length) {
+      html += '<section class="card card-pad stagger" style="margin-bottom:16px">';
+      html += '<h2 class="card-title">Bios</h2>';
+      html += '<p class="muted" style="font-size:12.5px;margin:0 0 8px">Three lengths — short, medium, long — ready to paste.</p>';
+      bios.forEach(function (b, i) {
+        html += '<div class="essay-card">';
+        html += '<div class="essay-head">';
+        html += '<div class="essay-title">' + esc(b.label) + '</div>';
+        html += '<div class="essay-meta">' + String(b.text == null ? "" : b.text).length + ' chars · ' + wordCount(b.text) + ' words</div>';
+        html += '</div>';
+        html += '<div class="essay-text">' + esc(b.text) + '</div>';
+        html += '<div style="text-align:right"><button class="copy-btn" data-act="copy" data-copy="bio.' + i + '">Copy bio</button></div>';
+        html += '</div>';
+      });
+      html += '</section>';
+    }
+
+    // Essays.
+    if (essays.length) {
+      html += '<section class="card card-pad stagger" style="margin-bottom:16px">';
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:8px">';
+      html += '<div><h2 class="card-title" style="margin:0">Essays</h2>';
+      html += '<p class="muted" style="font-size:12.5px;margin:0">' + essays.length + ' essay' + (essays.length === 1 ? "" : "s") + ' · copy individually or all at once.</p></div>';
+      html += '<button class="btn primary" data-act="copy" data-copy="essays.all">Copy all essays</button>';
+      html += '</div>';
+      essays.forEach(function (e, i) {
+        html += '<div class="essay-card">';
+        html += '<div class="essay-head">';
+        html += '<div class="essay-title">' + esc(e.title) + '</div>';
+        html += '<div class="essay-meta">target ~' + e.words + ' words · ' + wordCount(e.text) + ' words now</div>';
+        html += '</div>';
+        html += '<div class="essay-text">' + esc(e.text) + '</div>';
+        html += '<div style="text-align:right"><button class="copy-btn" data-act="copy" data-copy="essay.' + i + '">Copy essay</button></div>';
+        html += '</div>';
+      });
+      html += '</section>';
+    }
+
+    // Awards.
+    if (awards.length) {
+      html += '<section class="card card-pad stagger" style="margin-bottom:16px">';
+      html += '<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px">';
+      html += '<h2 class="card-title" style="margin:0">Awards</h2>';
+      html += '<button class="copy-btn" data-act="copy" data-copy="awards.all">Copy all</button>';
+      html += '</div>';
+      awards.forEach(function (a, i) {
+        html += '<div class="fk-item">';
+        html += '<span class="fk-value">' + esc(a) + '</span>';
+        html += '<button class="copy-btn" data-act="copy" data-copy="award.' + i + '">Copy</button>';
+        html += '</div>';
+      });
+      html += '</section>';
+    }
+
+    // Activities — read-only reference.
+    if (activities.length) {
+      html += '<section class="card card-pad stagger">';
+      html += '<h2 class="card-title">Activities</h2>';
+      html += '<p class="muted" style="font-size:12.5px;margin:0 0 8px">Role / organization / detail — for reference while filling activities lists.</p>';
+      activities.forEach(function (a) {
+        html += '<div class="essay-card" style="margin-bottom:8px">';
+        html += '<div class="essay-title">' + esc(a.role) +
+          (a.org ? ' <span class="faint" style="font-weight:400">· ' + esc(a.org) + '</span>' : '') + '</div>';
+        if (a.detail) html += '<div class="muted" style="font-size:13px">' + esc(a.detail) + '</div>';
+        html += '</div>';
+      });
+      html += '</section>';
+    }
+
+    return html;
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Actions
+   * ------------------------------------------------------------------ */
+
+  function cycleStatus(id) {
+    var s = baseById(id); if (!s) return;
+    var cur = effStatus(s);
+    var next = STATUS_ORDER[(STATUS_ORDER.indexOf(cur) + 1) % STATUS_ORDER.length];
+    setStatus(id, next);
+    rerender();
+    toast(next === "todo" ? "⬜ " + s.name + " → To-do" : STATUS[next].emoji + " " + s.name + " → " + STATUS[next].label);
+  }
+
+  function openNotes(id) {
+    var s = baseById(id); if (!s) return;
+    var cur = effNotes(s);
+    var back = document.createElement("div");
+    back.className = "modal-backdrop";
+    back.innerHTML =
+      '<div class="modal-card" role="dialog" aria-modal="true">' +
+      '<div class="modal-title">Edit notes</div>' +
+      '<div class="modal-name">' + esc(s.name) + '</div>' +
+      '<textarea class="modal-area" id="notes-area" placeholder="Add a note…">' + esc(cur) + '</textarea>' +
+      '<div class="modal-actions">' +
+      '<button class="btn ghost" data-act="close-notes">Cancel</button>' +
+      '<button class="btn primary" data-act="save-notes" data-id="' + esc(s.id) + '">Save notes</button>' +
+      '</div></div>';
+    document.body.appendChild(back);
+    var area = back.querySelector("#notes-area");
+    area.focus();
+    area.setSelectionRange(area.value.length, area.value.length);
+  }
+
+  function saveNotes(id) {
+    var area = document.getElementById("notes-area");
+    if (area) setNotes(id, area.value);
+    closeModal();
+    rerender();
+    toast("Notes saved");
+  }
+  function closeModal() {
+    var m = document.querySelector(".modal-backdrop");
+    if (m) m.remove();
+  }
+
+  function checkSweep(id) {
+    var s = baseById(id); if (!s) return;
+    var entered = effStatus(s) !== "todo";
+    setStatus(id, entered ? "todo" : "submitted");
+    rerender();
+  }
+
+  function runBatch() {
+    var iso = toISO(todayAtMidnight());
+    recurringList.forEach(function (s) {
+      var o = shallow(override(s.id));
+      o.status = "todo";
+      o.lastEntered = iso;
+      putOverride(s.id, o);
+    });
+    rerender();
+    toast("🔁 Batch reset — " + recurringList.length + " sweepstakes stamped " + fmtShort(todayAtMidnight()));
+  }
+
+  function exportJson() {
+    var payload = {
+      app: "scholarship-tracker",
+      exportedAt: new Date().toISOString(),
+      version: state.version || 1,
+      overrides: state.overrides,
+      log: state.log,
+      snapshot: SCHOLARSHIPS.map(function (s) {
+        return { id: s.id, name: s.name, status: effStatus(s), lastEntered: effEntered(s), notes: effNotes(s) };
+      })
+    };
+    var blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "scholarship-tracker-backup.json";
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(function () { URL.revokeObjectURL(url); }, 500);
+    toast("Exported JSON backup");
+  }
+
+  function importJson(file) {
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var data = JSON.parse(reader.result);
+        if (data && data.overrides) {
+          state.overrides = data.overrides;
+          state.log = capLog(data.log || []);
+          state.version = data.version || 1;
+          saveState();
+          rerender();
+          toast("Import complete");
+        } else {
+          toast("Not a valid backup file");
+        }
+      } catch (e) { toast("Could not read that file"); }
+    };
+    reader.readAsText(file);
+  }
+
+  /* ------------------------------------------------------------------ *
+   * Event delegation
+   * ------------------------------------------------------------------ */
+
+  document.addEventListener("click", function (e) {
+    var el = e.target.closest("[data-act]");
+    if (!el) {
+      if (e.target.closest(".modal-backdrop") && !e.target.closest(".modal-card")) closeModal();
+      return;
+    }
+    var act = el.dataset.act;
+    var id = el.dataset.id;
+    var view = el.dataset.view;
+
+    switch (act) {
+      case "nav":
+        if (el.dataset.status) { tierFilter.status = el.dataset.status; currentView = view; animateReveal = true; setActiveNav(); render(); window.scrollTo(0, 0); }
+        else showView(view);
+        break;
+      case "focus": currentView = "tiers"; animateReveal = true; focusId = id; setActiveNav(); render(); window.scrollTo(0, 0); break;
+      case "cycle-status": cycleStatus(id); break;
+      case "edit-notes": openNotes(id); break;
+      case "save-notes": saveNotes(id); break;
+      case "close-notes": closeModal(); break;
+      case "check-sweep": checkSweep(id); break;
+      case "run-batch": runBatch(); break;
+      case "filter-status": tierFilter.status = el.dataset.status; rerender(); break;
+      case "cal-prev": calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth() - 1, 1); rerender(); break;
+      case "cal-next": calCursor = new Date(calCursor.getFullYear(), calCursor.getMonth() + 1, 1); rerender(); break;
+      case "cal-today": calCursor = (function () { var d = todayAtMidnight(); return new Date(d.getFullYear(), d.getMonth(), 1); })(); rerender(); break;
+      case "export": exportJson(); break;
+      case "import": document.getElementById("import-file").click(); break;
+      case "copy": copyFill(el.dataset.copy); break;
+    }
+  });
+
+  document.addEventListener("input", function (e) {
+    if (e.target && e.target.dataset.act === "search-input") {
+      tierFilter.q = e.target.value; rerender();
+    }
+  });
+  document.addEventListener("change", function (e) {
+    if (e.target && e.target.dataset.act === "sort-select") {
+      tierFilter.sort = e.target.value; rerender();
+    } else if (e.target && e.target.dataset.act === "toggle-hide-skipped") {
+      tierFilter.hideSkipped = e.target.checked; rerender();
+    }
+  });
+  document.getElementById("import-file").addEventListener("change", function (e) {
+    if (e.target.files && e.target.files[0]) importJson(e.target.files[0]);
+    e.target.value = "";
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeModal();
+  });
+
+  /* ------------------------------------------------------------------ *
+   * Init
+   * ------------------------------------------------------------------ */
+
+  setActiveNav();
+  render();
+
+  /* ------------------------------------------------------------------ *
+   * PWA — service worker
+   * ------------------------------------------------------------------ */
+
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('sw.js').catch(function () { /* offline cache optional */ });
+    });
+  }
+})();
+
+</script>
+</body>
+</html>
