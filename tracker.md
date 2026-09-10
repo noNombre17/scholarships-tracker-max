@@ -1,7 +1,7 @@
 # Scholarship Application Tracker — Max (Rogers, AR)
 
 **Updated:** Sep 10, 2026 · Source research: nationwide no-essay + Arkansas/NWA-specific (verified Sep 10, 2026).
-**Max's profile:** Senior (class of 2027) → **U of A Fayetteville** · Mexican + South Korean heritage · ACT 21 (retaking; UA superscores) · GPA 3.85 · Single-mom household (parents divorced) · **U.S. Army active duty (deployed Germany)** · Parent at Walmart/Sam's Club · **US citizen** · **Not first-gen** · Intended major: CS / engineering + business · Income > $100k · **FAFSA not filed yet**
+**Max's profile:** Senior (class of 2027) → **U of A Fayetteville** · Mexican + South Korean heritage · ACT 21 (registered Oct 17 retake; UA superscores) · GPA 3.85 · Single-mom household (parents divorced) · **U.S. Army active duty (deployed Germany)** · Parent at Walmart/Sam's Club · **US citizen** · **Not first-gen** · Intended major: CS / engineering + business · Income > $100k · **FAFSA not filed yet**
 **Legend:** ⬜ to-do · 🔁 re-enter monthly · ⏳ submitted/pending · ✅ awarded/done · ⚠️ conditional · ❌ skipped
 
 ---
@@ -141,6 +141,20 @@
 | AER — MG James Ursano Scholarship | varies (need-based) | opens Jan 1, closes Apr 1 | app + FAFSA | ⬜ | child of active-duty Army, under 24; need-based via FAFSA — low yield at >$100k income | armyemergencyrelief.org |
 
 **Arkansas Heroes (Tier D):** requires specific qualifying categories — confirm dad's status before counting on it.
+
+---
+
+## J. ACT registration (official 2026–27, verified Sep 10, 2026)
+Register via MyACT at my.act.org. Deadlines 11:59pm CT. Late fee +$42. Base fee $70 (EMR); +$5 science, +$25 writing.
+
+| Test date | Regular deadline | Late deadline | Scores (~online) | UA scholarship fit |
+|---|---|---|---|---|
+| Sep 19, 2026 | Aug 14, 2026 | Sep 1, 2026 | ~Oct 3 | ✅ cleanest first retake; safe for Nov 15 priority |
+| Oct 17, 2026 | Sep 11, 2026 | Sep 29, 2026 | ~Oct 27–31 | ✅ registered — lands before Nov 15 priority |
+| Dec 12, 2026 | Nov 6, 2026 | Nov 29, 2026 | ~Dec 22 | ✅ UA accepts December national ACT for priority; last date feeding Feb 1 final |
+| Feb 27, 2027 | Jan 22, 2027 | Feb 9, 2027 | ~Mar 13 | ❌ too late — scores arrive after Feb 1 final |
+
+⚠️ Sep 19 regular deadline (Aug 14) already passed — late registration closed Sep 1. ✅ Max is registered for Oct 17 — prep for scores ~Oct 27–31, in time for UA Nov 15 priority. NWA centers (Rogers/Bentonville/Fayetteville/Springdale) fill fast. Sources: act.org test-dates + fees pages; UA scholarship guide.
 
 ---
 

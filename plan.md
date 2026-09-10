@@ -2,7 +2,7 @@
 
 **Prepared:** Sep 10, 2026 (refreshed; verified Sep 10, 2026) · All programs verified live on official pages this week; flags noted.
 **Companion file:** `tracker.md` (statuses, deadlines, notes). This file = strategy + priorities.
-**Max's profile:** Senior (class of 2027) → **U of A Fayetteville** · Mexican + South Korean heritage · ACT 21 (retaking — UA superscores) · GPA 3.85 · Single-mom household (parents divorced) · **Parent at Walmart/Sam's Club** · **Dad on active duty (deployed Germany)** · US citizen · Not first-gen · Major: CS / engineering + business · Income > $100k
+**Max's profile:** Senior (class of 2027) → **U of A Fayetteville** · Mexican + South Korean heritage · ACT 21 (registered Oct 17 retake — UA superscores) · GPA 3.85 · Single-mom household (parents divorced) · **Parent at Walmart/Sam's Club** · **Dad on active duty (deployed Germany)** · US citizen · Not first-gen · Major: CS / engineering + business · Income > $100k
 
 ---
 
@@ -81,7 +81,7 @@ Hispanic: HSF $500–$5k (Jan 2027) · LULAC LNSF $250–$2k (Max's LULAC VP rol
 - ✅ **U of A Fayetteville bound** → Tier E is the primary application path. Deadlines: admit **Nov 1**, scholarship **Nov 15** (priority).
 - ✅ **Mexican + South Korean heritage** → heritage scholarships (Tier H, research in progress).
 - ⚠️ **Income >$100k** → QuestBridge, Cooke, Horatio Alger, Advance Arkansas, Land of Opportunity likely disqualified; applying anyway per user — time-box essay work on these.
-- ⚠️ **ACT 21** → keep retaking (Oct–Dec 2026); UA superscores; higher ACT unlocks higher UA tiers, Honors College (32+), state thresholds.
+- ⚠️ **ACT 21** → registered Oct 17 retake (scores ~Oct 27–31); consider Dec 12 if another bump needed. UA superscores; higher ACT unlocks higher UA tiers, Honors College (32+), state thresholds.
 - ⚠️ **GPA 3.85** → strong; slightly under Honors College 3.90 weighted requirement.
 - ✅ **US citizen** → all citizenship-gated programs open (HSF, LULAC, APIA, Coca-Cola).
 - ✅ **Major: CS / engineering + business** → KASF-KIA (STEM/business, 3.5 GPA) and Prospanica (business) are now strong fits; answer-bank essays reflect the tech + business blend.
@@ -109,10 +109,13 @@ Hispanic: HSF $500–$5k (Jan 2027) · LULAC LNSF $250–$2k (Max's LULAC VP rol
 | When | Action |
 |---|---|
 | **Sep 10, 2026** | Sep monthly batch still open (all reset Sep 30): Sallie, Niche, SoFi, Appily, ScholarshipOwl $2,026→Oct 1 single deadline, Scholarships360, Scholly. Discover CLOSED (ended Aug 31). |
+| **Sep 11, 2026** | ✅ DONE — Max registered for Oct 17 ACT |
 | **Sep 30, 2026** | **Coca-Cola Scholars $20k (phase 1)** · Bold Be Bold $25k · Ascent $10k · monthly re-entries |
 | **Oct 15, 2026** | Niche $40k annual |
+| **Oct 17, 2026** | ✅ ACT registered (scores ~Oct 27–31, in time for UA Nov 15 priority) |
 | **Oct–Dec 2026** | ACT retakes (senior route) — UA superscores; higher ACT unlocks UA tiers + state thresholds |
 | **Oct 30, 2026** | US Bank |
+| **Nov 6, 2026** | ACT Dec 12 regular registration deadline (last test feeding Feb 1 final) |
 | **Nov 1 / Nov 15, 2026** | **UA admission + scholarship apps (priority)** · Honors College · Jack Kent Cooke opens |
 | **Nov 15, 2026** | 10 Words or Less $1,500 · **APIA Scholars window opens (~Nov 15)** |
 | **Nov 2026 – Jan 2027** | APIA Scholars application window (US citizen/PR; 250–500-word essay) · KASF region application (confirm) |
