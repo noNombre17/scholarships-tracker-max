@@ -4,7 +4,7 @@
  * cache-first (falling back to the network for anything not yet cached).
  * Bump CACHE_NAME when the shell changes to refresh the cache.
  */
-const CACHE_NAME = 'scholarship-shell-v2';
+const CACHE_NAME = 'scholarship-shell-v3';
 
 // App shell — everything needed to boot and run offline.
 const APP_SHELL = [

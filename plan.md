@@ -1,6 +1,6 @@
 # Max's Scholarship Plan — Rogers, AR (NW Arkansas)
 
-**Prepared:** Aug 31, 2026 · All programs verified live on official pages this week; flags noted.
+**Prepared:** Sep 10, 2026 (refreshed; verified Sep 10, 2026) · All programs verified live on official pages this week; flags noted.
 **Companion file:** `tracker.md` (statuses, deadlines, notes). This file = strategy + priorities.
 **Max's profile:** Senior (class of 2027) → **U of A Fayetteville** · Mexican + South Korean heritage · ACT 21 (retaking — UA superscores) · GPA 3.85 · Single-mom household (parents divorced) · **Parent at Walmart/Sam's Club** · **Dad on active duty (deployed Germany)** · US citizen · Not first-gen · Major: CS / engineering + business · Income > $100k
 
@@ -17,23 +17,24 @@
 
 ---
 
-## THIS WEEK (deadline-sensitive as of Aug 31, 2026)
+## THIS WEEK (deadline-sensitive as of Sep 10, 2026)
 
 | # | Action | Deadline | Why |
 |---|---|---|---|
-| 1 | **File FAFSA 2026-27** (studentaid.gov) — **NOT STARTED — do this today** | open now | Prerequisite for nearly every need-based award + UA + state + HSF |
-| 2 | Sallie $2,000 No Essay | **Aug 31** (re-enter Sep 30) | 2-min form |
-| 3 | Niche $2,000 monthly | **Aug 31** | account, 1 entry |
-| 4 | SoFi $2,500 | **Aug 31** | only if Max is **18+** |
-| 5 | Appily $1,000 Easy Money | **Aug 31** | 13+, basic profile |
-| 6 | ScholarshipOwl $2,026 | **Aug 31** | sign-in entry |
-| 7 | Scholarships360 $10k | **Aug 31** (monthly) | account |
-| 8 | Scholly Easy Apply (Sallie) | **Aug 31** → Sep 30 | 1 form → 18 scholarships, up to $13k |
+| 1 | **Prep FAFSA 2027–28** (studentaid.gov) — opens by Oct 1, 2026 (Fall 2027 enrollment year; 2026–27 form is NOT Max's year) | open now | Prerequisite for nearly every need-based award + UA + state + HSF |
+| 2 | Sallie $2,000 No Essay | **Sep 30** | 2-min form |
+| 3 | Niche $2,000 monthly | **Sep 30** | account, 1 entry |
+| 4 | SoFi $2,500 | **Sep 30** | only if Max is **18+** |
+| 5 | Appily $1,000 Easy Money | **Sep 30** | 13+, basic profile |
+| 6 | ScholarshipOwl $2,026 | **Oct 1** | single deadline (was monthly) |
+| 7 | Scholarships360 $10k | **Sep 30** (monthly) | account |
+| 8 | Scholly Easy Apply (Sallie) | **Sep 30** | 1 form → 18 scholarships, up to $13k |
 | 9 | Bold.org Be Bold $25k + tier stack | **Sep 30** | one profile covers ~90 no-essay awards |
 | 10 | Ascent $10,000 | **Sep 30** | quick form (lender — read rules first) |
 | 11 | BigFuture: start **college list step** | monthly drawings | College Board; more steps = more entries |
-| 12 | QuestBridge (⚠️ income >$100k likely disqualified — verify first) | **Aug–Oct 2026** | full ride; essays — start early |
+| 12 | QuestBridge (⚠️ income >$100k likely disqualified — verify first) | **Oct 1, 2026** | full ride; essays — start early |
 | 13 | **Coca-Cola Scholars $20,000** | **Sep 30, 2026, 5pm ET** | phase 1 = no essays/transcripts/recs; leadership + service — Max fits |
+| 14 | Dr Pepper Tuition Giveaway (if 18) + ScholarshipOwl $2,026 | **Sep 30 / Oct 1** | video / single deadline |
 
 ---
 
@@ -107,7 +108,7 @@ Hispanic: HSF $500–$5k (Jan 2027) · LULAC LNSF $250–$2k (Max's LULAC VP rol
 
 | When | Action |
 |---|---|
-| **Aug 31, 2026** | FAFSA + monthly sweepstakes batch (Sallie, Niche, SoFi, Appily, ScholarshipOwl, Scholarships360, Scholly) |
+| **Sep 10, 2026** | Sep monthly batch still open (all reset Sep 30): Sallie, Niche, SoFi, Appily, ScholarshipOwl $2,026→Oct 1 single deadline, Scholarships360, Scholly. Discover CLOSED (ended Aug 31). |
 | **Sep 30, 2026** | **Coca-Cola Scholars $20k (phase 1)** · Bold Be Bold $25k · Ascent $10k · monthly re-entries |
 | **Oct 15, 2026** | Niche $40k annual |
 | **Oct–Dec 2026** | ACT retakes (senior route) — UA superscores; higher ACT unlocks UA tiers + state thresholds |

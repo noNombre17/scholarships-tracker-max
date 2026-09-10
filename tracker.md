@@ -1,6 +1,6 @@
 # Scholarship Application Tracker — Max (Rogers, AR)
 
-**Updated:** Aug 31, 2026 · Source research: nationwide no-essay + Arkansas/NWA-specific (verified this week).
+**Updated:** Sep 10, 2026 · Source research: nationwide no-essay + Arkansas/NWA-specific (verified Sep 10, 2026).
 **Max's profile:** Senior (class of 2027) → **U of A Fayetteville** · Mexican + South Korean heritage · ACT 21 (retaking; UA superscores) · GPA 3.85 · Single-mom household (parents divorced) · **U.S. Army active duty (deployed Germany)** · Parent at Walmart/Sam's Club · **US citizen** · **Not first-gen** · Intended major: CS / engineering + business · Income > $100k · **FAFSA not filed yet**
 **Legend:** ⬜ to-do · 🔁 re-enter monthly · ⏳ submitted/pending · ✅ awarded/done · ⚠️ conditional · ❌ skipped
 
@@ -14,7 +14,7 @@
 | Niche $2,000 No Essay | $2,000 | monthly | account, 1 entry | ⬜ 🔁 | US citizen or visa | niche.com/colleges/scholarships/no-essay-scholarship/ |
 | SoFi $2,500 Giveaway | $2,500 | Sep 30, 2026 | form | ⬜ 🔁 | **18+ only** | refer.sofi.com/c/2077228/3283756/11190 |
 | Appily Easy Money | $1,000 | monthly | account + profile | ⬜ 🔁 | 13+; data-broker privacy flag | appily.com/scholarships/easy-money-scholarship |
-| ScholarshipOwl $2,026 | $2,026 | monthly | sign-in | ⬜ 🔁 | freemium, data-heavy | scholarshipowl.com |
+| ScholarshipOwl $2,026 | $2,026 | Oct 1, 2026, 3:59am UTC (single deadline; winner Oct 30) | sign-in | ⬜ | freemium, data-heavy; was monthly; now single deadline per official page | scholarshipowl.com |
 | ScholarshipOwl $50k program | $1,000 ×4/mo | monthly | sign-up | ⬜ 🔁 | realistic win = $1k | scholarshipowl.com |
 | Bold.org point tiers | $1k–$10k | Sep 30, 2026 | 1 profile, minutes | ⬜ 🔁 | ~90 no-essay awards on one profile | bold.org/scholarships/by-type/no-essay-scholarships/ |
 | Scholly Easy Apply (Sallie) | up to $13k (18 awards) | Sep 30, 2026 | 1 form ~2 min | ⬜ 🔁 | bundles 18 scholarships | sallie.com/scholarships/scholly/easy-apply |
@@ -23,7 +23,7 @@
 | Abe's "Plain, Honest" Scholarship | $1,500 | monthly | trivial form | ⬜ 🔁 | undergrad; no purchase/loan needed | abestudentloans.com |
 | College Ave $1,000 Monthly Sweepstakes | $1,000 | monthly | form | ⬜ 🔁 | students & parents; one entry/mo | collegeave.com/promotions/ |
 | Edvisors Monthly Scholarship | $1,000 | monthly | form | ⬜ 🔁 | HS senior 16+; privacy flag — bonus entries share emails | edvisors.com/rules-1k-scholarship/ |
-| Discover No-Essay Sweepstakes | $5,000 | monthly | form | ⬜ 🔁 | 18+ only | discover.com |
+| Discover No-Essay Sweepstakes | $5,000 | ENDED Aug 31, 2026 | form | ❌ | 18+ only; 2025–26 cycle ENDED Aug 31, 2026 — no 2026–27 cycle posted as of Sep 10; re-check monthly | discover.com |
 
 ## B. Big annual no-essay / low-effort (one-time)
 
@@ -32,9 +32,10 @@
 | BigFuture (College Board) | $40k + $500 monthly | monthly drawings | free planning steps | ⬜ | do all 6 steps; more = more entries; higher chance if low-income | bigfuture.collegeboard.org/pay-for-college/bigfuture-scholarships/scholarship-details |
 | Niche $40,000 No Essay | $40,000 | **Oct 15, 2026** | 5 min | ⬜ | winner by Nov 15, 2026 | niche.com/colleges/scholarships/40k-no-essay-scholarship-2026/ |
 | Bold.org Be Bold $25k | $25,000 | Sep 30, 2026 | profile, no essay | ⬜ | 6-yr track record, $160k paid | bold.org/scholarships/the-be-bold-no-essay-scholarship/ |
-| US Bank Student Scholarship | $2.5k–$20k tiered | Oct 30, 2026 | financial-ed lessons | ⬜ | 17+; more modules = higher tier | scholarships360.org/scholarships/search/us-bank-student-scholarship/ |
+| US Bank Student Scholarship | $2.5k–$20k tiered | Oct 30, 2026, 11:59pm CT (Entry Period 2; drawn Nov 9) | financial-ed lessons | ⬜ | 17+; more modules = higher tier | usbank.com/about-us-bank/community/student-scholarship.html |
 | Scholarships360 $10k | $10,000 | monthly; final Jun 30, 2027 | account | ⬜ | site is **scholarships360.org** | scholarships360.org/scholarships/search/10000-no-essay-scholarship/ |
 | Ascent $10k Summer Giveaway | $10,000 | Sep 30, 2026 | quick form | ⬜ | lender-sponsored — read official rules | ascentfunding.com/scholarships/summer-scholarship-giveaway-10k |
+| Dr Pepper Tuition Giveaway | pooled tuition prizes | Sep 30, 2026, 11:59pm ET | short video, no essay | ⬜ | ages 18–24 (only if 18 by entry); flag for age | drpepper.com/tuition |
 | **Coca-Cola Scholars** | **$20,000 (150 awards)** | **Sep 30, 2026, 5pm ET** — phase 1 OPEN now | phase 1: no essays/transcripts/recs | ⬜ | leadership + service focus — Max's profile fits; later phases add essays | coca-colascholarsfoundation.org/apply/ |
 | Doodle for Google | up to $55k | annual (~Oct) — **verify cycle** | draw + form | ⬜ | official page unreachable at research time | doodles.google.com/d4g/ |
 | Christian Connector / Catholic / Protestant | $5k / $2k / $2k | May 31, 2027 | simple form | ⬜ | only if attending a faith-based college | christianconnector.com |
@@ -51,8 +52,8 @@
 
 | Scholarship | Amount | Deadline | Effort | Status | Notes | URL |
 |---|---|---|---|---|---|---|
-| Academic Challenge | $2,000 (yr 1) | in SAMS | SAMS + FAFSA | ⬜ | lottery-funded; Diploma of Merit or GPA basis | sams.adhe.edu · adhe.edu |
-| Governor's Scholars (renamed from GDS) | up to $5,000/yr | in SAMS | SAMS + FAFSA | ⬜ | associate-degree or Diploma of Distinction paths | sams.adhe.edu |
+| Academic Challenge | $2,000 (yr 1) | in SAMS | SAMS + FAFSA | ⬜ | lottery-funded; Diploma of Merit or GPA basis; annual deadline Jul 1 | sams.adhe.edu · adhe.edu |
+| Governor's Scholars (renamed from GDS) | up to $5,000/yr | in SAMS | SAMS + FAFSA | ⬜ | associate-degree or Diploma of Distinction paths; Two tracks coexist: Distinguished up to $10k/yr (deadline Mar 1; ACT 32/1410 + GPA 3.5) vs Achievement up to $5k/yr (deadline Jul 1) | sams.adhe.edu |
 | ACCESS to Acceleration | $65/hr, max $2,000/yr | in SAMS | SAMS | ⬜ | **replaces Concurrent Challenge** (repealed); dual-enrollment | sams.adhe.edu |
 | Arkansas Future Grant | 2-yr tuition or $3,800 (4-yr) | in SAMS | SAMS + FAFSA | ⬜ | workforce/certificate/AA | sams.adhe.edu |
 | Workforce Challenge | $3,000/yr | in SAMS | app | ⬜ | 5 fields: mfg, health, IT, construction, logistics | sams.adhe.edu |
@@ -86,7 +87,7 @@
 
 | Scholarship | Amount | Deadline | Effort | Status | Notes | URL |
 |---|---|---|---|---|---|---|
-| QuestBridge National College Match | ~$200k (full ride) | **Aug–Oct 2026** | essays + recs + transcript | ⬜ | ⚠️ income >$100k likely disqualified — verify 2026 income guidelines before investing essay time | questbridge.org |
+| QuestBridge National College Match | ~$200k (full ride) | **Oct 1, 2026, 11:59pm PT (rankings/agreement Oct 15)** | essays + recs + transcript | ⬜ | ⚠️ income >$100k likely disqualified — verify 2026 income guidelines before investing essay time | questbridge.org |
 | Jack Kent Cooke | $40k+/yr × up to 4 | opens Nov 2026 | short form + FAFSA need | ⬜ | ⚠️ income >$100k likely disqualified; apply only if user insists | jackkentcooke.org |
 | Elks Most Valuable Student | $30k top + lodge/district | lodge early 2027; natl Mar–Apr 2027 | 2 essays + recs + leadership | ⬜ | check local lodge in Rogers/Bentonville | elks.org |
 | Horatio Alger | $25,000 | Jan–Feb 2027 | essays + need + recs | ⬜ | ⚠️ income >$100k likely disqualified; apply only if user insists | alger.org |
@@ -104,7 +105,7 @@
 | Ramsey Education Scholarship | $1,000 ×5 | ~May 31, 2027 | essay or video | ⚠️ | requires Ramsey Foundations course (~$30) | ramseysolutions.com |
 | NFTE World Series of Innovation | $1,500 / $600 / $300 | Dec 12, 2026 | free competition | ⚠️ | grades 9–12; on-ramp to NFTE funds | nfte.com |
 
-## H. Heritage scholarships — Hispanic/Latino (research complete Aug 31, 2026)
+## H. Heritage scholarships — Hispanic/Latino (research complete Sep 10, 2026)
 
 | Scholarship | Amount | Deadline | Effort | Status | Notes | URL |
 |---|---|---|---|---|---|---|
@@ -121,11 +122,11 @@
 | GMiS Scholars (Great Minds in STEM) | $500–$5,000 | opens ~Mar 2027 | 750–850 word essay + 2 recs | ⬜ | STEM; GPA 3.0+; leadership/service emphasized; open to all STEM not just Hispanic | greatmindsinstem.org |
 | One Korean Foundation / AR Korean Chamber | ~$1,000 | Dec (annual) | essay | ⬜ | Korean-American Arkansas students; confirm 2027 via AR Korean Chamber | (verify) |
 
-**Checked & ruled out (as of Aug 31, 2026):** Golden Door Scholars (NC/SC/GA residence + income cap) · MALDEF (no undergraduate program — resource guide only) · TheDream.US (undocumented/DACA-only; N/A if citizen) · UA Land of Opportunity (Pell-preferred; unlikely >$100k income).
+**Checked & ruled out (as of Sep 10, 2026):** Golden Door Scholars (NC/SC/GA residence + income cap) · MALDEF (no undergraduate program — resource guide only) · TheDream.US (undocumented/DACA-only; N/A if citizen) · UA Land of Opportunity (Pell-preferred; unlikely >$100k income).
 
 **First-gen note:** Max is **not** first-gen (confirmed) — first-gen-specific awards are not targeted.
 
-## I. Military-family scholarships (dad active-duty, deployed Germany) — verified Aug 31, 2026
+## I. Military-family scholarships (dad active-duty, deployed Germany) — verified Sep 10, 2026
 
 | Scholarship | Amount | Deadline | Effort | Status | Notes | URL |
 |---|---|---|---|---|---|---|
@@ -145,7 +146,7 @@
 
 ## Notes / assumptions
 - Max: Senior (class of 2027), Rogers, AR · U of A Fayetteville bound · Mexican + South Korean heritage · single-mom household (parents divorced) · **dad on active duty (deployed Germany)** · parent at Walmart/Sam's Club · US citizen · not first-gen · income > $100k.
-- **#1 action: FAFSA 2026-27 — not started.** Required for UA need-based, state SAMS, HSF.
+- **#1 action: FAFSA 2027–28 (opens by Oct 1, 2026; beta from Aug 5) — for Fall 2027 enrollment.** The 2026–27 form (open since Sep 24, 2025) is NOT Max's enrollment year. Required for UA need-based, state SAMS, HSF.
 - **Biggest single benefit: Walmart Live Better U** (parent confirmed) — 100% tuition + books; enroll via mom's HR benefits. Verify current caps.
 - **Top priorities now:** FAFSA + Coca-Cola Scholars (Sep 30) + UA admission (Nov 1) + UA scholarship app (Nov 15) + monthly sweepstakes batch + SAMS state awards.
 - Military-child scholarships (Tier I): Fisher House, AUSA, Army Scholarship Foundation, ThanksUSA — all need dad's service details (branch, status, disability/decorations).

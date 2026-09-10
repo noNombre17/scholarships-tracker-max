@@ -1,6 +1,6 @@
 # Copy-Paste Answer Bank — Max B. Hill De Santiago
 
-**Built from résumé (Aug 31, 2026).** Sections 1–4 are copy-paste ready. Essays (section 5) are drafts — **personalize and trim to the exact word limit before submitting** (never go over). Bracketed `[PLACEHOLDER]` items need confirmation.
+**Built from résumé (refreshed Sep 10, 2026).** Sections 1–4 are copy-paste ready. Essays (section 5) are drafts — **personalize and trim to the exact word limit before submitting** (never go over). Bracketed `[PLACEHOLDER]` items need confirmation.
 
 ---
 
@@ -193,7 +193,7 @@
 
 ## 8. Documents to keep ready
 
-- [ ] **FAFSA (studentaid.gov) — NOT STARTED — do this first** (required for UA need-based, state, HSF)
+- [ ] **FAFSA 2027–28 (studentaid.gov) — opens by Oct 1, 2026 for Fall 2027 enrollment — prep now** (required for UA need-based, state, HSF)
 - [ ] Weighted GPA + class rank from counselor (UA recalculates; Honors College wants 3.90 weighted)
 - [ ] ACT superscore report (retake Oct–Dec 2026)
 - [ ] SSN / citizenship documents (HSF, LULAC, APIA — do NOT email these)
