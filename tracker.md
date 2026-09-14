@@ -1,6 +1,6 @@
 # Scholarship Application Tracker — Max (Rogers, AR)
 
-**Updated:** Sep 10, 2026 · Source research: nationwide no-essay + Arkansas/NWA-specific (verified Sep 10, 2026).
+**Updated:** Sep 12, 2026 · Source research: nationwide no-essay + Arkansas/NWA-specific (verified Sep 12, 2026).
 **Max's profile:** Senior (class of 2027) → **U of A Fayetteville** · Mexican + South Korean heritage · ACT 21 (registered Oct 17 retake; UA superscores) · GPA 3.85 · Single-mom household (parents divorced) · **U.S. Army active duty (deployed Germany)** · Parent at Walmart/Sam's Club · **US citizen** · **Not first-gen** · Intended major: CS / engineering + business · Income > $100k · **FAFSA not filed yet**
 **Legend:** ⬜ to-do · 🔁 re-enter monthly · ⏳ submitted/pending · ✅ awarded/done · ⚠️ conditional · ❌ skipped
 
@@ -29,12 +29,12 @@
 
 | Scholarship | Amount | Deadline | Effort | Status | Notes | URL |
 |---|---|---|---|---|---|---|
-| BigFuture (College Board) | $40k + $500 monthly | monthly drawings | free planning steps | ⬜ | do all 6 steps; more = more entries; higher chance if low-income | bigfuture.collegeboard.org/pay-for-college/bigfuture-scholarships/scholarship-details |
+| BigFuture (College Board) | $40k + $500 monthly | monthly drawings | free planning steps | ⬜ | do all 6 steps; more = more entries; higher chance if low-income; Class of 2027 window to Nov 30, 2026 | bigfuture.collegeboard.org/pay-for-college/bigfuture-scholarships/scholarship-details |
 | Niche $40,000 No Essay | $40,000 | **Oct 15, 2026** | 5 min | ⬜ | winner by Nov 15, 2026 | niche.com/colleges/scholarships/40k-no-essay-scholarship-2026/ |
 | Bold.org Be Bold $25k | $25,000 | Sep 30, 2026 | profile, no essay | ⬜ | 6-yr track record, $160k paid | bold.org/scholarships/the-be-bold-no-essay-scholarship/ |
 | US Bank Student Scholarship | $2.5k–$20k tiered | Oct 30, 2026, 11:59pm CT (Entry Period 2; drawn Nov 9) | financial-ed lessons | ⬜ | 17+; more modules = higher tier | usbank.com/about-us-bank/community/student-scholarship.html |
 | Scholarships360 $10k | $10,000 | monthly; final Jun 30, 2027 | account | ⬜ | site is **scholarships360.org** | scholarships360.org/scholarships/search/10000-no-essay-scholarship/ |
-| Ascent $10k Summer Giveaway | $10,000 | Sep 30, 2026 | quick form | ⬜ | lender-sponsored — read official rules | ascentfunding.com/scholarships/summer-scholarship-giveaway-10k |
+| Ascent $10k Summer Giveaway | $10,000 | Sep 30, 2026 | quick form | ⬜ | lender-sponsored — read official rules; morning cutoff 8:59am PT | ascentfunding.com/scholarships/summer-scholarship-giveaway-10k |
 | Dr Pepper Tuition Giveaway | pooled tuition prizes | Sep 30, 2026, 11:59pm ET | short video, no essay | ⬜ | ages 18–24 (only if 18 by entry); flag for age | drpepper.com/tuition |
 | **Coca-Cola Scholars** | **$20,000 (150 awards)** | **Sep 30, 2026, 5pm ET** — phase 1 OPEN now | phase 1: no essays/transcripts/recs | ⬜ | leadership + service focus — Max's profile fits; later phases add essays | coca-colascholarsfoundation.org/apply/ |
 | Doodle for Google | up to $55k | annual (~Oct) — **verify cycle** | draw + form | ⬜ | official page unreachable at research time | doodles.google.com/d4g/ |

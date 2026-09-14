@@ -1,6 +1,6 @@
 # Max's Scholarship Plan — Rogers, AR (NW Arkansas)
 
-**Prepared:** Sep 10, 2026 (refreshed; verified Sep 10, 2026) · All programs verified live on official pages this week; flags noted.
+**Prepared:** Sep 12, 2026 (refreshed; verified Sep 12, 2026) · All programs verified live on official pages this week; flags noted.
 **Companion file:** `tracker.md` (statuses, deadlines, notes). This file = strategy + priorities.
 **Max's profile:** Senior (class of 2027) → **U of A Fayetteville** · Mexican + South Korean heritage · ACT 21 (registered Oct 17 retake — UA superscores) · GPA 3.85 · Single-mom household (parents divorced) · **Parent at Walmart/Sam's Club** · **Dad on active duty (deployed Germany)** · US citizen · Not first-gen · Major: CS / engineering + business · Income > $100k
 
@@ -17,7 +17,7 @@
 
 ---
 
-## THIS WEEK (deadline-sensitive as of Sep 10, 2026)
+## THIS WEEK (deadline-sensitive as of Sep 12, 2026)
 
 | # | Action | Deadline | Why |
 |---|---|---|---|
@@ -108,7 +108,7 @@ Hispanic: HSF $500–$5k (Jan 2027) · LULAC LNSF $250–$2k (Max's LULAC VP rol
 
 | When | Action |
 |---|---|
-| **Sep 10, 2026** | Sep monthly batch still open (all reset Sep 30): Sallie, Niche, SoFi, Appily, ScholarshipOwl $2,026→Oct 1 single deadline, Scholarships360, Scholly. Discover CLOSED (ended Aug 31). |
+| **Sep 12, 2026** | Sep monthly batch still open (all reset Sep 30): Sallie, Niche, SoFi, Appily, ScholarshipOwl $2,026→Oct 1 single deadline, Scholarships360, Scholly. Discover CLOSED (ended Aug 31). |
 | **Sep 11, 2026** | ✅ DONE — Max registered for Oct 17 ACT |
 | **Sep 30, 2026** | **Coca-Cola Scholars $20k (phase 1)** · Bold Be Bold $25k · Ascent $10k · monthly re-entries |
 | **Oct 15, 2026** | Niche $40k annual |
