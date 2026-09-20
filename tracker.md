@@ -1,6 +1,6 @@
 # Scholarship Application Tracker — Max (Rogers, AR)
 
-**Updated:** Sep 16, 2026 · Source research: nationwide no-essay + Arkansas/NWA-specific (verified Sep 16, 2026).
+**Updated:** Sep 20, 2026 · Source research: nationwide no-essay + Arkansas/NWA-specific (verified Sep 20, 2026).
 **Max's profile:** Senior (class of 2027) → **U of A Fayetteville** · Mexican + South Korean heritage · ACT 21 (registered Oct 17 retake; UA superscores) · GPA 3.85 · Single-mom household (parents divorced) · **U.S. Army active duty (deployed Germany)** · Parent at Walmart/Sam's Club · **US citizen** · **Not first-gen** · Intended major: CS / engineering + business · Income > $100k · **FAFSA not filed yet**
 **Legend:** ⬜ to-do · 🔁 re-enter monthly · ⏳ submitted/pending · ✅ awarded/done · ⚠️ conditional · ❌ skipped
 
